@@ -1,0 +1,5 @@
+F:\IXPERY\Solucion\Ixpery\Dominio.Main.Module\bin\Release\Dominio.Main.Module.dll
+F:\IXPERY\Solucion\Ixpery\Dominio.Main.Module\bin\Release\Dominio.Main.Module.pdb
+F:\IXPERY\Solucion\Ixpery\Dominio.Main.Module\obj\Release\Dominio.Main.Module.csproj.CoreCompileInputs.cache
+F:\IXPERY\Solucion\Ixpery\Dominio.Main.Module\obj\Release\Dominio.Main.Module.dll
+F:\IXPERY\Solucion\Ixpery\Dominio.Main.Module\obj\Release\Dominio.Main.Module.pdb
