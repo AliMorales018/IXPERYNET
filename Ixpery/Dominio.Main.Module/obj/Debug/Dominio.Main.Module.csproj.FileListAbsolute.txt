@@ -1,0 +1,12 @@
+F:\IXPERY\Solucion\Ixpery\Dominio.Main.Module\bin\Debug\Dominio.Main.Module.dll
+F:\IXPERY\Solucion\Ixpery\Dominio.Main.Module\bin\Debug\Dominio.Main.Module.pdb
+F:\IXPERY\Solucion\Ixpery\Dominio.Main.Module\obj\Debug\Dominio.Main.Module.csprojResolveAssemblyReference.cache
+F:\IXPERY\Solucion\Ixpery\Dominio.Main.Module\obj\Debug\Dominio.Main.Module.csproj.CoreCompileInputs.cache
+F:\IXPERY\Solucion\Ixpery\Dominio.Main.Module\obj\Debug\Dominio.Main.Module.dll
+F:\IXPERY\Solucion\Ixpery\Dominio.Main.Module\obj\Debug\Dominio.Main.Module.pdb
+C:\Users\PC\Documents\GitHub\IXPERYNET\Ixpery\Dominio.Main.Module\bin\Debug\Dominio.Main.Module.dll
+C:\Users\PC\Documents\GitHub\IXPERYNET\Ixpery\Dominio.Main.Module\bin\Debug\Dominio.Main.Module.pdb
+C:\Users\PC\Documents\GitHub\IXPERYNET\Ixpery\Dominio.Main.Module\obj\Debug\Dominio.Main.Module.csprojResolveAssemblyReference.cache
+C:\Users\PC\Documents\GitHub\IXPERYNET\Ixpery\Dominio.Main.Module\obj\Debug\Dominio.Main.Module.csproj.CoreCompileInputs.cache
+C:\Users\PC\Documents\GitHub\IXPERYNET\Ixpery\Dominio.Main.Module\obj\Debug\Dominio.Main.Module.dll
+C:\Users\PC\Documents\GitHub\IXPERYNET\Ixpery\Dominio.Main.Module\obj\Debug\Dominio.Main.Module.pdb
