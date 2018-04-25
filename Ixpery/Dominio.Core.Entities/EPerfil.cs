@@ -7,10 +7,13 @@ using System.Threading.Tasks;
 namespace Dominio.Core.Entities
 {
     public class EPerfil{
-        public EMenuPerfil oMenuPerfil { get; set; }
-        public EMenu oMenu { get; set; }
-        public EPerfil oPerfil { get; set; }
-        public bool Visible { get; set; }
+        public int idPerfil { get; set; }
+        public EAplicacion oAplicacion { get; set; }
+        public string Nombre  { get; set; }
         public bool Estado { get; set; }
+        public DateTime FechaCreacion { get; set; }
+        public EUser oUserC { get; set; }
+        public DateTime FechaModifi { get; set; }
+        public EUser oUserM { get; set; }
     }
 }

@@ -12,7 +12,7 @@ public partial class _Default : System.Web.UI.Page
 
     public void Page_Load(object sender, EventArgs e)
     {
-       
+
     }
 
     public void Validar(object sender, EventArgs e)
@@ -31,15 +31,13 @@ public partial class _Default : System.Web.UI.Page
 
         if (Acceso != 0)
         {
-            Session["idUsuario"] = Acceso;
-            //ContSelec.Visible = true;
-            //Deshabilitar(true);
-            ListarApli(Acceso);
+                Session["idUsuario"] = Acceso;
+                Habilitar();
+                ListarApli(Acceso);
         }
         else
         {
-            ContSelec.Visible = false;
-            //Deshabilitar(false);
+            Session["idUsuario"] = 0;
             Mensaje.Text = "Usuario no encontrado :(";
         }
     }
@@ -50,8 +48,18 @@ public partial class _Default : System.Web.UI.Page
         ListarPerfApli(idUsuario, Int32.Parse(SelectApli.SelectedValue));
     }
 
-    protected void Enter(object sender, EventArgs e) {
-        Mensaje.Text = "enter";
+    protected void Redirect(object sender, EventArgs e) {
+        if (!SelectApli.SelectedValue.Equals("0") && !SelectPerfil.SelectedValue.Equals("0"))
+        {
+            int idApli = Int32.Parse(SelectApli.SelectedValue);
+            int idPerf = Int32.Parse(SelectPerfil.SelectedValue);
+            Mensaje.Text = "Entro al Sistema";
+            Response.Redirect("/Usuario/PanelControl.aspx?apli="+idApli+"&perf="+idPerf);
+        }
+        else
+        {
+            Mensaje.Text = "Complete todos los campos :)";
+        }
     }
 
     protected void ListarApli(int idUsu)
@@ -64,7 +72,6 @@ public partial class _Default : System.Web.UI.Page
 
     protected void ListarPerfApli(int idUsu, int idApli)
     {
-        Mensaje.Text = "IDU: " +Acceso + "IDA: " +idApli;
         DataTable dtTable = dUser.VerPerfApliUsuario(new EUser { idUsuario = idUsu }, new EAplicacion { idApli = idApli });
         LlenarSelect(dtTable, SelectPerfil, "V_Perfil", "N_IdPerfil");
     }
@@ -77,14 +84,7 @@ public partial class _Default : System.Web.UI.Page
         ddl.DataBind();
     }
 
-    protected void HabilitarSelect() {
-        SelectApli.Enabled = true;
-        SelectPerfil.Enabled = true;
+    protected void Habilitar() {
+        BtnIngresar.Enabled = true;
     }
-
-    /*protected void Deshabilitar(bool estado)
-    {
-        TxtLogin.Enabled = estado;
-        TxtPass.Enabled = estado;
-    }*/
 }
