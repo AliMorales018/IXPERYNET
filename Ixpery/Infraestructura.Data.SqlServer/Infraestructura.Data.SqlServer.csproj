@@ -43,6 +43,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DFamilia.cs" />
     <Compile Include="DMenuPerfil.cs" />
     <Compile Include="DPerfilUser.cs" />
     <Compile Include="DUser.cs" />
