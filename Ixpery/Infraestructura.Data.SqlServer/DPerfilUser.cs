@@ -15,7 +15,7 @@ namespace Infraestructura.Data.SqlServer{
 
         private void LlenarObj(EPerfilUser oPerUse) {
             SqlParameter id = new SqlParameter("@IdPerfilUsuario", oPerUse.idPerfilUser);
-            SqlParameter idPerfil = new SqlParameter("@IdPerfil", oPerUse.oPerfil.oPerfil);
+            SqlParameter idPerfil = new SqlParameter("@IdPerfil", oPerUse.oPerfil.idPerfil);
             SqlParameter idUsuario = new SqlParameter("@IdUsuario", oPerUse.oUser.idUsuario);
             SqlParameter estado = new SqlParameter("@Estado", oPerUse.Estado);
             lista.Add(id); lista.Add(idPerfil); lista.Add(idUsuario); lista.Add(estado);

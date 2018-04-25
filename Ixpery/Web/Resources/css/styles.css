@@ -1,0 +1,12 @@
+﻿.mnuMain ul li {
+    margin: 15px;
+}
+
+.mnuMain ul li a {
+    color: white;
+    font-size: 15px;
+}
+
+.text-size-sm {
+    font-size: 15px;
+}
