@@ -13,3 +13,4 @@ namespace Dominio.Core.Entities{
         public string Abreviatura { get; set; }
     }
 }
+//Fin
