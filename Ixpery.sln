@@ -1,0 +1,91 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2002
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dominio", "Dominio", "{431BA36C-D024-41D5-8654-B6F8F97A7091}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infraestructura", "Infraestructura", "{CF989625-B6FC-4CD0-A772-4EFBB7CAC37B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentacion", "Presentacion", "{2E42F375-7EAE-43D6-A012-0610006278D1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Servicios", "Servicios", "{8FB0A526-B78A-4FA3-9ED5-1819A2E505AB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{491439ED-8500-4F0D-985D-CB7E86A2D859}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MainModule", "MainModule", "{9CA5FF83-E32F-4420-9F39-25752CA202C5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dominio.Core.Entities", "Dominio.Core.Entities\Dominio.Core.Entities.csproj", "{6FD3FD2D-0CA7-4479-8AE1-B8E5E9C42BF2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dominio.Main.Module", "Dominio.Main.Module\Dominio.Main.Module.csproj", "{22C4030A-83C0-45B7-BED3-8ABA81D9741B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6FD3FD2D-0CA7-4479-8AE1-B8E5E9C42BF2} = {6FD3FD2D-0CA7-4479-8AE1-B8E5E9C42BF2}
+		{0A45496E-1D2D-4598-BED6-68576644F907} = {0A45496E-1D2D-4598-BED6-68576644F907}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infraestructura.Data.SqlServer", "Infraestructura.Data.SqlServer\Infraestructura.Data.SqlServer.csproj", "{0A45496E-1D2D-4598-BED6-68576644F907}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6FD3FD2D-0CA7-4479-8AE1-B8E5E9C42BF2} = {6FD3FD2D-0CA7-4479-8AE1-B8E5E9C42BF2}
+	EndProjectSection
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Web", "Web\", "{64A75947-1B25-4CD3-97EA-0D4A1DA05B22}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.6.1"
+		ProjectReferences = "{0a45496e-1d2d-4598-bed6-68576644f907}|Infraestructura.Data.SqlServer.dll;{6fd3fd2d-0ca7-4479-8ae1-b8e5e9c42bf2}|Dominio.Core.Entities.dll;"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_50103"
+		Debug.AspNetCompiler.PhysicalPath = "Web\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_50103\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_50103"
+		Release.AspNetCompiler.PhysicalPath = "Web\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_50103\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "50103"
+		SlnRelativePath = "Web\"
+		DefaultWebSiteLanguage = "Visual C#"
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6FD3FD2D-0CA7-4479-8AE1-B8E5E9C42BF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FD3FD2D-0CA7-4479-8AE1-B8E5E9C42BF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FD3FD2D-0CA7-4479-8AE1-B8E5E9C42BF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FD3FD2D-0CA7-4479-8AE1-B8E5E9C42BF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22C4030A-83C0-45B7-BED3-8ABA81D9741B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22C4030A-83C0-45B7-BED3-8ABA81D9741B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22C4030A-83C0-45B7-BED3-8ABA81D9741B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22C4030A-83C0-45B7-BED3-8ABA81D9741B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A45496E-1D2D-4598-BED6-68576644F907}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A45496E-1D2D-4598-BED6-68576644F907}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A45496E-1D2D-4598-BED6-68576644F907}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A45496E-1D2D-4598-BED6-68576644F907}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64A75947-1B25-4CD3-97EA-0D4A1DA05B22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64A75947-1B25-4CD3-97EA-0D4A1DA05B22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64A75947-1B25-4CD3-97EA-0D4A1DA05B22}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{64A75947-1B25-4CD3-97EA-0D4A1DA05B22}.Release|Any CPU.Build.0 = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{491439ED-8500-4F0D-985D-CB7E86A2D859} = {431BA36C-D024-41D5-8654-B6F8F97A7091}
+		{9CA5FF83-E32F-4420-9F39-25752CA202C5} = {431BA36C-D024-41D5-8654-B6F8F97A7091}
+		{6FD3FD2D-0CA7-4479-8AE1-B8E5E9C42BF2} = {491439ED-8500-4F0D-985D-CB7E86A2D859}
+		{22C4030A-83C0-45B7-BED3-8ABA81D9741B} = {9CA5FF83-E32F-4420-9F39-25752CA202C5}
+		{0A45496E-1D2D-4598-BED6-68576644F907} = {CF989625-B6FC-4CD0-A772-4EFBB7CAC37B}
+		{64A75947-1B25-4CD3-97EA-0D4A1DA05B22} = {2E42F375-7EAE-43D6-A012-0610006278D1}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B01C164E-915B-4EE9-8507-FFE30E99875C}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,5 @@
+F:\IXPERY\Solucion\Ixpery\Dominio.Core.Entities\bin\Debug\Dominio.Core.Entities.dll
+F:\IXPERY\Solucion\Ixpery\Dominio.Core.Entities\bin\Debug\Dominio.Core.Entities.pdb
+F:\IXPERY\Solucion\Ixpery\Dominio.Core.Entities\obj\Debug\Dominio.Core.Entities.csproj.CoreCompileInputs.cache
+F:\IXPERY\Solucion\Ixpery\Dominio.Core.Entities\obj\Debug\Dominio.Core.Entities.dll
+F:\IXPERY\Solucion\Ixpery\Dominio.Core.Entities\obj\Debug\Dominio.Core.Entities.pdb
