@@ -11,6 +11,8 @@ F:\IXPERY\Solucion\Ixpery\Infraestructura.Data.SqlServer\obj\Debug\Infraestructu
 C:\Users\PC\Documents\GitHub\IXPERYNET\Infraestructura.Data.SqlServer\bin\Debug\Infraestructura.Data.SqlServer.dll
 C:\Users\PC\Documents\GitHub\IXPERYNET\Infraestructura.Data.SqlServer\bin\Debug\Infraestructura.Data.SqlServer.pdb
 C:\Users\PC\Documents\GitHub\IXPERYNET\Infraestructura.Data.SqlServer\bin\Debug\Dominio.Core.Entities.dll
+C:\Users\PC\Documents\GitHub\IXPERYNET\Infraestructura.Data.SqlServer\bin\Debug\Mono.Security.dll
+C:\Users\PC\Documents\GitHub\IXPERYNET\Infraestructura.Data.SqlServer\bin\Debug\Npgsql.dll
 C:\Users\PC\Documents\GitHub\IXPERYNET\Infraestructura.Data.SqlServer\bin\Debug\Utilitario.dll
 C:\Users\PC\Documents\GitHub\IXPERYNET\Infraestructura.Data.SqlServer\bin\Debug\Dominio.Core.Entities.pdb
 C:\Users\PC\Documents\GitHub\IXPERYNET\Infraestructura.Data.SqlServer\obj\Debug\Infraestructura.Data.SqlServer.csprojResolveAssemblyReference.cache
