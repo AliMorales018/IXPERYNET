@@ -3,3 +3,9 @@ F:\IXPERY\Solucion\Ixpery\Dominio.Core.Entities\bin\Debug\Dominio.Core.Entities.
 F:\IXPERY\Solucion\Ixpery\Dominio.Core.Entities\obj\Debug\Dominio.Core.Entities.csproj.CoreCompileInputs.cache
 F:\IXPERY\Solucion\Ixpery\Dominio.Core.Entities\obj\Debug\Dominio.Core.Entities.dll
 F:\IXPERY\Solucion\Ixpery\Dominio.Core.Entities\obj\Debug\Dominio.Core.Entities.pdb
+C:\Users\PC\Documents\GitHub\IXPERYNET\Dominio.Core.Entities\bin\Debug\Dominio.Core.Entities.dll
+C:\Users\PC\Documents\GitHub\IXPERYNET\Dominio.Core.Entities\bin\Debug\Dominio.Core.Entities.pdb
+C:\Users\PC\Documents\GitHub\IXPERYNET\Dominio.Core.Entities\obj\Debug\Dominio.Core.Entities.csprojResolveAssemblyReference.cache
+C:\Users\PC\Documents\GitHub\IXPERYNET\Dominio.Core.Entities\obj\Debug\Dominio.Core.Entities.csproj.CoreCompileInputs.cache
+C:\Users\PC\Documents\GitHub\IXPERYNET\Dominio.Core.Entities\obj\Debug\Dominio.Core.Entities.dll
+C:\Users\PC\Documents\GitHub\IXPERYNET\Dominio.Core.Entities\obj\Debug\Dominio.Core.Entities.pdb

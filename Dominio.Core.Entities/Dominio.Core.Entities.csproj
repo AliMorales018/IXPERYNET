@@ -30,6 +30,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Mono.Security">
+      <HintPath>..\..\..\..\source\repos\PruebaGrilla\PruebaGrilla\bin\Mono.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Npgsql">
+      <HintPath>..\..\..\..\source\repos\PruebaGrilla\PruebaGrilla\bin\Npgsql.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -41,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EAplicacion.cs" />
+    <Compile Include="EFamilia.cs" />
     <Compile Include="EMenu.cs" />
     <Compile Include="EMenuPerfil.cs" />
     <Compile Include="EPerfil.cs" />
