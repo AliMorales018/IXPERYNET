@@ -13,8 +13,8 @@
 <body class="bg-light">
       <div class="container">
         <div class="row justify-content-center">
-            <form id="form1" runat="server" class="col-lg-4 col-md-5 col-sm-12 mt-5">
-                <h1 class="text-center text-primary mt-5">Acceso</h1>
+            <form id="form1" runat="server" class="col-lg-4 col-md-5 col-sm-12 mt-4">
+                <h1 class="text-center text-dark mt-5">Acceso</h1>
                 <h6 class="text-center mt-3 lead text-size-sm">Registre sus credenciales</h6>
                 <div class="form-group">
                     <label for="exampleInputEmail1">Usuario</label>
@@ -60,7 +60,7 @@
                 
                 <div class="row justify-content-center">
                     <div class="col-lg-4 col-md-6 col-sm-12">
-                      <asp:Button ID="BtnIngresar" runat="server" Text="Ingresar" type="button" class="btn btn-primary btn-lg mb-5" OnClick="Redirect"/>
+                      <asp:Button ID="BtnIngresar" runat="server" Text="Ingresar" type="button" class="btn btn-danger btn-lg mb-5" OnClick="Redirect"/>
                     </div>
                 </div>
                 <asp:Label ID="Mensaje" class="mt-5 text-center" runat="server"></asp:Label>

@@ -31,6 +31,7 @@ public partial class _Default : System.Web.UI.Page
 
         if (Acceso != 0)
         {
+                Mensaje.Text = "";
                 Session["idUsuario"] = Acceso;
                 Habilitar();
                 ListarApli(Acceso);
@@ -54,7 +55,7 @@ public partial class _Default : System.Web.UI.Page
             int idApli = Int32.Parse(SelectApli.SelectedValue);
             int idPerf = Int32.Parse(SelectPerfil.SelectedValue);
             Mensaje.Text = "Entro al Sistema";
-            Response.Redirect("/Usuario/PanelControl.aspx?apli="+idApli+"&perf="+idPerf);
+            Response.Redirect("/Aplicaciones/ControlUsuarios/PanelControl.aspx?apli="+idApli+"&perf="+idPerf);
         }
         else
         {
@@ -66,7 +67,7 @@ public partial class _Default : System.Web.UI.Page
     {
         Acceso = idUsu;
         DataTable dtTable = dUser.VerApliUsuario(new EUser { idUsuario = idUsu });
-        LlenarSelect(dtTable, SelectApli, "V_Aplication", "N_IdApli");
+        LlenarSelect(dtTable, SelectApli, "V_Aplicacion", "N_IdApli");
         ListarPerfApli(idUsu, Int32.Parse(SelectApli.SelectedValue));
     }
 
