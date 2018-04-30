@@ -15,9 +15,9 @@
         </label>
         <div class="form-group">
           <div class="table-responsive-lg text-size-sm">
-            <table class="table table-bordered" id="tblUsuarios">
-              <thead class="thead-dark">
-              <tr>
+            <table class="table table-bordered" runat="server" id="tblUsuarios">
+              <thead class="bg-dark">
+                <tr class="bg-dark text-white border border-dark">
                   <th class="text-center font-weight-light">N°</th>
                   <th class="text-center font-weight-light">Nombre</th>
                   <th class="text-center font-weight-light">Apellido Paterno</th>
@@ -27,7 +27,8 @@
                   <th class="text-center font-weight-light">Eliminar</th>
                 </tr>
               </thead>
-              <tr id="1">
+              <tbody>
+              <tr id="firstRow">
                   <td><p>1</p></td>
                   <td><div class="input-group input-group-sm"><input type="text" class="form-control"/></div></td>
                   <td><div class="input-group input-group-sm"><input type="text" class="form-control"/></div></td>
@@ -38,9 +39,10 @@
                       <button type="button" class="btn btn-danger mr-sm-2 btn-sm" id="btn1">Eliminar</button>
                   </td>
               </tr>
+              </tbody>  
             </table>
             <div class="container text-center">
-              <button class="btn btn-success btn-sm">Guardar</button>  
+                  <button id="btnGuardar" runat="server" class="btn btn-success btn-sm">Guardar</button>
             </div>
           </div>
         </div>

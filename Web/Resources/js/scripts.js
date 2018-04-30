@@ -1,5 +1,17 @@
 ﻿var idFila = 1;
 
+      $("#btnGuardar").click(function () {
+            var mitabla = [];
+            $("#tblUsuarios tbody tr").each(function () {
+                var tr = [];
+                $(this).find("td div").each(function () {
+                    tr.push($(this).text());
+                });
+                mitabla.push(tr)
+            });
+            alert(mitabla);
+      });
+
       $(document).ready(function(){
           $('#btnNuevo').click(function(){
                 idFila++;
@@ -102,8 +114,7 @@
                 $('<td>')
                 .append
                 (
-                  //"<button class='btn btn-sm btn-danger' id ='"+'btn'+idFila+"' onclick='eliminar(this.id)'>Eliminar</button>"
-                  "<asp:TextBox ID='txtNom' visible='true' runat='server'/>"
+                  "<button class='btn btn-sm btn-danger' id ='"+'btn'+idFila+"' onclick='eliminar(this.id)'>Eliminar</button>"
                 )
             )
         );
@@ -118,3 +129,4 @@
             num++;
           });
       }
+
