@@ -11,12 +11,9 @@ namespace Infraestructura.Data.SqlServer
 {
     public class DFamilia
     {
+        public string nomFam { get => "V_NomFamilia"; }//nombre de la columna de la BD
         DtUtilitario com = new DtUtilitario();
         List<SqlParameter> lista = new List<SqlParameter>();
-        private void ObtenerId()
-        {
-
-        }
         private void LlenarObj(EFamilia oFam)
         {
             //SqlParameter id = new SqlParameter("@IdFamilia", oFam.idFamilia);
@@ -26,7 +23,6 @@ namespace Infraestructura.Data.SqlServer
         }
         public void InsertarFamilia(EFamilia oFam)
         {
-            
             try
             {
                 LlenarObj(oFam);
@@ -35,8 +31,7 @@ namespace Infraestructura.Data.SqlServer
             }
             catch (Exception ex)
             {
-                //com.DeshaceTransaccion();
-                //throw new Exception("DB - Error" + ex.Message, ex);
+                throw new Exception("DB - Error" + ex.Message, ex);
             }
             finally
             {

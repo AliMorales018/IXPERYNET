@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Familia.aspx.cs" Inherits="Familia" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Categoria.aspx.cs" Inherits="Aplicaciones_Logistica_Categoria" %>
 
 <%@ Register Assembly="System.Web.DataVisualization, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" Namespace="System.Web.UI.DataVisualization.Charting" TagPrefix="asp" %>
 
@@ -26,16 +26,17 @@
     <div class="container">
         <div class="row justify-content-center">
             <form id="form1" runat="server" class="">
-                <h1 class="text-center mt-5">REGISTRO DE FAMILIAS</h1>
+                <h1 class="text-center mt-5">REGISTRO DE CATEGORIAS</h1>
                 <asp:HiddenField ID="Hc" runat="server" />
                 <div class="container">
                     <div class="form-group">
                         <div class="table-responsive-lg text-size-sm">
-                            <table class="table" id="tblFamilia" runat="server" visible="true">
+                            <table class="table" id="tblCategoria" runat="server" visible="true">
                                 <thead class="thead-light">
                                     <tr>
                                         <th class="text-center">N°</th>
                                         <th class="text-center">Familia</th>
+                                        <th class="text-center">Categoria</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -47,7 +48,15 @@
                                         <td>
 
                                             <div class="input-group input-group-sm">
-                                                <input type="text" id="txtNomFam1" class="form-control" runat="server" />
+                                                <select id="cmbFam" name="cmbFam" size="1" runat="server">
+                                                    <option value="link pagina 1">Seleccione</option>
+                                                </select>
+                                            </div>
+                                        </td>
+                                        <td>
+
+                                            <div class="input-group input-group-sm">
+                                                <input type="text" id="txtCategoria" class="form-control" runat="server" />
                                             </div>
                                         </td>
                                         <td class="auto-style1">
@@ -65,13 +74,15 @@
                             </table>
                         </div>
                     </div>
-                    <asp:Button ID="btnSave" runat="server" Text="Guardar" class="btn btn-dark btn-lg mb-5" OnClick="btnSave_Click" />
+                     <asp:Button ID="btnSave" runat="server" Text="Guardar" class="btn btn-dark btn-lg mb-5" OnClick="btnSave_Click" />
                 </div>
             </form>
         </div>
 
     </div>
 
-    <% Response.WriteFile("/Includes/filesCss.html"); %>    <% Response.WriteFile("/Includes/filesJs.html"); %>
+    <% Response.WriteFile("/Includes/filesCss.html"); %>
+    <% //Response.WriteFile("/Includes/filesJs.html"); %>
+    <script src="../../Resources/js/SCategoria.js"></script>
 </body>
 </html>

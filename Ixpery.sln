@@ -31,7 +31,7 @@ EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Web", "Web\", "{64A75947-1B25-4CD3-97EA-0D4A1DA05B22}"
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.6.1"
-		ProjectReferences = "{0a45496e-1d2d-4598-bed6-68576644f907}|Infraestructura.Data.SqlServer.dll;{6fd3fd2d-0ca7-4479-8ae1-b8e5e9c42bf2}|Dominio.Core.Entities.dll;"
+		ProjectReferences = "{0a45496e-1d2d-4598-bed6-68576644f907}|Infraestructura.Data.SqlServer.dll;{6fd3fd2d-0ca7-4479-8ae1-b8e5e9c42bf2}|Dominio.Core.Entities.dll;{22c4030a-83c0-45b7-bed3-8aba81d9741b}|Dominio.Main.Module.dll;"
 		Debug.AspNetCompiler.VirtualPath = "/localhost_50103"
 		Debug.AspNetCompiler.PhysicalPath = "Web\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_50103\"

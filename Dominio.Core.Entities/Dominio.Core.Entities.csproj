@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EAplicacion.cs" />
+    <Compile Include="ECategoria.cs" />
     <Compile Include="EFamilia.cs" />
     <Compile Include="EMenu.cs" />
     <Compile Include="EMenuPerfil.cs" />

@@ -7,6 +7,7 @@ C:\Users\PC\Documents\GitHub\IXPERYNET\Dominio.Core.Entities\bin\Debug\Dominio.C
 C:\Users\PC\Documents\GitHub\IXPERYNET\Dominio.Core.Entities\bin\Debug\Dominio.Core.Entities.pdb
 C:\Users\PC\Documents\GitHub\IXPERYNET\Dominio.Core.Entities\bin\Debug\Mono.Security.dll
 C:\Users\PC\Documents\GitHub\IXPERYNET\Dominio.Core.Entities\bin\Debug\Npgsql.dll
+C:\Users\PC\Documents\GitHub\IXPERYNET\Dominio.Core.Entities\obj\Debug\Dominio.Core.Entities.csprojResolveAssemblyReference.cache
 C:\Users\PC\Documents\GitHub\IXPERYNET\Dominio.Core.Entities\obj\Debug\Dominio.Core.Entities.csproj.CoreCompileInputs.cache
 C:\Users\PC\Documents\GitHub\IXPERYNET\Dominio.Core.Entities\obj\Debug\Dominio.Core.Entities.csproj.CopyComplete
 C:\Users\PC\Documents\GitHub\IXPERYNET\Dominio.Core.Entities\obj\Debug\Dominio.Core.Entities.dll

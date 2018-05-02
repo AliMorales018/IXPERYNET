@@ -12,3 +12,9 @@ C:\Users\PC\Documents\GitHub\IXPERYNET\Dominio.Main.Module\obj\Debug\Dominio.Mai
 C:\Users\PC\Documents\GitHub\IXPERYNET\Dominio.Main.Module\obj\Debug\Dominio.Main.Module.csproj.CopyComplete
 C:\Users\PC\Documents\GitHub\IXPERYNET\Dominio.Main.Module\obj\Debug\Dominio.Main.Module.dll
 C:\Users\PC\Documents\GitHub\IXPERYNET\Dominio.Main.Module\obj\Debug\Dominio.Main.Module.pdb
+C:\Users\PC\Documents\GitHub\IXPERYNET\Dominio.Main.Module\bin\Debug\Dominio.Core.Entities.dll
+C:\Users\PC\Documents\GitHub\IXPERYNET\Dominio.Main.Module\bin\Debug\Infraestructura.Data.SqlServer.dll
+C:\Users\PC\Documents\GitHub\IXPERYNET\Dominio.Main.Module\bin\Debug\Utilitario.dll
+C:\Users\PC\Documents\GitHub\IXPERYNET\Dominio.Main.Module\bin\Debug\Dominio.Core.Entities.pdb
+C:\Users\PC\Documents\GitHub\IXPERYNET\Dominio.Main.Module\bin\Debug\Infraestructura.Data.SqlServer.pdb
+C:\Users\PC\Documents\GitHub\IXPERYNET\Dominio.Main.Module\obj\Debug\Dominio.Main.Module.csprojResolveAssemblyReference.cache

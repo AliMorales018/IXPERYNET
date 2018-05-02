@@ -1,11 +1,10 @@
 ﻿var idFila = 1;
 var cFila = 1;
-
 $(document).ready(function () {
     $('#btnNuevo').click(function () {
         idFila++;
         cFila++;
-        funcNuevaFam(idFila);
+        funcNuevaCat(idFila);
         document.getElementById("Hc").value = cFila;
     });
 
@@ -29,9 +28,8 @@ function eliminar(id) {
         document.getElementById("Hc").value = cFila;
     }
 }
-
-function funcNuevaFam(cont) {
-    $("#tblFamilia")
+function funcNuevaCat(cont) {
+    $("#tblCategoria")
         .append
         (
         $('<tr>').attr('id', idFila)
@@ -67,18 +65,9 @@ function funcNuevaFam(cont) {
     Reordenar();
 }
 
-
 function Reordenar() {
     var num = 1;
-    $('#tblFamilia tr td p').each(function () {
-        $(this).text(num);
-        num++;
-    });
-}
-
-function Reordenar() {
-    var num = 1;
-    $('#tblFamilia tr td p').each(function () {
+    $('#tblCategoria tr td p').each(function () {
         $(this).text(num);
         num++;
     });
@@ -87,13 +76,13 @@ function Reordenar() {
 
 function ReordenarId() {
     var r = 0;
-    $('#tblFamilia tbody tr').each(function () {
+    $('#tblCategoria tbody tr').each(function () {
         $(this).find('td div input').each(function (index) {
             $(this).removeAttr('id');
             $(this).removeAttr('name');
             switch (index) {
                 case 0: $(this).attr('id', 'txtNomFam' + r);
-                        $(this).attr('name', 'txtNomFam' + r);
+                    $(this).attr('name', 'txtNomFam' + r);
                     break;
                 default:
             }

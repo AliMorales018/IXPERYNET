@@ -46,7 +46,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BCategoria.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Dominio.Core.Entities\Dominio.Core.Entities.csproj">
+      <Project>{6fd3fd2d-0ca7-4479-8ae1-b8e5e9c42bf2}</Project>
+      <Name>Dominio.Core.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Infraestructura.Data.SqlServer\Infraestructura.Data.SqlServer.csproj">
+      <Project>{0a45496e-1d2d-4598-bed6-68576644f907}</Project>
+      <Name>Infraestructura.Data.SqlServer</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
