@@ -6,12 +6,15 @@ $(document).ready(function () {
         cFila++;
         funcNuevaCat(idFila);
         document.getElementById("Hc").value = cFila;
+        //document.getElementById("txtprueba").value = "";
+        //alert(document.getElementById("txtprueba").value);
     });
-
+    
     $('#btn' + idFila).click(function () {
         eliminar(this.id);
     });
 });
+
 function eliminar(id) {
     if (id.length == 4) {
         var id = id.substring(3, 4);
@@ -49,7 +52,20 @@ function funcNuevaCat(cont) {
                 $('<div>').addClass('input-group input-group-sm')
                     .append
                     (
-                    "<input type='text' id='" + 'txtNomFam' + cont + "'  name='" + 'txtNomFam' + cont + "' runat='server' class='form-control' />"
+                    //"<select id='" + 'cmbFam' + cont + "'  name='" + 'cmbFam' + cont + "' runat='server' size='1' class='form-control' />"
+                    $('#cmbFam1').clone().attr('id', 'cmbFam' + cont).attr('name', 'cmbFam' + cont).attr('class','form-control').attr('runat','server').insertAfter('#cmbFam1')
+                    )
+                )
+            )
+            .append
+            (
+            $('<td>')
+                .append
+                (
+                  $('<div>').addClass('input-group input-group-sm')
+                    .append
+                    (
+                    "<input type='text' runat='server' id='" + 'txtCategoria' + cont + "' name='" + 'txtCategoria' + cont + "' class='form-control'/>"
                     )
                 )
             )
@@ -81,8 +97,18 @@ function ReordenarId() {
             $(this).removeAttr('id');
             $(this).removeAttr('name');
             switch (index) {
-                case 0: $(this).attr('id', 'txtNomFam' + r);
-                    $(this).attr('name', 'txtNomFam' + r);
+                case 0: $(this).attr('id', 'txtCategoria' + r);
+                    $(this).attr('name', 'txtCategoria' + r);
+                    break;
+                default:
+            }
+        });
+        $(this).find('td div select').each(function (index) {
+            $(this).removeAttr('id');
+            $(this).removeAttr('name');
+            switch (index) {
+                case 0: $(this).attr('id', 'cmbFam' + r);
+                    $(this).attr('name', 'cmbFam' + r);
                     break;
                 default:
             }

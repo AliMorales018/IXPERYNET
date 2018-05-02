@@ -7,7 +7,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Registro_familia</title>
+    <title>Registro_Categoria</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -46,17 +46,14 @@
                                         </td>
 
                                         <td>
-
                                             <div class="input-group input-group-sm">
-                                                <select id="cmbFam" name="cmbFam" size="1" runat="server">
-                                                    <option value="link pagina 1">Seleccione</option>
-                                                </select>
+                                                <select id="cmbFam1" name="cmbFam1" size="1" class="form-control"  runat="server"></select>
                                             </div>
                                         </td>
                                         <td>
 
                                             <div class="input-group input-group-sm">
-                                                <input type="text" id="txtCategoria" class="form-control" runat="server" />
+                                                <input type="text" id="txtCategoria1" name="txtCategoria1" class="form-control" runat="server" />
                                             </div>
                                         </td>
                                         <td class="auto-style1">
@@ -74,7 +71,7 @@
                             </table>
                         </div>
                     </div>
-                     <asp:Button ID="btnSave" runat="server" Text="Guardar" class="btn btn-dark btn-lg mb-5" OnClick="btnSave_Click" />
+                    <asp:Button ID="btnSave" runat="server" Text="Guardar" class="btn btn-dark btn-lg mb-5" OnClick="btnSave_Click" />
                 </div>
             </form>
         </div>
@@ -82,7 +79,7 @@
     </div>
 
     <% Response.WriteFile("/Includes/filesCss.html"); %>
-    <% //Response.WriteFile("/Includes/filesJs.html"); %>
-    <script src="../../Resources/js/SCategoria.js"></script>
+    <% Response.WriteFile("/Includes/filesJs.html"); %>
+    <%--    <script src="../../Resources/js/SCategoria.js"></script>--%>
 </body>
 </html>

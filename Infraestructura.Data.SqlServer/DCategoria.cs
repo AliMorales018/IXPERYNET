@@ -11,7 +11,7 @@ namespace Infraestructura.Data.SqlServer
 {
     public class DCategoria
     {
-        public string nomTab { get => "XTBC_CATEGORIA"; }
+        public string nomTab { get => "XTBC_FAMILIA"; }
         public string nomCat { get => "V_NomCategoria"; }//COL BD NOMBRE DE LA CATEGORIA
         public string idFam { get => "N_IdFamilia"; }//COL BD IDFAMILIA(FK->FAMILIA)
         

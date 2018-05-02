@@ -11,14 +11,14 @@ using Dominio.Main.Module;
 public partial class Aplicaciones_Logistica_Categoria : System.Web.UI.Page
 {
     private int cont = 1;
-    BCategoria obCategoria = new BCategoria();
+    BFamilia obFamilia = new BFamilia();
     protected void Page_Load(object sender, EventArgs e)
     {
         //DataTable TBNomFam = new DataTable();
-        cmbFam.DataSource = obCategoria.LlenarCombo();
-        cmbFam.DataTextField = "NOMBRE DE CATEGORIA";
-        cmbFam.DataValueField = "ID DE CATEGORIA";
-        cmbFam.DataBind();
+        cmbFam1.DataSource = obFamilia.LlenarCombo();
+        cmbFam1.DataTextField = "NOMBRE";
+        cmbFam1.DataValueField = "ID";
+        cmbFam1.DataBind();
     }
 
     protected void btnSave_Click(object sender, EventArgs e)
@@ -27,11 +27,13 @@ public partial class Aplicaciones_Logistica_Categoria : System.Web.UI.Page
         DTcol1.Columns.Add("Familia");//columna 1
         DTcol1.Columns.Add("Categoria");//columna 2
         int fila = Convert.ToInt32(Hc.Value);
+        string valor = "";
+        valor = txtCategoria1.Value;
         for (int i = 0; i < fila; i++)
         {
             DataRow f = DTcol1.NewRow();
-            f[0] = Request["txtNomFam" + cont];
-            f[1] = Request["txtNomFam" + cont];
+            f[0] = Request["cmbFam" + cont];
+            f[1] = Request["txtCategoria" + cont];
             DTcol1.Rows.Add(f);
             cont++;
         }

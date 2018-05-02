@@ -11,7 +11,10 @@ namespace Infraestructura.Data.SqlServer
 {
     public class DFamilia
     {
+
+        public string nomTab { get => "XTBC_FAMILIA"; }//NOMBRE DE LA TABLA BD
         public string nomFam { get => "V_NomFamilia"; }//nombre de la columna de la BD
+        public string idFam { get => "N_IdFamilia"; }//COL BD IDFAMILIA(FK->FAMILIA)
         DtUtilitario com = new DtUtilitario();
         List<SqlParameter> lista = new List<SqlParameter>();
         private void LlenarObj(EFamilia oFam)
@@ -35,6 +38,23 @@ namespace Infraestructura.Data.SqlServer
             }
             finally
             {
+            }
+        }
+
+        public DataTable LlenarCombo()
+        {
+            try
+            {
+                lista.Clear();
+                SqlParameter tabla = new SqlParameter("@tabla", nomTab);
+                lista.Add(tabla);
+                return com.EjecutaConsulta("X_XTBC_Listar", lista, 1);
+
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception("Error " + ex.Message, ex);
             }
         }
 

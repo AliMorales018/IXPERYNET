@@ -32,8 +32,14 @@ public partial class Familia : System.Web.UI.Page
             f[0] = Request["txtNomFam" + cont];
             DTcol1.Rows.Add(f);
             cont++;
+            
         }
         //DTcol1.WriteXml("E:/Familia.xml");
         ConvertDatatableToXML(DTcol1);
+    }
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        
     }
 }
