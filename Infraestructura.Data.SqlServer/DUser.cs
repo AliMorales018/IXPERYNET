@@ -11,6 +11,13 @@ using Utilitario;
 namespace Infraestructura.Data.SqlServer {
 
     public class DUser {
+        //Parametros tabla Usuario
+        public string tblNombre { get=>"XTBC_USER";}
+        public string Login { get => "V_Login"; }
+        public string ApellidoP { get => "XTBC_USER"; }
+        public string ApellidoM { get => "XTBC_USER"; }
+
+
         DtUtilitario com = new DtUtilitario();
         List<SqlParameter> lista = new List<SqlParameter>();
 
