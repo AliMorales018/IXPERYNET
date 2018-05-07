@@ -12,10 +12,16 @@ namespace Infraestructura.Data.SqlServer {
 
     public class DUser {
         //Parametros tabla Usuario
-        public string tblNombre { get=>"XTBC_USER";}
+        public string NomTab { get => "XTBC_USER"; }
+        public string idUsuario { get => "N_IdUser"; }
         public string Login { get => "V_Login"; }
-        public string ApellidoP { get => "XTBC_USER"; }
-        public string ApellidoM { get => "XTBC_USER"; }
+        public string Nombres { get => "V_Nombres"; }
+        public string ApePat { get => "V_Paterno"; }
+        public string ApeMat { get => "V_Materno"; }
+        public string Estado { get => "S_estado"; }
+        public string Clave { get => "V_Clave"; }
+        public string IdPersonal { get => "N_IdPersonal"; }
+
 
 
         DtUtilitario com = new DtUtilitario();

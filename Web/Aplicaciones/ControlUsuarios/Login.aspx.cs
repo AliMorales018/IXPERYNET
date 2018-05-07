@@ -8,6 +8,7 @@ using Infraestructura.Data.SqlServer;
 public partial class _Default : System.Web.UI.Page
 {
     DUser dUser = new DUser();
+    
     int Acceso;
 
     public void Page_Load(object sender, EventArgs e)

@@ -7,6 +7,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Dominio.Core.Entities;
 using Dominio.Main.Module;
+using Infraestructura.Data.SqlServer;
 
 public partial class Aplicaciones_Logistica_Categoria : System.Web.UI.Page
 {

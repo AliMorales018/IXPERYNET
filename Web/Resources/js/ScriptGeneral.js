@@ -7,7 +7,7 @@ var totalCol = tbody[0].childNodes[1].children.length;
 var arrayElem = [];
 
 for (var i = 1 ; i <= totalCol; i++) {
-    var campo = document.getElementById("campo"+i);
+    var campo = document.getElementById("campo" + i);
     arrayElem.push([campo.firstChild.tagName,campo.firstChild.id]);
 }
 
@@ -15,7 +15,8 @@ $(document).ready(function () {
     $('#btnNuevo').on('click', function () {
         idFila++;
         cFila++;
-        funcNuevaLinea(idFila,tabla[0].id);
+        funcNuevaLinea(idFila, tabla[0].id);
+        document.getElementById("Hc" + tabla[0].id).value = cFila;
     });
 
     $('#btn' + idFila).click(function () {
@@ -38,6 +39,7 @@ function eliminar(id) {
         cFila = cFila - 1;
     }
     ReordenarId(idTabla);
+    document.getElementById("Hc" + tabla[0].id).value = cFila;
 }
 
 function Reordenar(idTabla) {

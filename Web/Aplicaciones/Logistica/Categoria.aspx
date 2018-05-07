@@ -57,7 +57,7 @@
                                             </div>
                                         </td>
                                         <td class="auto-style1">
-                                            <label for="">
+                                            <label for="" runat="server" id="nombreusuario">
                                                 <div>
                                                     <button type="button" class="btn btn-primary mr-sm-2 btn-sm" id="btnNuevo">Nuevo</button>
                                                 </div>
