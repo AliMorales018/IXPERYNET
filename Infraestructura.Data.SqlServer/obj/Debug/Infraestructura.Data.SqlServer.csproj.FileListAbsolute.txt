@@ -20,3 +20,13 @@ C:\Users\PC\Documents\GitHub\IXPERYNET\Infraestructura.Data.SqlServer\obj\Debug\
 C:\Users\PC\Documents\GitHub\IXPERYNET\Infraestructura.Data.SqlServer\obj\Debug\Infraestructura.Data.SqlServer.csproj.CopyComplete
 C:\Users\PC\Documents\GitHub\IXPERYNET\Infraestructura.Data.SqlServer\obj\Debug\Infraestructura.Data.SqlServer.dll
 C:\Users\PC\Documents\GitHub\IXPERYNET\Infraestructura.Data.SqlServer\obj\Debug\Infraestructura.Data.SqlServer.pdb
+C:\Users\ingdi_000\Documents\GitHub\IXPERYNET\Infraestructura.Data.SqlServer\bin\Debug\Infraestructura.Data.SqlServer.dll
+C:\Users\ingdi_000\Documents\GitHub\IXPERYNET\Infraestructura.Data.SqlServer\bin\Debug\Infraestructura.Data.SqlServer.pdb
+C:\Users\ingdi_000\Documents\GitHub\IXPERYNET\Infraestructura.Data.SqlServer\bin\Debug\Dominio.Core.Entities.dll
+C:\Users\ingdi_000\Documents\GitHub\IXPERYNET\Infraestructura.Data.SqlServer\bin\Debug\Utilitario.dll
+C:\Users\ingdi_000\Documents\GitHub\IXPERYNET\Infraestructura.Data.SqlServer\bin\Debug\Dominio.Core.Entities.pdb
+C:\Users\ingdi_000\Documents\GitHub\IXPERYNET\Infraestructura.Data.SqlServer\obj\Debug\Infraestructura.Data.SqlServer.csprojResolveAssemblyReference.cache
+C:\Users\ingdi_000\Documents\GitHub\IXPERYNET\Infraestructura.Data.SqlServer\obj\Debug\Infraestructura.Data.SqlServer.csproj.CoreCompileInputs.cache
+C:\Users\ingdi_000\Documents\GitHub\IXPERYNET\Infraestructura.Data.SqlServer\obj\Debug\Infraestructura.Data.SqlServer.csproj.CopyComplete
+C:\Users\ingdi_000\Documents\GitHub\IXPERYNET\Infraestructura.Data.SqlServer\obj\Debug\Infraestructura.Data.SqlServer.dll
+C:\Users\ingdi_000\Documents\GitHub\IXPERYNET\Infraestructura.Data.SqlServer\obj\Debug\Infraestructura.Data.SqlServer.pdb

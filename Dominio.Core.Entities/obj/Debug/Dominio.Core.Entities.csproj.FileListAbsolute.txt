@@ -12,3 +12,9 @@ C:\Users\PC\Documents\GitHub\IXPERYNET\Dominio.Core.Entities\obj\Debug\Dominio.C
 C:\Users\PC\Documents\GitHub\IXPERYNET\Dominio.Core.Entities\obj\Debug\Dominio.Core.Entities.csproj.CopyComplete
 C:\Users\PC\Documents\GitHub\IXPERYNET\Dominio.Core.Entities\obj\Debug\Dominio.Core.Entities.dll
 C:\Users\PC\Documents\GitHub\IXPERYNET\Dominio.Core.Entities\obj\Debug\Dominio.Core.Entities.pdb
+C:\Users\ingdi_000\Documents\GitHub\IXPERYNET\Dominio.Core.Entities\bin\Debug\Dominio.Core.Entities.dll
+C:\Users\ingdi_000\Documents\GitHub\IXPERYNET\Dominio.Core.Entities\bin\Debug\Dominio.Core.Entities.pdb
+C:\Users\ingdi_000\Documents\GitHub\IXPERYNET\Dominio.Core.Entities\obj\Debug\Dominio.Core.Entities.csproj.CoreCompileInputs.cache
+C:\Users\ingdi_000\Documents\GitHub\IXPERYNET\Dominio.Core.Entities\obj\Debug\Dominio.Core.Entities.csproj.CopyComplete
+C:\Users\ingdi_000\Documents\GitHub\IXPERYNET\Dominio.Core.Entities\obj\Debug\Dominio.Core.Entities.dll
+C:\Users\ingdi_000\Documents\GitHub\IXPERYNET\Dominio.Core.Entities\obj\Debug\Dominio.Core.Entities.pdb

@@ -10,7 +10,7 @@ using System.IO;
 using Dominio.Main.Module;
 
 public partial class Aplicaciones_ControlUsuarios_MaterUsuarios : System.Web.UI.Page{
-
+	/*
     BUsuario obUsuario = new BUsuario();
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -57,13 +57,14 @@ public partial class Aplicaciones_ControlUsuarios_MaterUsuarios : System.Web.UI.
         xmlstr = sr.ReadToEnd();
         return (xmlstr);
     }
-
+	*/
     protected void BtnGuardar_Click(object sender, EventArgs e)
     {
-        RecorrerTabla();
+        //RecorrerTabla();
     }
 
     protected void Guardar() {
 
     }
+	
 }

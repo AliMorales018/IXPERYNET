@@ -46,8 +46,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BAplicacion.cs" />
     <Compile Include="BCategoria.cs" />
     <Compile Include="BFamilia.cs" />
+    <Compile Include="BGeneral.cs" />
+    <Compile Include="BMenu.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
