@@ -109,7 +109,7 @@ function funcNuevaLinea(cont, idTabla) {
                                             break;
                             case 'INPUT':   nuevaFila = nuevaFila + "<td><div class='input-group input-group-sm'><input type='text' runat='server' id='"+idText+idFila+"' name='"+idText+idFila+"' class='form-control'/></div></td>"
                                             break; 
-                            case 'SELECT':  nuevaFila = nuevaFila + "<td><div class='input-group input-group-sm'><select id='"+idText+idFila+"' name='"+idText+idFila+"' class='form-control'><option value='0'>Prueba</option></select></div></td>"
+                            case 'SELECT': nuevaFila = nuevaFila + $('#cmbFam1').clone().attr('id', 'cmbFam' + cont).attr('name', 'cmbFam' + cont).attr('class', 'form-control').attr('runat', 'server').insertAfter('#cmbFam1')
                                             break;                       
                         }    
                     }
