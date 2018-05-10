@@ -18,10 +18,6 @@ $(document).ready(function () {
         funcNuevaLinea(idFila, tabla[0].id);
         document.getElementById("Hc" + tabla[0].id).value = cFila;
     });
-
-    $('#btn' + idFila).click(function () {
-        eliminar(this.id);
-    });
 });
 
 function eliminar(id) {
@@ -109,8 +105,8 @@ function funcNuevaLinea(cont, idTabla) {
                                             break;
                             case 'INPUT':   nuevaFila = nuevaFila + "<td><div class='input-group input-group-sm'><input type='text' runat='server' id='"+idText+idFila+"' name='"+idText+idFila+"' class='form-control'/></div></td>"
                                             break; 
-                            case 'SELECT': nuevaFila = nuevaFila + $('#cmbFam1').clone().attr('id', 'cmbFam' + cont).attr('name', 'cmbFam' + cont).attr('class', 'form-control').attr('runat', 'server').insertAfter('#cmbFam1')
-                                            break;                       
+                            case 'SELECT':  nuevaFila = nuevaFila + "<td><div id='div" + idFila + "' class='input-group input-group-sm'><script type='text/javascript'>$('#div" + idFila + "').prepend($('#select1').clone().insertAfter('#div" + idFila + "').attr('id','" + idText + idFila + "').attr('name','" + idText + idFila + "').attr('runat','server'))</script></div></td>"
+                                            break;
                         }    
                     }
                     return nuevaFila;
