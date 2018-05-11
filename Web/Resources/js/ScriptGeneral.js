@@ -16,6 +16,7 @@ $(document).ready(function () {
         idFila++;
         cFila++;
         funcNuevaLinea(idFila, tabla[0].id);
+        document.getElementById("Hc" + tabla[0].id).value = cFila;
     });
 });
 
@@ -26,12 +27,14 @@ function eliminar(id) {
         $('#' + id).remove();
         Reordenar(idTabla);
         cFila = cFila - 1;
+        document.getElementById("Hc" + tabla[0].id).value = cFila;
     }
     else {
         var id = id.substring(3, 5);
         $('#' + id).remove();
         Reordenar(idTabla);
         cFila = cFila - 1;
+        document.getElementById("Hc" + tabla[0].id).value = cFila;
     }
     ReordenarId(idTabla);
 }
@@ -104,11 +107,11 @@ function funcNuevaLinea(cont, idTabla) {
                     }
                     idText = idText.substring(0, idText.length - 1);
                     switch (tagName) {
-                        case 'P': nuevaFila = nuevaFila + "<td><div><p>" + idFila + "</p></div></td>";
+                        case 'P': nuevaFila = nuevaFila + "<td><div><p class='text-center'>" + idFila + "</p></div></td>";
                             break;
                         case 'BUTTON': nuevaFila = nuevaFila + "<td><div class='d-flex justify-content-center input-group input-group-sm'><button class='btn btn-sm btn-danger mr-sm-2 btn-sm' id='" + idText + idFila + "' onclick='eliminar(this.id)'>Eliminar</button></div></td>";
                             break;
-                        case 'INPUT': nuevaFila = nuevaFila + "<td><div class='input-group input-group-sm'><input type='text' runat='server' id='" + idText + idFila + "' name='" + idText + idFila + "' class='form-control'/></div></td>"
+                        case 'INPUT': nuevaFila = nuevaFila + "<td><div class='input-group input-group-sm'><input type='text' required='' runat='server' id='" + idText + idFila + "' name='" + idText + idFila + "' class='form-control'/></div></td>"
                             break;
                         case 'SELECT': nuevaFila = nuevaFila + "<td><div id='" + idDiv + idFila + "' class='input-group input-group-sm'><script type='text/javascript'>$('#" + idDiv + idFila + "').prepend($('#" + idText + "1').clone().insertAfter('#" + idDiv + idFila + "').attr('id','" + idText + idFila + "').attr('name','" + idText + idFila + "').attr('runat','server'))</script></div></td>"
                             break;
@@ -120,6 +123,10 @@ function funcNuevaLinea(cont, idTabla) {
         );
     Reordenar(idTabla);
     ReordenarId(idTabla);
+}
+
+function ValidarCampos() {
+    document.getElementById(txtUsuario);
 }
 
 
