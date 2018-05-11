@@ -9,14 +9,11 @@
 </head>
 <body class="bg-light">
     <form id="form1" runat="server">
-        <asp:HiddenField ID="HctblUsuarios" runat="server" />
+        <asp:HiddenField ID="HctblUsuarios" runat="server"/>
         <div class="container mt-5">
             <div class="text-center m-2">
-                <p class="lead mt-4">Control de Usuarios</p>
+                <p class="lead m-5">CONTROL DE USUARIOS</p>
             </div>
-            <label for="">
-                <button type="button" class="btn btn-secondary mr-sm-2 btn-sm" id="btnBuscar">Buscar</button>
-            </label>
             <div class="form-group">
                 <div class="table-responsive-lg text-size-sm">
                     <table class="table table-bordered" id="tblUsuarios">
@@ -28,7 +25,7 @@
                                 <th class="text-center font-weight-light">Apellido Materno</th>
                                 <th class="text-center font-weight-light">Usuario</th>
                                 <th class="text-center font-weight-light">Clave</th>
-                                <th class="text-center font-weight-light">Personal</th>
+                                <th class="text-center font-weight-light">Empleado</th>
                                 <th class="text-center font-weight-light">Eliminar</th>
                             </tr>
                         </thead>

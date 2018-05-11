@@ -32,9 +32,7 @@ namespace Infraestructura.Data.SqlServer
         {
             try
             {
-                lista.Clear();
-                SqlParameter tabla = new SqlParameter("@tabla", nomTab);
-                return com.EjecutaConsulta("X_XTBC_Listar", lista, 0);
+                return com.EjecutaConsulta("LOG_TBC_EMPLEADO_LISTAR", lista, 0);
             }
             catch (Exception ex)
             {
