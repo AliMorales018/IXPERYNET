@@ -19,7 +19,10 @@ namespace Dominio.Main.Module
         {
             return odCat.LlenarCombo();
         }
-
+        public DataTable RecuperarId()
+        {
+           return odCat.RecuperarId();
+        }
         public DataTable BuscarCategoria(string catBuscar)
         {
             return odCat.BuscarCategoria(catBuscar);

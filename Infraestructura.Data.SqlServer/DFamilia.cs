@@ -56,5 +56,19 @@ namespace Infraestructura.Data.SqlServer
             }
         }
 
+        public DataTable ListarFamilia()
+        {
+            try
+            {
+                lista.Clear();
+                return com.EjecutaConsulta("LOG_TBC_FAMILIA_LISTAR", lista, 1);
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception("Error" + ex.Message,ex);
+            }
+        }
+
     }
 }

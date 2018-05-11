@@ -16,5 +16,9 @@ namespace Dominio.Main.Module
         {
             return odFamilia.LlenarCombo();
         }
+        public DataTable ListarFamilia()
+        {
+            return odFamilia.ListarFamilia();
+        }
     }
 }

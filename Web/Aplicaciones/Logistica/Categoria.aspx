@@ -43,6 +43,55 @@
                             </tr>
                         </tbody>
                     </table>
+                    <asp:GridView ID="gvCategoria" runat="server" AutoGenerateColumns="false" ShowFooter="true" Visible="false"
+                                ShowHeaderWhenEmpty="true"
+                                BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" CellPadding="3" OnRowCommand="gvCategoria_RowCommand" OnRowUpdating="gvCategoria_RowUpdating">
+                                <FooterStyle BackColor="White" ForeColor="#000066" />
+                                <HeaderStyle BackColor="#006699" Font-Bold="True" ForeColor="White" />
+                                <PagerStyle BackColor="White" ForeColor="#000066" HorizontalAlign="Left" />
+                                <RowStyle ForeColor="#000066" />
+                                <SelectedRowStyle BackColor="#669999" Font-Bold="True" ForeColor="White" />
+                                <SortedAscendingCellStyle BackColor="#F1F1F1" />
+                                <SortedAscendingHeaderStyle BackColor="#007DBB" />
+                                <SortedDescendingCellStyle BackColor="#CAC9C9" />
+                                <SortedDescendingHeaderStyle BackColor="#00547E" />
+
+                                <Columns>
+                                    <asp:TemplateField HeaderText="N°">
+                                        <ItemTemplate>
+                                            <asp:Label ID="lblIdCate" Text='<%# Eval("ID DE CATEGORIA") %>' runat="server" />
+                                        </ItemTemplate>
+                                        <EditItemTemplate>
+                                            <asp:TextBox ID="lblIdCate" Text='<%# Eval("ID DE CATEGORIA") %>' runat="server" />
+                                        </EditItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Familia">
+                                        <ItemTemplate>
+                                            <asp:DropDownList ID="cmbFamilia"  runat="server" /><%--Text='<%# Eval("ID DE FAMILIA") %>'--%> 
+                                        </ItemTemplate>
+                                        <EditItemTemplate>
+                                            <asp:DropDownList ID="cmbFamilia" runat="server" /><%--Text='<%# Eval("ID DE FAMILIA") %>'--%> 
+                                        </EditItemTemplate>
+                                    </asp:TemplateField>
+
+                                    <asp:TemplateField HeaderText="Categoria">
+                                        <ItemTemplate>
+                                            <asp:TextBox ID="txtCat" Text='<%# Eval("NOMBRE DE CATEGORIA") %>' runat="server" />
+                                        </ItemTemplate>
+                                        <EditItemTemplate>
+                                            <asp:TextBox ID="txtCat" Text='<%# Eval("NOMBRE DE CATEGORIA") %>' runat="server" />
+                                        </EditItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField>
+                                        <ItemTemplate>
+                                            <asp:ImageButton ImageUrl="~/images/0.png" runat="server" CommandName="Update" ToolTip="Update" Width="20px" Height="20px" />
+                                        </ItemTemplate>
+                                        <EditItemTemplate>
+                                            <asp:ImageButton ImageUrl="~/images/0.png" runat="server" CommandName="Update" ToolTip="Update" Width="20px" Height="20px" />
+                                        </EditItemTemplate>
+                                    </asp:TemplateField>
+                                </Columns>
+                            </asp:GridView>
                     <div class="container text-center">
                         <button type="button" class="btn btn-primary mr-sm-2 btn-sm" id="btnNuevo">Nuevo</button>
                         <asp:Button ID="BtnGuardar" runat="server" class="btn btn-success btn-sm" Text="Guardar" OnClick="BtnGuardar_Click"></asp:Button>
@@ -50,9 +99,9 @@
                 </div>
             </div>
         </div>
-    </form>
     <% Response.WriteFile("/Includes/filesCss.html"); %>
     <% Response.WriteFile("/Includes/filesJs.html"); %>
-</body>
+    </form>
+    </body>
 </html>
 
