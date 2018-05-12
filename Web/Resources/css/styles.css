@@ -10,3 +10,36 @@
 .text-size-sm {
     font-size: 14px;
 }
+
+.text-size-xsm {
+    font-size: 10px;
+}
+
+#isearch:hover {
+    cursor:pointer;
+}
+
+#txtBusCate {
+    color: white;
+    border: 0;
+    background-color: #343a40;
+    outline: rgba(0,0,0,0);
+}
+
+#txtBusCate::placeholder {
+    color: white;
+}
+
+.form-con {
+    position: relative;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    width: 1%;
+    margin-bottom: 0;
+}
+
+
+
+
+
+

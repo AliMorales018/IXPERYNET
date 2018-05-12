@@ -17,14 +17,14 @@ namespace Infraestructura.Data.SqlServer
         public string nomTabFam { get => "TBC_FAMILIA"; }//NOMBRE TABLA FAMILIA BD
         public string nomTabCat { get => "TBC_CATEGORIA"; }//NOMBRE TABLA CATEGORIA BD
 
+        public string idCat { get => "N_IdCategoria"; }
         public string nombreCat { get => "V_NomCategoria"; }//COL BD NOMBRE DE LA CATEGORIA
         public string idFam { get => "N_IdFamilia"; }//COL BD IDFAMILIA(FK->FAMILIA)
         private string xmlString = "";//SE CAPTURA EL XML COMO CADENA @fichero
         //private string nodoHijo = "V_NomCategoria, N_IdFamilia";//@parametros BD
         private string campoUpd = "V_NomCategoria; N_IdFamilia";
-        private string salida = "";
         List<SqlParameter> lista = new List<SqlParameter>();
-
+        List<SqlParameter> lista2 = new List<SqlParameter>();
         public DataTable LlenarCombo()
         {
             try
@@ -41,22 +41,22 @@ namespace Infraestructura.Data.SqlServer
             }
         }
 
-        private void ListaParametros(int tipo,string nomCat,int idFam,int idCat)
+        private void ListaParametros(int tipo, string nomCat, int idFam, int idCat)
         {
             SqlParameter pNomTabla = new SqlParameter("@tabla", nomTabCat);//NOMBRE TABLA LOG.TBC_CATEGORIA @tabla
             SqlParameter pCampoEval = new SqlParameter("@campo", nombreCat);//NOMBRE DE LA COL BD NOMBRE DE LA CATEGORIA
-            if (tipo==0)//tipo 0: grabar
+            if (tipo == 0)//tipo 0: grabar
             {
                 SqlParameter pXml = new SqlParameter("@xml", xmlString);//@fichero BD
-                SqlParameter pSalida = new SqlParameter("@salida", salida);//@parametros
+                //SqlParameter pSalida = new SqlParameter("@salida", salida);//@parametros
                 lista.Add(pXml);
-                lista.Add(pCampoEval);
-                lista.Add(pSalida);
+                //lista.Add(pCampoEval);
+                //lista.Add(pSalida);
                 //lista.Add(pNomTabla);
                 //lista.Add(pNodoHijo);
-                
+
             }
-            else if(tipo==1)//tipo 1:actualizar
+            else if (tipo == 1)//tipo 1:actualizar
             {
                 string valores = nomCat + ";" + idFam;
                 SqlParameter pCampos = new SqlParameter("@campos", campoUpd);
@@ -67,9 +67,9 @@ namespace Infraestructura.Data.SqlServer
                 lista.Add(pValores);
                 lista.Add(pIdCat);
             }
-            else//tipo listar
+            else//tipo 2:retorna id
             {
-
+                lista2.Add(pNomTabla);
             }
         }
         private void ListaCategorias(string catBuscar)
@@ -83,10 +83,10 @@ namespace Infraestructura.Data.SqlServer
         {
             int tipo = 0;
             xmlString = xml;
-            ListaParametros(tipo,"",0,0);
+            ListaParametros(tipo, "", 0, 0);
             try
             {
-                com.TransUnica("GEN_INSERTAR_XML", lista);
+                com.TransUnica("GEN_INSERTAR_XML3", lista);
             }
             catch (Exception ex)
             {
@@ -98,7 +98,7 @@ namespace Infraestructura.Data.SqlServer
         public void UpdateCategoria(string nomCat, int idFam, int idCat)
         {
             int tipo = 1;
-            ListaParametros(tipo,nomCat,idFam,idCat);
+            ListaParametros(tipo, nomCat, idFam, idCat);
             try
             {
                 com.TransUnica("GEN_ACTUALIZAR", lista);
@@ -110,9 +110,26 @@ namespace Infraestructura.Data.SqlServer
             }
             lista.Clear();
         }
+        public DataTable RecuperarId()
+        {
+            int tipo = 2;
+            ListaParametros(tipo, "", 0, 0);
+            try
+            {
+                return com.EjecutaConsulta("GEN_RETORNAID", lista2, 1);
+
+                //string IdCate = outParId.Value.ToString();
+            }
+            catch (Exception ex)
+            {
+                com.DeshaceTransaccion();
+                throw new Exception(ex.Message, ex);
+            }
+            lista.Clear();
+        }
         public DataTable BuscarCategoria(string catBuscar)
         {
-            
+
             ListaCategorias(catBuscar);
             try
             {
@@ -122,7 +139,6 @@ namespace Infraestructura.Data.SqlServer
             {
                 throw new Exception("Error " + ex.Message, ex);
             }
-            lista.Clear();
         }
 
 
