@@ -12,41 +12,51 @@ namespace Dominio.Main.Module
 {
 	public class BAplicacion
 	{
-		DAplicacion oDApli = new DAplicacion();
+		DAplicacion odApli = new DAplicacion();
 
+		#region ATRIBUTOS
+		/**LLAMADO DE LOS ATRIBUTOS EN LA CAPA DE DATOS**/
 		public string ApliValue()
 		{
-			return oDApli.apliValue;
+			return odApli.cIdApp;
 		}
 
 		public string ApliText()
 		{
-			return oDApli.apliText;
+			return odApli.cNomApp;
+		}
+		#endregion
+
+		#region METODOS
+		/**LLAMADO DE LOS METODOS EN LA CAPA DE DATOS**/
+		public void Insertar(DataSet ds)
+		{
+			odApli.InsertarAplicacion(ds);
 		}
 
-		public void InsertarAplicacion(EAplicacion oEApli)
+		public void Modificar(EAplicacion oeApli, List<string> campos, string valores)
 		{
-			oDApli.InsertarAplicacion(oEApli);
+			odApli.ModificarAplicacion(oeApli, campos, valores);
 		}
 
-		public void ModificarAplicacion(EAplicacion oEApli)
+		public void Eliminar(EAplicacion oeApli)
 		{
-			oDApli.ModificarAplicacion(oEApli);
+			odApli.EliminarAplicacion(oeApli);
+		}
+		#endregion
+
+		#region FUNCIONES
+		/**LLAMADO DE LAS FUNCIONES EN LA CAPA DE DATOS**/
+		public DataTable Listar()
+		{
+			return odApli.ListarAplicaciones();
 		}
 
-		public void EliminarAplicacion(EAplicacion oEApli)
+		public DataTable Buscar(List<string> campos, string valores)
 		{
-			oDApli.EliminarAplicacion(oEApli);
+			return odApli.BuscarAplicacion(campos, valores);
 		}
+		#endregion
 
-		public DataTable ListarAplicaciones()
-		{
-			return oDApli.ListarAplicaciones();
-		}
-
-		public DataTable BuscarAplicacion(EAplicacion oEApli, string campo, string valor)
-		{
-			return oDApli.BuscarAplicacion(oEApli, campo, valor);
-		}
 	}
 }

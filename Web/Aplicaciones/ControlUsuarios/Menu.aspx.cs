@@ -12,9 +12,9 @@ using Dominio.Main.Module;
 public partial class Aplicaciones_ControlUsuarios_Menu : System.Web.UI.Page
 {
 	EMenu oeMenu = new EMenu();
+	BMenu obMenu = new BMenu();
 	EAplicacion oeApli = new EAplicacion();
 	BAplicacion obApli = new BAplicacion();
-	BMenu obMenu = new BMenu();
 	DataTable DataSource;
 	int apliSelec = 0;
 	int perSelec = 0;
@@ -29,7 +29,7 @@ public partial class Aplicaciones_ControlUsuarios_Menu : System.Web.UI.Page
 
 	protected void ListarDdlAplicacion()
 	{
-		DdlApli.DataSource = obApli.ListarAplicaciones();
+		DdlApli.DataSource = obApli.Listar();
 		DdlApli.DataValueField = obApli.ApliValue();
 		DdlApli.DataTextField = obApli.ApliText();
 		DdlApli.DataBind();

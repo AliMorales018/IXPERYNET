@@ -13,15 +13,37 @@ namespace Infraestructura.Data.SqlServer
 {
 	public class DMenu
 	{
-		private string tablaMenu { get => "XXX.TBC_MENU"; }
-		private string tablaMePer { get => "XXX.TBD_MENUPERFIL"; }
-		public string perValue { get => "ID"; }
-		public string perText { get => "PERFIL"; }
+		//public string perValue { get => "ID"; }
+		//public string perText { get => "PERFIL"; }
 
-		public string KeyMember { get => "N_IdMenu"; }
-		public string DisplayMember { get => "V_descripcion"; }
-		public string ValueMember { get => "N_IdMenu"; }
-		public string ParentMember { get => "N_IdPadre"; }
+		//public string KeyMember { get => "N_IdMenu"; }
+		//public string DisplayMember { get => "V_descripcion"; }
+		//public string ValueMember { get => "N_IdMenu"; }
+		//public string ParentMember { get => "N_IdPadre"; }
+
+		//private string tablaMePer { get => "TBD_MENUPERFIL"; }
+
+		#region Atributos Menu
+		internal string tablaMenu { get => "TBC_MENU"; }
+
+		internal string tIdMen { get => "N_IdMenu"; }
+		internal string tDesMen { get => "V_Descripcion"; }
+		internal string tIdPadMen { get => "N_IdPadre"; }
+		internal string tPosMen { get => "N_Posicion"; }
+		internal string tIcoMen { get => "V_Icono"; }
+		internal string tHabMen { get => "S_Habilitado"; }
+		internal string tUrlMen { get => "V_Url"; }
+		internal string tIdAppMen { get => "N_IdApli"; }
+
+		public string cIdMen { get => "IdMenu"; }
+		public string cDesMen { get => "Descripcion"; }
+		public string cIdPadMen { get => "IdPadre"; }
+		public string cPosMen { get => "Posicion"; }
+		public string cIcoMen { get => "Icono"; }
+		public string cHabMen { get => "Habilitado"; }
+		public string cUrlMen { get => "Url"; }
+		public string cIdAppMen { get => "IdApli"; }
+		#endregion
 
 		DtUtilitario com = new DtUtilitario();
 		List<SqlParameter> listaParametros = new List<SqlParameter>();

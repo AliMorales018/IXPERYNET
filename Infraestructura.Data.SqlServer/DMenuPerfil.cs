@@ -8,18 +8,33 @@ using System.Data;
 using System.Data.SqlClient;
 using Utilitario;
 
-namespace Infraestructura.Data.SqlServer{
-    public class DMenuPerfil{
-        DtUtilitario com = new DtUtilitario();
+namespace Infraestructura.Data.SqlServer
+{
+    public class DMenuPerfil
+	{
+		#region Atributos Menu-Perfil
+		internal string tablaMenPer { get => "TBD_MENUPERFIL"; }
+
+		internal string tIdMenMenPer { get => "N_IdMenu"; }
+		internal string tIdPerMenPer { get => "N_IdPerfil"; }
+		internal string tVisMenPer { get => "S_Visible"; }
+		internal string tEstMenPer { get => "S_Estado"; }
+
+		public string cIdMenMenPer { get => "IdMenu"; }
+		public string cIdPerMenPer { get => "IdPerfil"; }
+		public string cVisMenPer { get => "Visible"; }
+		public string cEstMenPer { get => "Estado"; }
+		#endregion
+
+		DtUtilitario com = new DtUtilitario();
         List<SqlParameter> lista = new List<SqlParameter>();
 
         private void LlenarObj(EMenuPerfil oMenuPerfil){
-            SqlParameter idMenuPerfil = new SqlParameter("@IdMenuPerfil", oMenuPerfil.idMenuPerfil);
             SqlParameter idMenu = new SqlParameter("@IdMenu", oMenuPerfil.oMenu.idMenu);
             SqlParameter idPerfil = new SqlParameter("@IdPerfil", oMenuPerfil.oPerfil.idPerfil);
             SqlParameter estado = new SqlParameter("@Estado", oMenuPerfil.Estado);
             SqlParameter visible = new SqlParameter("@Visible", oMenuPerfil.Visible);
-            lista.Add(idMenuPerfil); lista.Add(idMenu); lista.Add(idPerfil); lista.Add(estado); lista.Add(visible);
+            lista.Add(idMenu); lista.Add(idPerfil); lista.Add(estado); lista.Add(visible);
         }
 
         public void InsertarMenuPerfil(EMenuPerfil oMenuPerfil){
