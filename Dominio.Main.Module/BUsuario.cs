@@ -11,10 +11,19 @@ namespace Dominio.Main.Module
     public class BUsuario
     {
         DEmpleado odEmpleado = new DEmpleado();
+        DUser odUser = new DUser();
 
         public DataTable LlenarComboEmpleado()
         {
             return odEmpleado.LlenarCombo();
+        }
+        public DataTable RecuperarId()
+        {
+            return odUser.RecuperarId();
+        }
+        public void InsertUsuario(String xml)
+        {
+            odUser.InsertUsuario(xml);
         }
     }
 }

@@ -8,17 +8,15 @@ using Infraestructura.Data.SqlServer;
 public partial class _Default : System.Web.UI.Page
 {
     DUser dUser = new DUser();
-    
     int Acceso;
 
     public void Page_Load(object sender, EventArgs e)
     {
-
+  
     }
 
     public void Validar(object sender, EventArgs e)
     {
-
         String login = TxtLogin.Text;
         String pass = TxtPass.Text;
 
@@ -32,21 +30,21 @@ public partial class _Default : System.Web.UI.Page
 
         if (Acceso != 0)
         {
-                Mensaje.Text = "";
-                Session["idUsuario"] = Acceso;
-                Habilitar();
-                ListarApli(Acceso);
+            Mensaje.Text = "";
+            Session["Usuario"] = Acceso;
+            Habilitar();
+            ListarApli(Acceso);
         }
         else
         {
-            Session["idUsuario"] = 0;
+            Session["Usuario"] = 0;
             Mensaje.Text = "Usuario no encontrado :(";
         }
     }
 
     protected void OnChanged(object sender, EventArgs e)
     {
-        int idUsuario = Int32.Parse(Session["idUsuario"].ToString());
+        int idUsuario = Int32.Parse(Session["Usuario"].ToString());
         ListarPerfApli(idUsuario, Int32.Parse(SelectApli.SelectedValue));
     }
 
@@ -55,8 +53,9 @@ public partial class _Default : System.Web.UI.Page
         {
             int idApli = Int32.Parse(SelectApli.SelectedValue);
             int idPerf = Int32.Parse(SelectPerfil.SelectedValue);
-            Mensaje.Text = "Entro al Sistema";
-            Response.Redirect("/Aplicaciones/ControlUsuarios/PanelControl.aspx?apli="+idApli+"&perf="+idPerf);
+            Session["idAplicacion"] = idApli;
+            Session["idPerfil"] = idPerf;
+            Response.Redirect("/Aplicaciones/ControlUsuarios/PanelControl.aspx",true);
         }
         else
         {
@@ -68,14 +67,14 @@ public partial class _Default : System.Web.UI.Page
     {
         Acceso = idUsu;
         DataTable dtTable = dUser.VerApliUsuario(new EUser { idUsuario = idUsu });
-        LlenarSelect(dtTable, SelectApli, "V_Aplicacion", "N_IdApli");
+        LlenarSelect(dtTable, SelectApli, "APLICACION", "ID");
         ListarPerfApli(idUsu, Int32.Parse(SelectApli.SelectedValue));
     }
 
     protected void ListarPerfApli(int idUsu, int idApli)
     {
         DataTable dtTable = dUser.VerPerfApliUsuario(new EUser { idUsuario = idUsu }, new EAplicacion { idApli = idApli });
-        LlenarSelect(dtTable, SelectPerfil, "V_Perfil", "N_IdPerfil");
+        LlenarSelect(dtTable, SelectPerfil, "PERFIL", "ID");
     }
 
     protected void LlenarSelect(DataTable dtTable, DropDownList ddl, String Texto, String Valor)

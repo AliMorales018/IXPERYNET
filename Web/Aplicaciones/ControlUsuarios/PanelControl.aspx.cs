@@ -12,35 +12,38 @@ public partial class Usuario_PanelControl : System.Web.UI.Page
     {
         if (!Page.IsPostBack)
         {
-            int idApliReq = Int32.Parse(Request.QueryString["apli"]);
-            int idPerf = Int32.Parse(Request.QueryString["perf"]);
+            if (Session["Usuario"]!=null) {
+                int idApliReq = Int32.Parse(Session["idAplicacion"].ToString());
+                int idPerf = Int32.Parse(Session["idPerfil"].ToString());
+                DataTable dtMenuItems = com.ConsultarMenuPerfApli(
+                    new EMenuPerfil {
+                        oPerfil = new EPerfil {
+                            oAplicacion = new EAplicacion {
+                                idApli = idApliReq
+                            },
 
-      
-            DataTable dtMenuItems = com.ConsultarMenuPerfApli( 
-                new EMenuPerfil {
-                    oPerfil = new EPerfil {
-                                  oAplicacion = new EAplicacion {        
-                                      idApli = idApliReq
-                                  },
+                            idPerfil = idPerf
+                        }
+                    }
+                );
 
-                                  idPerfil = idPerf
-                              }
-                }        
-            );
-
-            foreach (DataRow drMenuItem in dtMenuItems.Rows)
-            {
-                if (drMenuItem["N_IdMenu"].Equals(drMenuItem["N_IdPadre"]))
+                foreach (DataRow drMenuItem in dtMenuItems.Rows)
                 {
-                    MenuItem mnuMenuItem = new MenuItem();
-                    mnuMenuItem.Value = Convert.ToString(drMenuItem["N_IdMenu"]);
-                    mnuMenuItem.Text = Convert.ToString(drMenuItem["V_Descripcion"]);
-                    mnuMenuItem.ImageUrl = drMenuItem["V_Icono"].ToString();
+                    if (drMenuItem["N_IdMenu"].Equals(drMenuItem["N_IdPadre"]))
+                    {
+                        MenuItem mnuMenuItem = new MenuItem();
+                        mnuMenuItem.Value = Convert.ToString(drMenuItem["N_IdMenu"]);
+                        mnuMenuItem.Text = Convert.ToString(drMenuItem["V_Descripcion"]);
+                        mnuMenuItem.ImageUrl = drMenuItem["V_Icono"].ToString();
 
-                    mnuMenuItem.NavigateUrl = drMenuItem["V_Url"].ToString();
-                    mnuMain.Items.Add(mnuMenuItem);
-                    AddMenuItem(mnuMenuItem, dtMenuItems);
+                        mnuMenuItem.NavigateUrl = drMenuItem["V_Url"].ToString();
+                        mnuMain.Items.Add(mnuMenuItem);
+                        AddMenuItem(mnuMenuItem, dtMenuItems);
+                    }
                 }
+            }
+            else {
+                Response.Redirect("/Aplicaciones/ControlUsuarios/Login.aspx");
             }
         }
     }
@@ -53,7 +56,7 @@ public partial class Usuario_PanelControl : System.Web.UI.Page
     {
         foreach (DataRow drMenuItem in dtMenuItems.Rows)
         {
-            if (Convert.ToString(drMenuItem["N_IdPadre"]).Equals(mnuMenuItem.Value) && !drMenuItem["N_IdMenu"].Equals(drMenuItem["n_IdPadre"]))
+            if (Convert.ToString(drMenuItem["N_IdPadre"]).Equals(mnuMenuItem.Value) && !drMenuItem["N_IdMenu"].Equals(drMenuItem["N_IdPadre"]))
             {
                 MenuItem mnuNewMenuItem = new MenuItem();
 

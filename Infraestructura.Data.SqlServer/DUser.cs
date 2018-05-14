@@ -12,20 +12,21 @@ namespace Infraestructura.Data.SqlServer {
 
     public class DUser {
         //Parametros tabla Usuario
-        public string NomTab { get => "XTBC_USER"; }
+        public string NomTabEsquema { get => "XXX.TBC_USER"; }
+        public string NomTab { get => "TBC_USER"; }
         public string idUsuario { get => "N_IdUser"; }
         public string Login { get => "V_Login"; }
         public string Nombres { get => "V_Nombres"; }
         public string ApePat { get => "V_Paterno"; }
         public string ApeMat { get => "V_Materno"; }
-        public string Estado { get => "S_estado"; }
+        public string Estado { get => "S_Estado"; }
         public string Clave { get => "V_Clave"; }
         public string IdPersonal { get => "N_IdPersonal"; }
 
 
-
         DtUtilitario com = new DtUtilitario();
         List<SqlParameter> lista = new List<SqlParameter>();
+        private string xmlString = "";
 
         private void LlenarObj(EUser oUsu) {
             SqlParameter id = new SqlParameter("@iduser", oUsu.idUsuario);
@@ -46,7 +47,7 @@ namespace Infraestructura.Data.SqlServer {
             SqlParameter id = new SqlParameter("@login", oUsu.Login);
             SqlParameter clave = new SqlParameter("@clave", oUsu.CLave);
             lista.Add(id); lista.Add(clave);
-            DataTable dtAcceso = com.EjecutaConsulta("LOG_XTBC_USER_INGRESAR", lista, 1);
+            DataTable dtAcceso = com.EjecutaConsulta("XXX_TBC_USER_INGRESAR", lista, 1);
             DataRow row = dtAcceso.Rows[0];
 
             return (int) row["acceso"];
@@ -102,7 +103,7 @@ namespace Infraestructura.Data.SqlServer {
             List<SqlParameter> lista = new List<SqlParameter>();
             SqlParameter id = new SqlParameter("@iduser", oUsu.idUsuario);
             lista.Add(id);
-            return com.EjecutaConsulta("LOG_XTBD_APLICACIONXUSER_BUSCAR_", lista, 1);
+            return com.EjecutaConsulta("XXX_TBD_APLICACION_USER_BUSCAR", lista, 1);
         }
 
         public DataTable VerPerfApliUsuario(EUser oUsu, EAplicacion oApli){
@@ -110,7 +111,64 @@ namespace Infraestructura.Data.SqlServer {
             SqlParameter idUsu = new SqlParameter("@iduser", oUsu.idUsuario);
             SqlParameter idApli = new SqlParameter("@idaplicacion", oApli.idApli);
             lista.Add(idUsu);lista.Add(idApli);
-            return com.EjecutaConsulta("LOG_XTBD_PERFILES_APLICACION_USUARIO", lista, 1);
+            return com.EjecutaConsulta("XXX_TBD_PERFIL_APLICACION_USUARIO_BUSCAR", lista, 1);
+        }
+
+        private void ListaParametros(int tipo, string nomCat, int idFam, int idCat)
+        {
+            lista.Clear();
+            SqlParameter pNomTabla = new SqlParameter("@tabla", NomTab);
+            if (tipo == 0)
+            {
+                SqlParameter pXml = new SqlParameter("@xml", xmlString);
+                lista.Add(pXml);
+            }
+            else if (tipo == 1)
+            {
+                //string valores = nomCat + ";" + idFam;
+                //SqlParameter pCampos = new SqlParameter("@campos", campoUpd);
+                //SqlParameter pValores = new SqlParameter("@valores", valores);
+                //SqlParameter pIdCat = new SqlParameter("@id", idCat);
+                //lista.Add(pNomTabla);
+                //lista.Add(pCampos);
+                //lista.Add(pValores);
+                //lista.Add(pIdCat);
+            }
+            else
+            {
+                lista.Add(pNomTabla);
+            }
+        }
+
+        public void InsertUsuario(String xml)
+        {
+            int tipo = 0;
+            xmlString = xml;
+            ListaParametros(tipo, "", 0, 0);
+            try
+            {
+                com.TransUnica("GEN_INSERTAR_XML_CON_ID", lista);
+            }
+            catch (Exception ex)
+            {
+                com.DeshaceTransaccion();
+                throw new Exception(ex.Message, ex);
+            }
+        }
+
+        public DataTable RecuperarId()
+        {
+            int tipo = 2;
+            ListaParametros(tipo, "", 0, 0);
+            try
+            {
+                return com.EjecutaConsulta("GEN_RETORNAID", lista, 1);
+            }
+            catch (Exception ex)
+            {
+                com.DeshaceTransaccion();
+                throw new Exception(ex.Message, ex);
+            }
         }
     }
 }
