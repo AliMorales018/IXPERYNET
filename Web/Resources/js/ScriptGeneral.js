@@ -15,7 +15,7 @@ $(document).ready(function () {
 
     for (var i = 1; i <= totalCol; i++) {
         var campo = document.getElementById("campo" + i);
-        arrayElem.push([campo.firstChild.tagName, campo.firstChild.id]);
+        arrayElem.push([campo.firstChild.tagName, campo.firstChild.id, campo.firstChild.type]);
         if (campo.firstChild.id.substring(0, 1) == "V") {
             var idTextV = campo.firstChild.id;
             idTextV = idTextV.substring(0, idTextV.length - 1);
@@ -110,6 +110,7 @@ function funcNuevaLinea(cont, idTabla) {
                 for (var i = 0; i < totalCol; i++) {
                     var tagName = arrayElem[i][0];
                     var idText = arrayElem[i][1];
+                    var type = arrayElem[i][2];
                     if (tagName == 'SELECT') {
                         contSelect++;
                         idDiv = "div" + contSelect + "_"
@@ -120,7 +121,7 @@ function funcNuevaLinea(cont, idTabla) {
                             break;
                         case 'BUTTON': nuevaFila = nuevaFila + "<td><div class='d-flex justify-content-center input-group input-group-sm'><button class='btn btn-sm btn-danger mr-sm-2 btn-sm' id='" + idText + idFila + "' onclick='eliminar(this.id)'><i class='icon icon-cross'></i></button></div></td>";
                             break;
-                        case 'INPUT': nuevaFila = nuevaFila + "<td><div class='input-group input-group-sm'><input type='text' required='' runat='server' id='" + idText + idFila + "' name='" + idText + idFila + "' class='form-control'/></div></td>"
+                        case 'INPUT': nuevaFila = nuevaFila + "<td><div class='input-group input-group-sm'><input type='" + type +"' required='' runat='server' id='" + idText + idFila + "' name='" + idText + idFila + "' class='form-control'/></div></td>"
                             break;
                         case 'SELECT': nuevaFila = nuevaFila + "<td><div id='" + idDiv + idFila + "' class='input-group input-group-sm'><script type='text/javascript'>$('#" + idDiv + idFila + "').prepend($('#" + idText + "1').clone().insertAfter('#" + idDiv + idFila + "').attr('id','" + idText + idFila + "').attr('name','" + idText + idFila + "').attr('runat','server'))</script></div></td>"
                             break;
