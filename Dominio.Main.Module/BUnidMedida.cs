@@ -18,7 +18,10 @@ namespace Dominio.Main.Module
         {
             return odUme.LlenarCombo();
         }
-
+        public DataTable ListarUMedida()
+        {
+            return odUme.ListarUMedida();
+        }
         //public DataTable BuscarUmedida(string catBuscar)
         //{
         //    return odUme.BuscarUmedida(catBuscar);

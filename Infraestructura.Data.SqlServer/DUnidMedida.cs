@@ -33,5 +33,18 @@ namespace Infraestructura.Data.SqlServer
                 throw new Exception("Error " + ex.Message, ex);
             }
         }
+        public DataTable ListarUMedida()
+        {
+            try
+            {
+                lista.Clear();
+                return com.EjecutaConsulta("LOG_TBC_UMEDIDA_LISTAR", lista, 1);
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception("Error" + ex.Message, ex);
+            }
+        }
     }
 }

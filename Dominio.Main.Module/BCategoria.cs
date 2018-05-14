@@ -14,26 +14,34 @@ namespace Dominio.Main.Module
     public class BCategoria
     {
         DCategoria odCat = new DCategoria();
-
+        #region FUNCIONES
         public DataTable LlenarCombo()
         {
             return odCat.LlenarCombo();
-        }
-        public DataTable RecuperarId()
-        {
-           return odCat.RecuperarId();
         }
         public DataTable BuscarCategoria(string catBuscar)
         {
             return odCat.BuscarCategoria(catBuscar);
         }
-        public void InsertCategoria(String xml)
+        #endregion
+        #region METODOS
+        public void InsertCategoria(DataSet ds)
         {
-            odCat.InsertCategoria(xml);
+            odCat.InsertCategoria(ds);
         }
-        public void UpdateCategoria(string  nomCat, int idFam, int idCat)
+        public void UpdateCategoria(string nomCat, int idFam, int idCat)
         {
-            odCat.UpdateCategoria(nomCat,idFam,idCat);
+            odCat.UpdateCategoria(nomCat, idFam, idCat);
         }
+        public void DeleteCategoria(int idCat)
+        {
+            odCat.DeleteCategoria(idCat);
+        }
+        #endregion
+        public DataTable ListarCategoria()
+        {
+            return odCat.ListarCategoria();
+        }
+        
     }
 }
