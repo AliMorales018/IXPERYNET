@@ -19,26 +19,52 @@ namespace Infraestructura.Data.SqlServer
 		#region ATRIBUTOS DE APLICACION
 		/**NOMBRE TABLA**/
 		internal string tablaApli { get => "TBC_APLICACION"; }
-		/**NOMBRE DE CAMPOS EN LA BASE DE DATOS**/
+		/*
 		internal string tIdApp { get => "N_IdApli"; }
 		internal string tNomApp { get => "V_Aplicacion"; }
 		internal string tEstApp { get => "S_Estado"; }
 		internal string tVerApp { get => "N_Version"; }
 		internal string tAbrApp { get => "V_Abreviatura"; }
-		/**NOMBRE DE CAMPOS PARA LA PRESENTACION**/
 		public string cIdApp { get => "IdApli"; }
 		public string cNomApp { get => "Aplicacion"; }
 		public string cEstApp { get => "Estado"; }
 		public string cVerApp { get => "Version"; }
 		public string cAbrApp { get => "Abreviatura"; }
+		*/
 		#endregion
 
 		#region INSTANCIACIONES
 		/**LLAMADOS A OTRAS CLASES**/
 		DtUtilitario com = new DtUtilitario();
 		List<SqlParameter> listaParametros = new List<SqlParameter>();
+		List<string> lstAppReal = new List<string>();
+		List<string> lstAppAli = new List<string>();
 		DGeneral odGeneral = new DGeneral();
 		XDocument xml = new XDocument();
+		#endregion
+
+		#region LISTA DE CAMPOS DEL DB
+		internal List<string> LstAppReal()
+		{
+			lstAppReal[0] = "N_IdApli";
+			lstAppReal[1] = "V_Aplicacion";
+			lstAppReal[2] = "S_Estado";
+			lstAppReal[3] = "N_Version";
+			lstAppReal[4] = "V_Abreviatura";
+			return lstAppReal;
+		}
+		#endregion
+
+		#region LISTA DE CAMPOS CON ALIAS DEL DB
+		internal List<string> LstAppAli()
+		{
+			lstAppAli[0] = "IdApli";
+			lstAppAli[1] = "Aplicacion";
+			lstAppAli[2] = "Estado";
+			lstAppAli[3] = "Version";
+			lstAppAli[4] = "Abreviatura";
+			return lstAppAli;
+		}
 		#endregion
 
 		#region MODIFICAR DATASET
@@ -52,7 +78,8 @@ namespace Infraestructura.Data.SqlServer
 				listaParametros.Add(pTabla);
 				dtPos = com.EjecutaConsulta("GEN_RETORNAID", listaParametros, 1);
 				int numero = Convert.ToInt32(dtPos.Rows[0][0].ToString());
-				ds.Tables[0].Columns.Add("IdApli").SetOrdinal(0);
+				//ds.Tables[0].Columns.Add("IdApli").SetOrdinal(0);
+				ds.Tables[0].Columns.Add(LstAppAli()[0]).SetOrdinal(0);
 
 				for (int i = 0; i < ds.Tables[0].Rows.Count; ++i)
 				{
@@ -70,15 +97,14 @@ namespace Infraestructura.Data.SqlServer
 		#endregion
 
 		#region VALIDACIONES
-		/**VALIDACIONES DE LOS NOMBRES DE LAS TABLAS**/
+		/**VALIDACIONES DE LOS NOMBRES DE LAS TABLAS Y CAMPOS**/
 		public DataSet ValidarDataSet(DataSet ds)
 		{
 			ds.Tables[0].TableName = tablaApli;
-			ds.Tables[0].Columns[cIdApp].ColumnName = tIdApp;
-			ds.Tables[0].Columns[cNomApp].ColumnName = tNomApp;
-			ds.Tables[0].Columns[cEstApp].ColumnName = tEstApp;
-			ds.Tables[0].Columns[cVerApp].ColumnName = tVerApp;
-			ds.Tables[0].Columns[cAbrApp].ColumnName = tAbrApp;		
+			for (int i = 0; i < LstAppReal().Count; i++)
+			{
+				ds.Tables[0].Columns[LstAppAli()[i]].ColumnName = LstAppReal()[i];
+			}
 			if (ds.Tables.Count == 2)
 			{
 				//LLENAR SEGUN CASO
@@ -87,15 +113,16 @@ namespace Infraestructura.Data.SqlServer
 			}
 			return ds;
 		}
-		/**VALIDACIONES DE LOS NOMBRES DE LOS CAMPOS**/
+		/**VALIDACIONES DE LISTAS**/
 		public string ValidarCampos(List<string> lista)
 		{
 			string campos = string.Empty;		
 			List<string> camposTabla = new List<string>();
-			camposTabla.Add(tNomApp);
-			camposTabla.Add(tEstApp);
-			camposTabla.Add(tVerApp);
-			camposTabla.Add(tAbrApp);
+			for (int j = 1; j < LstAppReal().Count; ++j)
+			{
+				camposTabla.Add(LstAppReal()[j]);
+			}
+
 			foreach (string campoLista in lista)
 			{
 				foreach(string campoTabla in camposTabla)

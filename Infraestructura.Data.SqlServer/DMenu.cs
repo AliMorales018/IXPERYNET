@@ -25,7 +25,7 @@ namespace Infraestructura.Data.SqlServer
 
 		#region Atributos Menu
 		internal string tablaMenu { get => "TBC_MENU"; }
-
+		/*
 		internal string tIdMen { get => "N_IdMenu"; }
 		internal string tDesMen { get => "V_Descripcion"; }
 		internal string tIdPadMen { get => "N_IdPadre"; }
@@ -43,7 +43,57 @@ namespace Infraestructura.Data.SqlServer
 		public string cHabMen { get => "Habilitado"; }
 		public string cUrlMen { get => "Url"; }
 		public string cIdAppMen { get => "IdApli"; }
+		*/
 		#endregion
+
+		#region Listas de campos en tabla
+		/**LISTA SIN ALIAS**/
+		internal List<string> lstMenuSal = new List<string>();
+		/**LISTA CON ALIAS**/
+		internal List<string> lstMenuCal = new List<string>();
+		#endregion
+
+		#region Lleando de lista sin alias
+		internal List<string> LstMenuSal()
+		{
+			lstMenuSal.Add("N_IdMenu");
+			lstMenuSal.Add("V_Descripcion");
+			lstMenuSal.Add("N_IdPadre");
+			lstMenuSal.Add("N_Posicion");
+			lstMenuSal.Add("V_Icono");
+			lstMenuSal.Add("S_Habilitado");
+			lstMenuSal.Add("V_Url");
+			lstMenuSal.Add("N_IdApli");
+			return lstMenuSal;
+		}
+		#endregion
+
+		#region Llenado de lista con alias
+		public List<string> LstMenuCal()
+		{
+			/*
+			lstMenuCal[0] = "IdMenu";
+			lstMenuCal[1] = "Descripcion";
+			lstMenuCal[2] = "IdPadre";
+			lstMenuCal[3] = "Posicion";
+			lstMenuCal[4] = "Icono";
+			lstMenuCal[5] = "Habilitado";
+			lstMenuCal[6] = "Url";
+			lstMenuCal[7] = "IdApli";
+			*/
+			
+			lstMenuCal.Add("IdMenu");
+			lstMenuCal.Add("Descripcion");
+			lstMenuCal.Add("IdPadre");
+			lstMenuCal.Add("Posicion");
+			lstMenuCal.Add("Icono");
+			lstMenuCal.Add("Habilitado");
+			lstMenuCal.Add("Url");
+			lstMenuCal.Add("IdApli");
+			return lstMenuCal;
+		}
+		#endregion
+
 
 		DtUtilitario com = new DtUtilitario();
 		List<SqlParameter> listaParametros = new List<SqlParameter>();
