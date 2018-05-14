@@ -13,19 +13,6 @@ namespace Infraestructura.Data.SqlServer
 {
     public class DEmpleado
     {
-        //public string nomTab {get => "RHTBC_EMPLEADO";}
-        //public string idEmpleado { get => "N_IdEmpleado"; }
-        //public string idArea { get => "N_IdArea"; }
-        //public string Dni { get => "C_Dni"; }
-        //public string Nombres { get => "V_Nombre"; }
-        //public string ApePat { get => "V_ApellidoPaterno"; }
-        //public string ApeMat { get => "V_ApellidoMaterno"; }
-        //public string Telefono { get => "C_Telefono"; }
-        //public string Direccion { get => "V_Direccion"; }
-        //public string FechaNac { get => "D_FechaNac"; }
-        //public string Sexo { get => "C_Sexo"; }
-        //public string Estado { get => "S_Estado"; }
-
         #region ATRIBUTOS DE APLICACION
         /**NOMBRE TABLAS**/
         internal string nomTabEmpl { get => "TBC_EMPLEADO"; }
@@ -80,6 +67,24 @@ namespace Infraestructura.Data.SqlServer
             try
             {
                 return com.EjecutaConsulta("LOG_TBC_Empleado_Buscar", lista, 1);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error " + ex.Message, ex);
+            }
+        }
+        public DataTable ListarSexo()
+        {
+            try
+            {
+                DataTable dtsexo = new DataTable();
+                dtsexo.Columns.Add("Sexo");
+
+                dtsexo.Rows.Add("M");
+                dtsexo.Rows.Add("F");
+                return dtsexo;
+                //lista.Clear();
+                //return com.EjecutaConsulta("LOG_TBC_AREA_LISTAR", lista, 1);
             }
             catch (Exception ex)
             {
@@ -176,18 +181,22 @@ namespace Infraestructura.Data.SqlServer
         /**METODO INSERTAR SEGUN REQUERIMIENTOS DEL PROCEDIMIENTO ALMACENADO**/
         public void InsertEmpleado(DataSet ds)
         {
+            string salida = "";
             try
             {
                 List<SqlParameter> listParInsert = new List<SqlParameter>();
                 SqlParameter pXml = new SqlParameter("@xml", Convert.ToString(odGeneral.generarXML(ValidarDataSet(FixDataSet(ds)))));
                 //SqlParameter pCampo = new SqlParameter("@campo", campo);
-                //SqlParameter pSalid = new SqlParameter("@salida", salida);
-                //pSalid.Direction = ParameterDirection.InputOutput;
+                SqlParameter pSalid = new SqlParameter("@salid", salida);
+                pSalid.Direction = ParameterDirection.InputOutput;
+                pSalid.SqlDbType=SqlDbType.NVarChar;
+                pSalid.Size = 100;
                 listParInsert.Add(pXml);
+                listParInsert.Add(pSalid);
                 //listaParametros.Add(pCampo);
                 //listaParametros.Add(pSalid);
                 com.TransUnica("GEN_INSERTAR_XML_CON_ID", listParInsert);
-                //string a = Convert.ToString(pSalid.Value);
+                string a = pSalid.Value.ToString();
                 listParInsert.Clear();
             }
             catch (Exception ex)

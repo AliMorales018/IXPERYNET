@@ -21,6 +21,11 @@ namespace Dominio.Main.Module
         {
             return odArea.LlenarCombo();
         }
+        public DataTable ListarArea()
+        {
+            return odArea.ListarArea();
+        }
+
         #region METODOS
         public void InsertArea(DataSet ds)
         {

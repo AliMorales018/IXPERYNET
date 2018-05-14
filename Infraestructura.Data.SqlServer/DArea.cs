@@ -71,6 +71,26 @@ namespace Infraestructura.Data.SqlServer
                 throw new Exception("Error " + ex.Message, ex);
             }
         }
+        public DataTable ListarArea()
+        {
+            try
+            {
+                DataTable dtprueba = new DataTable();
+                dtprueba.Columns.Add("IdArea");
+                dtprueba.Columns.Add("Nombre");
+
+                dtprueba.Rows.Add(1, "area1");
+                dtprueba.Rows.Add(2, "area2");
+                dtprueba.Rows.Add(3, "area3");
+                return dtprueba;
+                //lista.Clear();
+                //return com.EjecutaConsulta("LOG_TBC_AREA_LISTAR", lista, 1);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error " + ex.Message, ex);
+            }
+        }
         #endregion
         #region VALIDACIONES
         /**VALIDACIONES DE LOS NOMBRES DE LAS TABLAS**/

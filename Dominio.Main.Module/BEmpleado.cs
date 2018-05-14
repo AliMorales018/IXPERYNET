@@ -18,7 +18,14 @@ namespace Dominio.Main.Module
         {
             return odEmpl.BuscarEmpleado(emplBuscar);
         }
-
+        public DataTable ListarSexo()
+        {
+            return odEmpl.ListarSexo();
+        }
+        //public DataTable ListarEmpleado()
+        //{
+        //    //return odEmpl.ListarEmpleado();
+        //}
         #region METODOS
         public void InsertEmpleado(DataSet ds)
         {

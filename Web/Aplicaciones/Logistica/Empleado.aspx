@@ -5,6 +5,8 @@
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Registro_Empleados</title>
+        <% Response.WriteFile("/Includes/filesCss.html"); %>
+    <% Response.WriteFile("/Includes/filesJs.html"); %>
 </head>
 <body class="bg-light">
     <form id="form1" runat="server">
@@ -18,16 +20,25 @@
             </label>
             <div class="form-group">
                 <div class="table-responsive-lg text-size-sm">
-                    <table class="table table-bordered" id="tblProducto">
+                    <table class="table table-bordered" id="tblEmpleado">
                         <thead class="bg-dark" runat="server">
                             <tr class="bg-dark text-white border border-dark">
                                 <th class="text-center font-weight-light">N°</th>
-                                <th class="text-center font-weight-light">Apellido_Paterno</th>
-                                <th class="text-center font-weight-light">Apellido_Materno</th>
-                                <th class="text-center font-weight-light">Nombre</th>
+                                <th class="text-center font-weight-light"><div id="divControlPat" runat="server">
+                                                <input type="text" id="txtBusPat" name='txtBusPat' placeholder='Buscar A. Paterno' class='form - control' runat="server" />
+                                                <asp:Button ID="btnBusPat" Text="Buscar" runat="server" OnClick="btnBusPat_Click" />
+                                            </div></th>
+                                <th class="text-center font-weight-light"><div id="divControlMat" runat="server">
+                                                <input type="text" id="txtBusMat" name='txtBusMat' placeholder='Buscar A. Materno' class='form - control' runat="server" />
+                                                <asp:Button ID="btnBusMat" Text="Buscar" runat="server" OnClick="btnBusMat_Click" />
+                                            </div></th>
+                                <th class="text-center font-weight-light"><div id="divControlNom" runat="server">
+                                                <input type="text" id="txtBusNom" name='txtBusNom' placeholder='Buscar Nombre' class='form - control' runat="server" />
+                                                <asp:Button ID="btnBusNom" Text="Buscar" runat="server" OnClick="btnBusNom_Click" />
+                                            </div></th>
                                 <th class="text-center font-weight-light">Sexo</th>
                                 <th class="text-center font-weight-light">Fecha_Nacimiento</th>
-                                <th class="text-center font-weight-light"><div id="divControl" runat="server"><%--style="display: none;"--%>
+                                <th class="text-center font-weight-light"><div id="divControlDni" runat="server">
                                                 <input type="text" id="txtBusDni" name='txtBusDni' placeholder='Buscar Dni' class='form - control' runat="server" />
                                                 <asp:Button ID="btnBusDni" Text="Buscar" runat="server" OnClick="btnBusDni_Click" />
                                             </div></th>
@@ -44,7 +55,7 @@
                                 <td><div id="campo2" class="input-group input-group-sm"><input type="text" runat="server" id="txtApePat1" class="form-control" /></div></td>
                                 <td><div id="campo3" class="input-group input-group-sm"><input type="text" runat="server" id="txtApeMat1" class="form-control" /></div></td>
                                 <td><div id="campo4" class="input-group input-group-sm"><input type="text" runat="server" id="txtNombre1" class="form-control" /></div></td>
-                                <td><div id="campo5" class="input-group input-group-sm"><select runat="server" class="form-control" id="cmbSex1" style="width:60px;"><option value="M">M</option><option value="F">F</option></select></div></td>
+                                <td><div id="campo5" class="input-group input-group-sm"><select runat="server" id="cmbSex1" class="form-control"><option value="M">M</option><option value="F">F</option></select></div></td>
                                 <td><div id="campo6" class="input-group input-group-sm"><input type="date" runat="server" id="txtFNac1" class="form-control" /></div></td>
                                 <td><div id="campo7" class="input-group input-group-sm"><input type="text" runat="server" id="txtDni1" class="form-control" /></div></td>
                                 <td><div id="campo8" class="input-group input-group-sm"><input type="text" runat="server" id="txtDirec1" class="form-control" /></div></td>
@@ -71,10 +82,10 @@
                                 <Columns>
                                     <asp:TemplateField HeaderText="N°">
                                         <ItemTemplate>
-                                            <asp:Label ID="lblIdEmpl" Text='<%# Eval("ID EMPLEADO") %>' runat="server" />
+                                            <asp:Label ID="lblIdEmpl" Text='<%# Eval("ID DE EMPLEADO") %>' runat="server" />
                                         </ItemTemplate>
                                         <EditItemTemplate>
-                                            <asp:Label ID="lblIdEmpl" Text='<%# Eval("ID EMPLEADO") %>' runat="server" />
+                                            <asp:Label ID="lblIdEmpl" Text='<%# Eval("ID DE EMPLEADO") %>' runat="server" />
                                         </EditItemTemplate>
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="Paterno">
@@ -111,10 +122,10 @@
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="Nacimiento">
                                         <ItemTemplate>
-                                            <asp:Calendar ID="calenNac"  SelectedDate='<%# Eval("NACIMIENTO") %>' runat="server" />
+                                            <asp:TextBox ID="calenNac"  Text='<%# Eval("FECHA DE NACIMIENTO") %>' PlaceHolder="dd/mm/aaaa" runat="server" />
                                         </ItemTemplate>
                                         <EditItemTemplate>
-                                            <asp:Calendar ID="calenNac"  SelectedDate='<%# Eval("NACIMIENTO") %>' runat="server" />
+                                            <asp:TextBox ID="calenNac"  Text='<%# Eval("FECHA DE NACIMIENTO") %>' PlaceHolder="dd/mm/aaaa" runat="server" />
                                         </EditItemTemplate>
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="Dni">
@@ -141,14 +152,14 @@
                                             <asp:TextBox ID="txtTelefono" Text='<%# Eval("TELEFONO") %>' runat="server" />
                                         </EditItemTemplate>
                                     </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="Estado">
+                                   <%-- <asp:TemplateField HeaderText="Estado">
                                         <ItemTemplate>
                                             <asp:DropDownList ID="cmbEstado"  runat="server"/>
                                         </ItemTemplate>
                                         <EditItemTemplate>
                                             <asp:DropDownList ID="cmbEstado"  runat="server"/>
                                         </EditItemTemplate>
-                                    </asp:TemplateField>
+                                    </asp:TemplateField>--%>
                                     <asp:TemplateField HeaderText="Area">
                                         <ItemTemplate>
                                             <asp:DropDownList ID="cmbArea"  runat="server"/>
@@ -176,8 +187,6 @@
                 </div>
             </div>
         </div>
-    <% Response.WriteFile("/Includes/filesCss.html"); %>
-    <% Response.WriteFile("/Includes/filesJs.html"); %>
     </form>
     </body>
 </html>
