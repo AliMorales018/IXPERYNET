@@ -1,10 +1,6 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Categoria.aspx.cs" Inherits="Aplicaciones_Logistica_Categoria" %>
-
 <%@ Register Assembly="System.Web.DataVisualization, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" Namespace="System.Web.UI.DataVisualization.Charting" TagPrefix="asp" %>
-
-
 <!DOCTYPE html>
-
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -45,7 +41,7 @@
                     </table>
                     <asp:GridView ID="gvCategoria" runat="server" AutoGenerateColumns="false" ShowFooter="true" Visible="false"
                                 ShowHeaderWhenEmpty="true"
-                                BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" CellPadding="3" OnRowCommand="gvCategoria_RowCommand" OnRowUpdating="gvCategoria_RowUpdating">
+                                BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" CellPadding="3" OnRowCommand="gvCategoria_RowCommand" OnRowUpdating="gvCategoria_RowUpdating"  OnRowDeleting="gvCategoria_RowDeleting">
                                 <FooterStyle BackColor="White" ForeColor="#000066" />
                                 <HeaderStyle BackColor="#006699" Font-Bold="True" ForeColor="White" />
                                 <PagerStyle BackColor="White" ForeColor="#000066" HorizontalAlign="Left" />
@@ -62,18 +58,17 @@
                                             <asp:Label ID="lblIdCate" Text='<%# Eval("ID DE CATEGORIA") %>' runat="server" />
                                         </ItemTemplate>
                                         <EditItemTemplate>
-                                            <asp:TextBox ID="lblIdCate" Text='<%# Eval("ID DE CATEGORIA") %>' runat="server" />
+                                            <asp:Label ID="lblIdCate" Text='<%# Eval("ID DE CATEGORIA") %>' runat="server" />
                                         </EditItemTemplate>
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="Familia">
                                         <ItemTemplate>
-                                            <asp:DropDownList ID="cmbFamilia"  runat="server" /><%--Text='<%# Eval("ID DE FAMILIA") %>'--%> 
+                                            <asp:DropDownList ID="cmbFamilia"  runat="server"/>
                                         </ItemTemplate>
                                         <EditItemTemplate>
-                                            <asp:DropDownList ID="cmbFamilia" runat="server" /><%--Text='<%# Eval("ID DE FAMILIA") %>'--%> 
+                                            <asp:DropDownList ID="cmbFamilia"  runat="server"/>
                                         </EditItemTemplate>
                                     </asp:TemplateField>
-
                                     <asp:TemplateField HeaderText="Categoria">
                                         <ItemTemplate>
                                             <asp:TextBox ID="txtCat" Text='<%# Eval("NOMBRE DE CATEGORIA") %>' runat="server" />
@@ -85,9 +80,11 @@
                                     <asp:TemplateField>
                                         <ItemTemplate>
                                             <asp:ImageButton ImageUrl="~/images/0.png" runat="server" CommandName="Update" ToolTip="Update" Width="20px" Height="20px" />
+                                            <asp:ImageButton ImageUrl="~/images/0.png" runat="server" CommandName="Delete" ToolTip="Delete" Width="20px" Height="20px" />
                                         </ItemTemplate>
                                         <EditItemTemplate>
-                                            <asp:ImageButton ImageUrl="~/images/0.png" runat="server" CommandName="Update" ToolTip="Update" Width="20px" Height="20px" />
+                                            <%--<asp:ImageButton ImageUrl="~/images/0.png" runat="server" CommandName="Update" ToolTip="Update" Width="20px" Height="20px" />--%>
+                                            <%--<asp:ImageButton ImageUrl="~/images/0.png" runat="server" CommandName="Delete" ToolTip="Delete" Width="20px" Height="20px" />--%>
                                         </EditItemTemplate>
                                     </asp:TemplateField>
                                 </Columns>

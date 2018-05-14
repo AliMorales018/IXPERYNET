@@ -11,25 +11,25 @@ using Dominio.Main.Module;
 
 public partial class Aplicaciones_ControlUsuarios_MaterUsuarios : System.Web.UI.Page{
 
-    BUsuario obUsuario = new BUsuario();
+    //BUsuario obUsuario = new BUsuario();
     protected void Page_Load(object sender, EventArgs e)
     {
         DataTable dtParseado = new DataTable();
-        DataTable dt = obUsuario.LlenarComboEmpleado();
+      //  DataTable dt = obUsuario.LlenarComboEmpleado();
         String NomComp;
         String Id;
         dtParseado.Columns.Add("NOMBRE COMPLETO");
         dtParseado.Columns.Add("ID EMPLEADO");
-        for (int i = 0; i < dt.Rows.Count; i++)
-        {
-            DataRow f = dtParseado.NewRow();
-            DataRow row = dt.Rows[i];
-            NomComp = row["NOMBRE"].ToString() +" "+row["APELLIDO PATERNO"].ToString()+" "+row["APELLIDO MATERNO"].ToString();
-            Id = row["ID EMPLEADO"].ToString();
-            f[0] = NomComp;
-            f[1] = Id;
-            dtParseado.Rows.Add(f);
-        }
+        //for (int i = 0; i < dt.Rows.Count; i++)
+        //{
+        //    DataRow f = dtParseado.NewRow();
+        //    DataRow row = dt.Rows[i];
+        //    NomComp = row["NOMBRE"].ToString() +" "+row["APELLIDO PATERNO"].ToString()+" "+row["APELLIDO MATERNO"].ToString();
+        //    Id = row["ID EMPLEADO"].ToString();
+        //    f[0] = NomComp;
+        //    f[1] = Id;
+        //    dtParseado.Rows.Add(f);
+        //}
         select1.DataSource = dtParseado;
         select1.DataTextField = "NOMBRE COMPLETO";
         select1.DataValueField = "ID EMPLEADO";

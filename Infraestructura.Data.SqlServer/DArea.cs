@@ -1,35 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
-
-
 using System.Data;
 using System.Data.SqlClient;
 using System.Xml.Linq;
 using Utilitario;
-
 namespace Infraestructura.Data.SqlServer
 {
-    public class DProducto
+    public class DArea
     {
         #region ATRIBUTOS DE APLICACION
         /**NOMBRE TABLAS**/
-        internal string nomTabPro { get => "TBC_PRODUCTO"; }
+        internal string nomTabArea { get => "TBC_AREA"; }
         /**NOMBRE DE CAMPOS EN LA BASE DE DATOS**/
-        internal string idPro { get => "N_IdProducto"; }
-        internal string nombrePro { get => "V_NomProducto"; }//COL BD NOMBRE DE LA CATEGORIA
-        internal string cantPro { get => "N_CantProducto"; }//COL BD IDFAMILIA(FK->FAMILIA)
-        internal string idCat { get => "N_IdCategoria"; }
-        internal string idUMed { get => "N_IdUmedida"; }
+        internal string idArea { get => "N_IdArea"; }
+        internal string nombreArea { get => "V_Nombre"; }
         /**NOMBRE DE CAMPOS PARA LA PRESENTACION**/
-        public string cIdPro { get => "IdProd"; }
-        public string cNomPro { get => "NomProd"; }
-        public string cCanPro { get => "CantProd"; }
-        public string cIdCat { get => "IdCate"; }
-        public string cIdUMed { get => "IdUMed"; }
+        public string cIdArea { get => "IdArea"; }
+        public string cNomArea { get => "NomArea"; }
         #endregion
         #region DECLARACION DE VARIABLES
         /****/
-        private string campoUpd = "V_NomProducto; N_CantProducto; N_IdCategoria; N_IdUmedida";
+        private string campoUpd = "V_Nombre";
         #endregion
         #region INSTANCIACIONES
         /**LLAMADOS A OTRAS CLASES**/
@@ -39,36 +30,55 @@ namespace Infraestructura.Data.SqlServer
         DGeneral odGeneral = new DGeneral();
         XDocument xml = new XDocument();
         #endregion
-        private void ListaProductos(string prodBuscar)
+        private void ListaAreas(string areaBuscar)
         {
             //SqlParameter pCampo = new SqlParameter("@campo", nomCat);
-            SqlParameter pValor = new SqlParameter("@valor", prodBuscar);
+            SqlParameter pValor = new SqlParameter("@valor", areaBuscar);
             //lista.Add(pCampo);
             lista.Add(pValor);
         }
-        public DataTable BuscarProducto(string prodBuscar)
+        public DataTable BuscarArea(string areaBuscar)
         {
 
-            ListaProductos(prodBuscar);
+            ListaAreas(areaBuscar);
             try
             {
-                return com.EjecutaConsulta("LOG_TBC_Producto_Buscar", lista, 1);
+                return com.EjecutaConsulta("LOG_TBC_Area_Buscar", lista, 1);
             }
             catch (Exception ex)
             {
                 throw new Exception("Error " + ex.Message, ex);
             }
         }
+        #region LLENAR COMBO AREAS
+        public DataTable LlenarCombo()
+        {
+            try
+            {
+                DataTable dtprueba = new DataTable();
+                dtprueba.Columns.Add("IdArea");
+                dtprueba.Columns.Add("Nombre");
+
+                dtprueba.Rows.Add(1, "area1");
+                dtprueba.Rows.Add(2, "area2");
+                dtprueba.Rows.Add(3, "area3");
+                return dtprueba;
+                //lista.Clear();
+                //return com.EjecutaConsulta("LOG_TBC_AREA_LISTAR", lista, 1);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error " + ex.Message, ex);
+            }
+        }
+        #endregion
         #region VALIDACIONES
         /**VALIDACIONES DE LOS NOMBRES DE LAS TABLAS**/
         public DataSet ValidarDataSet(DataSet ds)
         {
-            ds.Tables[0].TableName = nomTabPro;
-            ds.Tables[0].Columns[cIdPro].ColumnName = idPro;
-            ds.Tables[0].Columns[cNomPro].ColumnName = nombrePro;
-            ds.Tables[0].Columns[cCanPro].ColumnName = cantPro;
-            ds.Tables[0].Columns[cIdCat].ColumnName = idCat;
-            ds.Tables[0].Columns[cIdUMed].ColumnName = idUMed;
+            ds.Tables[0].TableName = nomTabArea;
+            ds.Tables[0].Columns[cIdArea].ColumnName = idArea;
+            ds.Tables[0].Columns[cNomArea].ColumnName = nombreArea;
             if (ds.Tables.Count == 2)
             {
                 //LLENAR SEGUN CASO
@@ -82,10 +92,7 @@ namespace Infraestructura.Data.SqlServer
         {
             string campos = string.Empty;
             List<string> camposTabla = new List<string>();
-            camposTabla.Add(nombrePro);
-            camposTabla.Add(cantPro);
-            camposTabla.Add(idCat);
-            camposTabla.Add(idUMed);
+            camposTabla.Add(nombreArea);
             foreach (string campoLista in lista)
             {
                 foreach (string campoTabla in camposTabla)
@@ -113,11 +120,11 @@ namespace Infraestructura.Data.SqlServer
             {
                 DataTable dtPos = new DataTable();
                 listaParametros.Clear();
-                SqlParameter pTabla = new SqlParameter("@tabla", nomTabPro);
+                SqlParameter pTabla = new SqlParameter("@tabla", nomTabArea);
                 listaParametros.Add(pTabla);
                 dtPos = com.EjecutaConsulta("GEN_RETORNAID", listaParametros, 1);
                 int numero = Convert.ToInt32(dtPos.Rows[0][0].ToString());
-                ds.Tables[0].Columns.Add("IdProd").SetOrdinal(0);
+                ds.Tables[0].Columns.Add("IdArea").SetOrdinal(0);
 
                 for (int i = 0; i < ds.Tables[0].Rows.Count; ++i)
                 {
@@ -135,7 +142,7 @@ namespace Infraestructura.Data.SqlServer
         #endregion
         #region INSERTAR NUEVO REGISTRO EN PRODUCTO
         /**METODO INSERTAR SEGUN REQUERIMIENTOS DEL PROCEDIMIENTO ALMACENADO**/
-        public void InsertProducto(DataSet ds)
+        public void InsertArea(DataSet ds)
         {
             try
             {
@@ -160,8 +167,8 @@ namespace Infraestructura.Data.SqlServer
         #endregion
         private void ListaParametros(int tipo, int idProd, string nomProd, int canProd, int idCat, int idUMed)
         {
-            SqlParameter pNomTabla = new SqlParameter("@tabla", nomTabPro);//NOMBRE TABLA LOG.TBC_CATEGORIA @tabla
-            SqlParameter pCampoEval = new SqlParameter("@campo", nombrePro);//NOMBRE DE LA COL BD NOMBRE DE LA CATEGORIA
+            SqlParameter pNomTabla = new SqlParameter("@tabla", nomTabArea);//NOMBRE TABLA LOG.TBC_CATEGORIA @tabla
+            SqlParameter pCampoEval = new SqlParameter("@campo", nombreArea);//NOMBRE DE LA COL BD NOMBRE DE LA CATEGORIA
             if (tipo == 1)//tipo 1:actualizar
             {
                 string valores = nomProd + ";" + canProd + ";" + idCat + ";" + idUMed;
@@ -182,10 +189,10 @@ namespace Infraestructura.Data.SqlServer
         }
         #region MODIFICAR REGISTRO EXISTENTE EN PRODUCTO
         /**METODO MODIFICAR SEGUN REQUERIMIENTOS DEL PROCEDIMIENTO ALMACENADO**/
-        public void UpdateProducto(int idProd, string nomProd, int canProd, int idCat, int idUMed)
+        public void UpdateArea(int idProd, string nomProd, int canProd, int idCat, int idUMed)
         {
             int tipo = 1;
-            ListaParametros(tipo,  idProd,  nomProd,  canProd,  idCat,  idUMed);
+            ListaParametros(tipo, idProd, nomProd, canProd, idCat, idUMed);
             try
             {
                 com.TransUnica("GEN_ACTUALIZAR", lista);
@@ -200,10 +207,10 @@ namespace Infraestructura.Data.SqlServer
         #endregion
         #region ELIMINAR REGISTRO EXISTENTE EN CATEGORÍA
         /**METODO ELIMINAR SEGUN REQUERIMIENTOS DEL PROCEDIMIENTO ALMACENADO**/
-        public void DeleteProducto(int idProd)
+        public void DeleteArea(int idProd)
         {
             int tipo = 3;
-            ListaParametros(tipo,idProd,"",0,0,0);
+            ListaParametros(tipo, idProd, "", 0, 0, 0);
             try
             {
                 com.TransUnica("GEN_ELIMINAR", lista);
@@ -216,6 +223,5 @@ namespace Infraestructura.Data.SqlServer
             }
         }
         #endregion
-
     }
 }

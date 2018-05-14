@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using System.Data;
 using Dominio.Core.Entities;
 using Infraestructura.Data.SqlServer;
-using System.Xml.Linq;
 namespace Dominio.Main.Module
 {
     public class BProducto
@@ -19,14 +18,19 @@ namespace Dominio.Main.Module
              return odPro.BuscarProducto(proBuscar);
         }
 
-        public void InsertProducto(String xml)
+        #region METODOS
+        public void InsertProducto(DataSet ds)
         {
-            //odPro.InsertProducto(xml);
+            odPro.InsertProducto(ds);
         }
-
-        public void UpdateProducto(string nomCat, int idFam, int idCat)
+        public void UpdateProducto(int idProd, string nomProd, int canProd, int idCat, int idUMed)
         {
-            //odPro.UpdateProducto(nomCat, idFam, idCat);
+            odPro.UpdateProducto(idProd, nomProd, canProd, idCat, idUMed);
         }
+        public void DeleteProducto(int idProd)
+        {
+            odPro.DeleteProducto(idProd);
+        }
+        #endregion
     }
 }

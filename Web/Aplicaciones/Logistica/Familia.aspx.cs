@@ -1,45 +1,70 @@
 ﻿using System;
-using System.Web.UI.WebControls;
-using System.Web.UI.HtmlControls;
+using System.Collections.Generic;
 using System.Data;
+using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
 using Dominio.Core.Entities;
+using Dominio.Main.Module;
 using Infraestructura.Data.SqlServer;
-using System.IO;
 
 public partial class Familia : System.Web.UI.Page
 {
-    private int cont = 1;
-
-    private string ConvertDatatableToXML(DataTable dt)
-    {
-        MemoryStream str = new MemoryStream();
-        dt.WriteXml(str, true);
-        str.Seek(0, SeekOrigin.Begin);
-        StreamReader sr = new StreamReader(str);
-        string xmlstr;
-        xmlstr = sr.ReadToEnd();
-        return (xmlstr);
-    }
-    protected void btnSave_Click(object sender, EventArgs e)
-    {
-        DFamilia ofam = new DFamilia();
-        DataTable DTcol1 = new DataTable("XTBC_FAMILIA");
-        DTcol1.Columns.Add(ofam.nomFam);//col 1 de la BD
-        int fila = Convert.ToInt32(Hc.Value);
-        for (int i = 0; i < fila; i++)
-        {
-            DataRow f = DTcol1.NewRow();
-            f[0] = Request["txtNomFam" + cont];
-            DTcol1.Rows.Add(f);
-            cont++;
-
-        }
-        //DTcol1.WriteXml("E:/Familia.xml");
-        ConvertDatatableToXML(DTcol1);
-    }
-
+    BFamilia obFam = new BFamilia();
+    EFamilia oeFam = new EFamilia();
+    List<string> lista = new List<string>();
+    DataSet ds = new DataSet();
+    DataTable dt = new DataTable();
     protected void Page_Load(object sender, EventArgs e)
     {
+        dt.Columns.Add("NomFamilia");
+    }
+    protected void BtnGuardar_Click(object sender, EventArgs e)
+    {
+        if (HctblFamilia.Value.Equals(string.Empty))
+        {
+            HctblFamilia.Value = "1";
+        }
+        for (int i = 0; i < Convert.ToInt32(HctblFamilia.Value); ++i)
+        {
+            DataRow dr = dt.NewRow();
+            dt.Rows.Add(dr);
+            dt.Rows[i][0] = Request["txtFamilia" + (i + 1)];
+        }
+        //grid.DataSource = dt;
+        //grid.DataBind();
+        ds.Tables.Add(dt);
+        obFam.InsertFamilia(ds);
+    }
+    protected void gvFamilia_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
 
     }
+
+    protected void gvFamilia_RowUpdating(object sender, GridViewUpdateEventArgs e)
+    {
+        int idFam = Convert.ToInt32((gvFamilia.Rows[e.RowIndex].FindControl("lblIdFam") as Label).Text.Trim());
+        string nomFam = (gvFamilia.Rows[e.RowIndex].FindControl("txtFam") as TextBox).Text.Trim();
+        obFam.UpdateFamilia(idFam, nomFam);
+    }
+
+    protected void gvFamilia_RowDeleting(object sender, GridViewDeleteEventArgs e)
+    {
+        int idFam = Convert.ToInt32((gvFamilia.Rows[e.RowIndex].FindControl("lblIdFam") as Label).Text.Trim());
+        obFam.DeleteFamilia(idFam);
+    }
+
+    protected void btnBusFam_Click(object sender, EventArgs e)
+    {
+        gvFamilia.Columns[0].Visible = false;
+        string famBus = txtBusFam.Value;
+        tbodyCol.Attributes.Add("style", "display:none;");
+        divControl.Attributes.Add("style", "display:block;");
+        gvFamilia.Visible = true;
+        DataTable dt = obFam.BuscarFamilia(famBus);
+        gvFamilia.DataSource = dt;
+        gvFamilia.DataBind();
+        txtFamilia1.Value = "";
+    }
+
+
 }

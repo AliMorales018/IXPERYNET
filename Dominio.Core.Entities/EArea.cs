@@ -8,5 +8,6 @@ namespace Dominio.Core.Entities
 {
     public class EArea
     {
+        public int IdArea { get; set; }
     }
 }
