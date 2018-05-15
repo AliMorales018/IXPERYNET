@@ -19,50 +19,54 @@ namespace Infraestructura.Data.SqlServer
 		#region ATRIBUTOS DE APLICACION
 		/**NOMBRE TABLA**/
 		internal string tablaApli { get => "TBC_APLICACION"; }
-		/*
-		internal string tIdApp { get => "N_IdApli"; }
-		internal string tNomApp { get => "V_Aplicacion"; }
-		internal string tEstApp { get => "S_Estado"; }
-		internal string tVerApp { get => "N_Version"; }
-		internal string tAbrApp { get => "V_Abreviatura"; }
-		public string cIdApp { get => "IdApli"; }
-		public string cNomApp { get => "Aplicacion"; }
-		public string cEstApp { get => "Estado"; }
-		public string cVerApp { get => "Version"; }
-		public string cAbrApp { get => "Abreviatura"; }
-		*/
 		#endregion
 
 		#region INSTANCIACIONES
 		/**LLAMADOS A OTRAS CLASES**/
 		DtUtilitario com = new DtUtilitario();
 		List<SqlParameter> listaParametros = new List<SqlParameter>();
-		List<string> lstAppReal = new List<string>();
-		List<string> lstAppAli = new List<string>();
+		private List<string> lstAppReal = new List<string>();
+		public List<string> lstAppAli = new List<string>();
 		DGeneral odGeneral = new DGeneral();
 		XDocument xml = new XDocument();
 		#endregion
 
 		#region LISTA DE CAMPOS DEL DB
-		internal List<string> LstAppReal()
+		private List<string> LstAppReal()
 		{
+			/*
 			lstAppReal[0] = "N_IdApli";
 			lstAppReal[1] = "V_Aplicacion";
 			lstAppReal[2] = "S_Estado";
 			lstAppReal[3] = "N_Version";
 			lstAppReal[4] = "V_Abreviatura";
+			*/
+			lstAppReal.Add("N_IdApli");
+			lstAppReal.Add("V_Aplicacion");
+			lstAppReal.Add("S_Estado");
+			lstAppReal.Add("N_Version");
+			lstAppReal.Add("V_Abreviatura");
 			return lstAppReal;
 		}
 		#endregion
 
 		#region LISTA DE CAMPOS CON ALIAS DEL DB
-		internal List<string> LstAppAli()
+		private List<string> LstAppAli()
 		{
-			lstAppAli[0] = "IdApli";
+			/*
+			lstAppAli[0]. = "IdApli";
 			lstAppAli[1] = "Aplicacion";
 			lstAppAli[2] = "Estado";
 			lstAppAli[3] = "Version";
 			lstAppAli[4] = "Abreviatura";
+			*/
+			lstAppAli.Add("IdApli");
+			lstAppAli.Add("Aplicacion");
+			lstAppAli.Add("Estado");
+			lstAppAli.Add("Version");
+			lstAppAli.Add("Abreviatura");
+
+
 			return lstAppAli;
 		}
 		#endregion
@@ -72,14 +76,17 @@ namespace Infraestructura.Data.SqlServer
 		{
 			try
 			{
+				LstAppAli();
+				LstAppReal();
 				DataTable dtPos = new DataTable();
+				DataTable prueba = new DataTable();
+				prueba = ds.Tables[0];
 				listaParametros.Clear();
 				SqlParameter pTabla = new SqlParameter("@tabla", tablaApli);
 				listaParametros.Add(pTabla);
 				dtPos = com.EjecutaConsulta("GEN_RETORNAID", listaParametros, 1);
 				int numero = Convert.ToInt32(dtPos.Rows[0][0].ToString());
-				//ds.Tables[0].Columns.Add("IdApli").SetOrdinal(0);
-				ds.Tables[0].Columns.Add(LstAppAli()[0]).SetOrdinal(0);
+				ds.Tables[0].Columns.Add(lstAppAli[0]).SetOrdinal(0);
 
 				for (int i = 0; i < ds.Tables[0].Rows.Count; ++i)
 				{
@@ -101,9 +108,11 @@ namespace Infraestructura.Data.SqlServer
 		public DataSet ValidarDataSet(DataSet ds)
 		{
 			ds.Tables[0].TableName = tablaApli;
-			for (int i = 0; i < LstAppReal().Count; i++)
+			int numFilas = lstAppReal.Count;
+
+			for (int i = 0; i < numFilas; i++)
 			{
-				ds.Tables[0].Columns[LstAppAli()[i]].ColumnName = LstAppReal()[i];
+				ds.Tables[0].Columns[LstAppAli()[i]].ColumnName = lstAppReal[i];
 			}
 			if (ds.Tables.Count == 2)
 			{
@@ -118,9 +127,9 @@ namespace Infraestructura.Data.SqlServer
 		{
 			string campos = string.Empty;		
 			List<string> camposTabla = new List<string>();
-			for (int j = 1; j < LstAppReal().Count; ++j)
+			for (int j = 1; j < lstAppReal.Count; ++j)
 			{
-				camposTabla.Add(LstAppReal()[j]);
+				camposTabla.Add(lstAppReal[j]);
 			}
 
 			foreach (string campoLista in lista)
@@ -152,14 +161,15 @@ namespace Infraestructura.Data.SqlServer
 			{
 				List<SqlParameter> listParInsert = new List<SqlParameter>();
 				SqlParameter pXml = new SqlParameter("@xml", Convert.ToString(odGeneral.generarXML(ValidarDataSet(FixDataSet(ds)))));
+				SqlParameter pSalid = new SqlParameter("@salid", "");
+				pSalid.Direction = ParameterDirection.InputOutput;
+				pSalid.Size = 50;
 				//SqlParameter pCampo = new SqlParameter("@campo", campo);
-				//SqlParameter pSalid = new SqlParameter("@salida", salida);
-				//pSalid.Direction = ParameterDirection.InputOutput;
 				listParInsert.Add(pXml);
+				listParInsert.Add(pSalid);
 				//listaParametros.Add(pCampo);
-				//listaParametros.Add(pSalid);
-				com.TransUnica("GEN_INSERTAR_XML", listParInsert);
-				//string a = Convert.ToString(pSalid.Value);
+				com.TransUnica("GEN_INSERTAR_XML_CON_ID", listParInsert);
+				string retorno = Convert.ToString(pSalid.Value);
 				listParInsert.Clear();
 			}
 			catch (Exception ex)
