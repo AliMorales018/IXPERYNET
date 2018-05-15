@@ -13,32 +13,57 @@ namespace Dominio.Main.Module
     public class BEmpleado
     {
         DEmpleado odEmpl = new DEmpleado();
-
-        public DataTable BuscarEmpleado(string emplBuscar)
-        {
-            return odEmpl.BuscarEmpleado(emplBuscar);
-        }
-        public DataTable ListarSexo()
-        {
-            return odEmpl.ListarSexo();
-        }
-        //public DataTable ListarEmpleado()
+       
+        #region ATRIBUTOS
+        /**LLAMADO DE LOS ATRIBUTOS EN LA CAPA DE DATOS**/
+        //public string ApliValue()
         //{
-        //    //return odEmpl.ListarEmpleado();
+        //	return odApli.cIdApp;
         //}
+
+        //public string ApliText()
+        //{
+        //	return odApli.cNomApp;
+        //}
+        #endregion
+
         #region METODOS
-        public void InsertEmpleado(DataSet ds)
+        /**LLAMADO DE LOS METODOS EN LA CAPA DE DATOS**/
+        public void Insertar(DataSet ds)
         {
-            odEmpl.InsertEmpleado(ds);
+            odEmpl.InsertarEmpleado(ds);
         }
-        public void UpdateEmpleado(int idEmpl, int idArea, char dni, string nombre, string paterno, string materno, char telef,string direc, string fNac, char sex, char esta)
+
+        public void Modificar(EEmpleado oeEmpl, List<string> campos, string valores)
         {
-            odEmpl.UpdateEmpleado(idEmpl, idArea, dni, nombre, paterno, materno, telef, direc, fNac, sex, esta);
+            odEmpl.ModificarEmpleado(oeEmpl, campos, valores);
         }
-        public void DeleteEmpleado(int idEmpl)
+
+        public void Eliminar(EEmpleado oeEmpl)
         {
-            odEmpl.DeleteEmpleado(idEmpl);
+            odEmpl.EliminarEmpleado(oeEmpl);
         }
         #endregion
+
+        #region FUNCIONES
+        /**LLAMADO DE LAS FUNCIONES EN LA CAPA DE DATOS**/
+        public DataTable Listar()
+        {
+            return odEmpl.ListarEmpleados();
+        }
+        public List<string> getListEmpl()
+        {
+            return odEmpl.getListaEmpl();
+        }
+        public List<string> llenarLista()
+        {
+            return odEmpl.LstEmplAli();
+        }
+        public DataTable Buscar(List<string> campos, string valores)
+        {
+            return odEmpl.BuscarEmpleados(campos, valores);
+        }
+        #endregion
+
     }
 }

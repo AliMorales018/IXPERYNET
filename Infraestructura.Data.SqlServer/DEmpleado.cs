@@ -13,37 +13,47 @@ namespace Infraestructura.Data.SqlServer
 {
     public class DEmpleado
     {
-        #region ATRIBUTOS DE APLICACION
-        /**NOMBRE TABLAS**/
+        //#region ATRIBUTOS DE APLICACION
+        ///**NOMBRE TABLAS**/
+
         internal string nomTabEmpl { get => "TBC_EMPLEADO"; }
-        /**NOMBRE DE CAMPOS EN LA BASE DE DATOS**/
-        internal string idEmpleado { get => "N_IdEmpleado"; }
-        internal string idArea { get => "N_IdArea"; }
-        internal string Dni { get => "C_Dni"; }
-        internal string Nombres { get => "V_Nombre"; }
-        internal string ApePat { get => "V_ApellidoPaterno"; }
-        internal string ApeMat { get => "V_ApellidoMaterno"; }
-        internal string Telefono { get => "C_Telefono"; }
-        internal string Direccion { get => "V_Direccion"; }
-        internal string FechaNac { get => "D_FechaNac"; }
-        internal string Sexo { get => "C_Sexo"; }
-        internal string Estado { get => "S_Estado"; }
-        /**NOMBRE DE CAMPOS PARA LA PRESENTACION**/
-        public string cIdEmpl { get => "IdEmpl"; }
-        public string cIdArea { get => "IdArea"; }
-        public string cDni { get => "Dni"; }
-        public string cNombres { get => "Nombre"; }
-        public string cApePat { get => "ApePaterno"; }
-        public string cApeMat { get => "ApeMaterno"; }
-        public string cTel { get => "Telefono"; }
-        public string cDir { get => "Direccion"; }
-        public string cFNac { get => "FechaNac"; }
-        public string cSexo { get => "Sexo"; }
-        public string cEstado { get => "Estado"; }
-        #endregion
-        #region DECLARACION DE VARIABLES
-        /****/
-        private string campoUpd = "N_IdEmpleado;N_IdArea;C_Dni;V_Nombre;V_ApellidoPaterno;V_ApellidoMaterno;C_Telefono;V_Direccion;D_FechaNac;C_Sexo;S_Estado";
+        private List<string> lstEmplReal = new List<string>();
+        private List<string> lstEmplAli = new List<string>();
+        #region LISTA DE CAMPOS DEL DB
+        private List<string> LstEmplReal()
+        {
+            lstEmplReal.Add("N_IdEmpleado");
+            lstEmplReal.Add("N_IdArea");
+            lstEmplReal.Add("C_Dni");
+            lstEmplReal.Add("V_Nombre");
+            lstEmplReal.Add("V_ApellidoPaterno");
+            lstEmplReal.Add("V_ApellidoMaterno");
+            lstEmplReal.Add("C_Telefono");
+            lstEmplReal.Add("V_Direccion");
+            lstEmplReal.Add("D_FechaNac");
+            lstEmplReal.Add("C_Sexo");
+            lstEmplReal.Add("S_Estado");
+            return lstEmplReal;
+        }
+        public List<string> LstEmplAli()
+        {
+            lstEmplAli.Add("IdEmpleado");
+            lstEmplAli.Add("IdArea");
+            lstEmplAli.Add("Dni");
+            lstEmplAli.Add("Nombre");
+            lstEmplAli.Add("ApellidoPaterno");
+            lstEmplAli.Add("ApellidoMaterno");
+            lstEmplAli.Add("Telefono");
+            lstEmplAli.Add("Direccion");
+            lstEmplAli.Add("FechaNac");
+            lstEmplAli.Add("Sexo");
+            lstEmplAli.Add("Estado");
+            return lstEmplAli;
+        }
+        public List<string> getListaEmpl()
+        {
+            return lstEmplAli;
+        }
         #endregion
         #region INSTANCIACIONES
         /**LLAMADOS A OTRAS CLASES**/
@@ -92,21 +102,16 @@ namespace Infraestructura.Data.SqlServer
             }
         }
         #region VALIDACIONES
-        /**VALIDACIONES DE LOS NOMBRES DE LAS TABLAS**/
+        /**VALIDACIONES DE LOS NOMBRES DE LAS TABLAS Y CAMPOS**/
         public DataSet ValidarDataSet(DataSet ds)
         {
             ds.Tables[0].TableName = nomTabEmpl;
-            ds.Tables[0].Columns[cIdEmpl].ColumnName = idEmpleado;
-            ds.Tables[0].Columns[cIdArea].ColumnName = idArea;
-            ds.Tables[0].Columns[cDni].ColumnName = Dni;
-            ds.Tables[0].Columns[cNombres].ColumnName = Nombres;
-            ds.Tables[0].Columns[cApePat].ColumnName = ApePat;
-            ds.Tables[0].Columns[cApeMat].ColumnName = ApeMat;
-            ds.Tables[0].Columns[cTel].ColumnName = Telefono;
-            ds.Tables[0].Columns[cDir].ColumnName = Direccion;
-            ds.Tables[0].Columns[cFNac].ColumnName = FechaNac;
-            ds.Tables[0].Columns[cSexo].ColumnName = Sexo;
-            ds.Tables[0].Columns[cEstado].ColumnName = Estado;
+            int numFilas = lstEmplReal.Count;
+
+            for (int i = 0; i < numFilas; i++)
+            {
+                ds.Tables[0].Columns[LstEmplAli()[i]].ColumnName = lstEmplReal[i];
+            }
             if (ds.Tables.Count == 2)
             {
                 //LLENAR SEGUN CASO
@@ -115,21 +120,17 @@ namespace Infraestructura.Data.SqlServer
             }
             return ds;
         }
-        /**VALIDACIONES DE LOS NOMBRES DE LOS CAMPOS**/
+        /**VALIDACIONES DE LISTAS**/
         public string ValidarCampos(List<string> lista)
         {
+            LstEmplReal();
             string campos = string.Empty;
             List<string> camposTabla = new List<string>();
-            camposTabla.Add(idArea);
-            camposTabla.Add(Dni);
-            camposTabla.Add(Nombres);
-            camposTabla.Add(ApePat);
-            camposTabla.Add(ApeMat);
-            camposTabla.Add(Telefono);
-            camposTabla.Add(Direccion);
-            camposTabla.Add(FechaNac);
-            camposTabla.Add(Sexo);
-            camposTabla.Add(Estado);
+            for (int j = 1; j < lstEmplReal.Count; ++j)
+            {
+                camposTabla.Add(lstEmplReal[j]);
+            }
+
             foreach (string campoLista in lista)
             {
                 foreach (string campoTabla in camposTabla)
@@ -149,19 +150,24 @@ namespace Infraestructura.Data.SqlServer
             }
             return campos;
         }
+
         #endregion
         #region MODIFICAR DATASET
         public DataSet FixDataSet(DataSet ds)
         {
             try
             {
+                //LstEmplAli();
+                LstEmplReal();
                 DataTable dtPos = new DataTable();
+                DataTable prueba = new DataTable();
+                prueba = ds.Tables[0];
                 listaParametros.Clear();
                 SqlParameter pTabla = new SqlParameter("@tabla", nomTabEmpl);
                 listaParametros.Add(pTabla);
                 dtPos = com.EjecutaConsulta("GEN_RETORNAID", listaParametros, 1);
                 int numero = Convert.ToInt32(dtPos.Rows[0][0].ToString());
-                ds.Tables[0].Columns.Add("IdEmpl").SetOrdinal(0);
+                ds.Tables[0].Columns.Add(lstEmplAli[0]).SetOrdinal(0);
 
                 for (int i = 0; i < ds.Tables[0].Rows.Count; ++i)
                 {
@@ -179,24 +185,21 @@ namespace Infraestructura.Data.SqlServer
         #endregion
         #region INSERTAR NUEVO REGISTRO EN EMPLEADO
         /**METODO INSERTAR SEGUN REQUERIMIENTOS DEL PROCEDIMIENTO ALMACENADO**/
-        public void InsertEmpleado(DataSet ds)
+        public void InsertarEmpleado(DataSet ds)
         {
-            string salida = "";
             try
             {
                 List<SqlParameter> listParInsert = new List<SqlParameter>();
                 SqlParameter pXml = new SqlParameter("@xml", Convert.ToString(odGeneral.generarXML(ValidarDataSet(FixDataSet(ds)))));
-                //SqlParameter pCampo = new SqlParameter("@campo", campo);
-                SqlParameter pSalid = new SqlParameter("@salid", salida);
+                SqlParameter pSalid = new SqlParameter("@salid", "");
                 pSalid.Direction = ParameterDirection.InputOutput;
-                pSalid.SqlDbType=SqlDbType.NVarChar;
-                pSalid.Size = 100;
+                pSalid.Size = 50;
+                //SqlParameter pCampo = new SqlParameter("@campo", campo);
                 listParInsert.Add(pXml);
                 listParInsert.Add(pSalid);
                 //listaParametros.Add(pCampo);
-                //listaParametros.Add(pSalid);
                 com.TransUnica("GEN_INSERTAR_XML_CON_ID", listParInsert);
-                string a = pSalid.Value.ToString();
+                string retorno = Convert.ToString(pSalid.Value);
                 listParInsert.Clear();
             }
             catch (Exception ex)
@@ -206,75 +209,70 @@ namespace Infraestructura.Data.SqlServer
             }
         }
         #endregion
-        private void ListaParametros(int tipo, int idEmpl, int idArea, char dni, string nombre, string paterno, string materno, char telef, string direc, string fNac, char sex, char esta)
-        {
-            SqlParameter pNomTabla = new SqlParameter("@tabla", nomTabEmpl);//NOMBRE TABLA LOG.TBC_CATEGORIA @tabla
-            SqlParameter pCampoEval = new SqlParameter("@campo", Dni);//NOMBRE DE LA COL BD NOMBRE DE LA CATEGORIA
-            if (tipo == 1)//tipo 1:actualizar
-            {
-                string valores = idArea + ";" + dni + ";" + nombre + ";" + paterno + ";" +  materno + ";" +  telef + ";" +  direc + ";" +  fNac + ";" + sex + ";" +  esta;
-                SqlParameter pCampos = new SqlParameter("@campos", campoUpd);
-                SqlParameter pValores = new SqlParameter("@valores", valores);
-                SqlParameter pIdEmpl = new SqlParameter("@id", idEmpl);
-                lista.Add(pNomTabla);
-                lista.Add(pCampos);
-                lista.Add(pValores);
-                lista.Add(pIdEmpl);
-            }
-            else
-            {
-                SqlParameter pIdEmpl = new SqlParameter("@id", idEmpl);
-                lista.Add(pIdEmpl);
-                lista.Add(pNomTabla);
-            }
-        }
-        #region MODIFICAR REGISTRO EXISTENTE EN PRODUCTO
+        #region MODIFICAR REGISTRO EXISTENTE EN APLICACION
         /**METODO MODIFICAR SEGUN REQUERIMIENTOS DEL PROCEDIMIENTO ALMACENADO**/
-        public void UpdateEmpleado(int idEmpl, int idArea, char dni, string nombre, string paterno, string materno, char telef, string direc, string fNac, char sex, char esta)
+        public void ModificarEmpleado(EEmpleado oeEmpl, List<string> campos, string valores)
         {
-            int tipo = 1;
-            ListaParametros(tipo, idEmpl, idArea, dni, nombre, paterno, materno, telef, direc, fNac, sex, esta);
             try
             {
-                com.TransUnica("GEN_ACTUALIZAR", lista);
+                SqlParameter pTabla = new SqlParameter("@tabla", nomTabEmpl);
+                SqlParameter pId = new SqlParameter("@id", oeEmpl.idEmpleado);
+                SqlParameter pCampos = new SqlParameter("@campos", ValidarCampos(campos));
+                SqlParameter pValores = new SqlParameter("@valores", valores);
+                listaParametros.Add(pTabla); listaParametros.Add(pId); listaParametros.Add(pCampos); listaParametros.Add(pValores);
+                com.TransUnica("GEN_ACTUALIZAR", listaParametros);
+                listaParametros.Clear();
             }
             catch (Exception ex)
             {
                 com.DeshaceTransaccion();
-                throw new Exception(ex.Message, ex);
+                throw new Exception("DB - Error" + ex.Message, ex);
             }
-            lista.Clear();
         }
         #endregion
-        #region ELIMINAR REGISTRO EXISTENTE EN EMPLEADO
+
+        #region ELIMINAR REGISTRO EXISTENTE EN APLICACION
         /**METODO ELIMINAR SEGUN REQUERIMIENTOS DEL PROCEDIMIENTO ALMACENADO**/
-        public void DeleteEmpleado(int idEmpl)
-        {
-            int tipo = 3;
-            ListaParametros(tipo, idEmpl,0,'0',"","","",'0',"","",'0','0');
-            try
-            {
-                com.TransUnica("GEN_ELIMINAR", lista);
-                lista.Clear();
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-        #endregion
-
-        public DataTable LlenarCombo()
+        public void EliminarEmpleado(EEmpleado oEmpl)
         {
             try
             {
-                return com.EjecutaConsulta("LOG_TBC_EMPLEADO_LISTAR", lista, 0);
+                SqlParameter pTabla = new SqlParameter("@tabla", nomTabEmpl);
+                SqlParameter pId = new SqlParameter("@id", oEmpl.idEmpleado);
+                listaParametros.Add(pId); listaParametros.Add(pTabla);
+                com.TransUnica("GEN_ELIMINAR", listaParametros);
+                listaParametros.Clear();
             }
             catch (Exception ex)
             {
-                throw new Exception("Error " + ex.Message, ex);
+                com.DeshaceTransaccion();
+                throw new Exception("DB - Error" + ex.Message, ex);
             }
         }
+        #endregion
+
+        #region LISTAR TODOS LOS REGISTROS EN APLICACION
+        /**FUNCION LISTAR SEGUN REQUERIMIENTOS DEL PROCEDIMIENTO ALMACENADO**/
+        public DataTable ListarEmpleados()
+        {
+            listaParametros.Clear();
+            SqlParameter pTabla = new SqlParameter("@tabla", nomTabEmpl);
+            listaParametros.Add(pTabla);
+            return com.EjecutaConsulta("GEN_LISTAR", listaParametros, 1);
+        }
+        #endregion
+
+        #region BUSCAR REGISTROS DETERMINADOS EN APLICACION
+        /**FUNCION BUSCAR SEGUN REQUERIMIENTOS DEL PROCEDIMIENTO ALMACENADO**/
+        public DataTable BuscarEmpleados(List<string> campos, string valores)
+        {
+            listaParametros.Clear();
+            SqlParameter pTabla = new SqlParameter("@tabla", nomTabEmpl);
+            SqlParameter pCampos = new SqlParameter("@campos", ValidarCampos(campos));
+            SqlParameter pValores = new SqlParameter("@valores", valores);
+            listaParametros.Add(pTabla); listaParametros.Add(pCampos); listaParametros.Add(pValores);
+            return com.EjecutaConsulta("GEN_FILTRAR", listaParametros, 1);
+        }
+        #endregion
     }
 }
