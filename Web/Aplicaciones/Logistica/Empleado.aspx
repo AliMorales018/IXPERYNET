@@ -5,7 +5,9 @@
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Registro_Empleados</title>
-    <script type="text/javascript">
+        <% Response.WriteFile("/Includes/filesCss.html"); %>
+    <% Response.WriteFile("/Includes/filesJs.html"); %>
+      <script type="text/javascript">
         function Demple(id,f) {
             document.getElementById("Hdemp").value = id;
             var objD = document.getElementById("BtnEliminar");
@@ -23,8 +25,6 @@
             }
         }
     </script>
-        <% Response.WriteFile("/Includes/filesCss.html"); %>
-    <% Response.WriteFile("/Includes/filesJs.html"); %>
 </head>
 <body class="bg-light">
     <form id="form1" runat="server">
@@ -43,7 +43,7 @@
                             <tr class="bg-dark text-white border border-dark">
                                 <th class="text-center font-weight-light">N°</th>
                                 <th class="text-center font-weight-light">Area</th>
-                                <th class="text-center font-weight-light" style="display:none;">IdEmpleado</th>
+                                <th class="text-center font-weight-light" style="display: none;">IdEmpleado</th>
                                 <th class="text-center font-weight-light"><div id="divControlDni" runat="server">
                                                 <input type="text" id="txtBusDni" name='txtBusDni' placeholder='Buscar Dni' class='form - control' runat="server" />
                                                 <asp:Button ID="btnBusDni" Text="Buscar" runat="server" OnClick="btnBusDni_Click" />
@@ -72,17 +72,17 @@
                             <tr id="firstRowBody">
                                 <td><div id="campo1"><p>1</p></div></td>
                                 <td><div id="campo2" class="input-group input-group-sm"><select runat="server" class="form-control" id="cmbArea1"></select></div></td>
-                                <td><div id="campo3" class="input-group input-group-sm"><input type="text" runat="server" id="txtId1" class="form-control" /></div></td>
+                                <td style="display: none;"><div id="campo3" class="input-group input-group-sm"><input type="text" runat="server" id="txtId1" class="form-control" /></div></td>
                                 <td><div id="campo4" class="input-group input-group-sm"><input type="text" runat="server" id="txtDni1" class="form-control" /></div></td>
                                 <td><div id="campo5" class="input-group input-group-sm"><input type="text" runat="server" id="txtNombre1" class="form-control" /></div></td>
                                 <td><div id="campo6" class="input-group input-group-sm"><input type="text" runat="server" id="txtApePat1" class="form-control" /></div></td>
                                 <td><div id="campo7" class="input-group input-group-sm"><input type="text" runat="server" id="txtApeMat1" class="form-control" /></div></td>
                                 <td><div id="campo8" class="input-group input-group-sm"><input type="text" runat="server" id="txtTelef1" class="form-control" /></div></td>
                                 <td><div id="campo9" class="input-group input-group-sm"><input type="text" runat="server" id="txtDirec1" class="form-control" /></div></td>
-                                <td><div id="campo11" class="input-group input-group-sm"><input type="date" value="2018-05-15" runat="server" id="txtFNac1" class="form-control" /></div></td>
-                                <td><div id="campo12" class="input-group input-group-sm"><select runat="server" id="cmbSex1" class="form-control" ><option value="M">M</option><option value="F">F</option></select></div></td>
+                                <td><div id="campo10" class="input-group input-group-sm"><input type="date" value="2018-05-15" runat="server" id="txtFNac1" class="form-control" /></div></td>
+                                <td><div id="campo11" class="input-group input-group-sm"><select runat="server" id="cmbSex1" class="form-control" ><option value="M">M</option><option value="F">F</option></select></div></td>
                                 <%--<td><div id="campo10" class="input-group input-group-sm"><input type="checkbox" runat="server" id="txtEstad1" value="0"  class="form-control"/></div></td>--%>
-                                <td class="text-center"><div id="campo13"><button type="button" class="btn btn-danger mr-sm-2 btn-sm" id="btn1">Eliminar</button></div></td>                     
+                                <td class="text-center"><div id="campo12"><button type="button" class="btn btn-danger mr-sm-2 btn-sm" id="btn1">Eliminar</button></div></td>                     
                             </tr>
                         </tbody>
                     </table>

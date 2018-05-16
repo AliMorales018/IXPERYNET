@@ -230,7 +230,27 @@ namespace Infraestructura.Data.SqlServer
             }
         }
         #endregion
-
+        #region MODIFICAR REGISTRO EXISTENTE EN APLICACION
+        /**METODO ACTUALIZAR SEGUN REQUERIMIENTOS DEL PROCEDIMIENTO ALMACENADO**/
+        public void ActualizarEmpleado(List<string> campos, string valores, int cod)
+        {
+            try
+            {
+                SqlParameter pTabla = new SqlParameter("@tabla", nomTabEmpl);
+                SqlParameter pId = new SqlParameter("@id", cod);
+                SqlParameter pCampos = new SqlParameter("@campos", ValidarCampos(campos));
+                SqlParameter pValores = new SqlParameter("@valores", valores);
+                listaParametros.Add(pTabla); listaParametros.Add(pCampos); listaParametros.Add(pValores); listaParametros.Add(pId);
+                com.TransUnica("GEN_ACTUALIZAR", listaParametros);
+                listaParametros.Clear();
+            }
+            catch (Exception ex)
+            {
+                com.DeshaceTransaccion();
+                throw new Exception("DB - Error" + ex.Message, ex);
+            }
+        }
+        #endregion
         #region ELIMINAR REGISTRO EXISTENTE EN APLICACION
         /**METODO ELIMINAR SEGUN REQUERIMIENTOS DEL PROCEDIMIENTO ALMACENADO**/
         public void EliminarEmpleado(EEmpleado oEmpl)

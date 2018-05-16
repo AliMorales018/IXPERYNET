@@ -63,6 +63,10 @@ namespace Dominio.Main.Module
         {
             return odEmpl.BuscarEmpleados(campos, valores);
         }
+        public void Actualizar(List<string> campos, string valores, int cod)
+        {
+             odEmpl.ActualizarEmpleado(campos, valores,cod);
+        }
         #endregion
 
     }

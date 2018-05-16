@@ -46,13 +46,16 @@ public partial class Aplicaciones_Logistica_Empleado : System.Web.UI.Page
             html += "<tr id='" + c + "'>";
            
             for (int j = -1; j < columnas; j++)
-
                 if (j == -1)
                 {
                     cont++;
                     html += "<td>" + cont + "</td>";
                 }
                 else if (j == 0)
+                {
+                    html += "<td style='display: none;'><div id='campo3' class='input-group input-group-sm'><input type = 'text' runat='server' id='txtId" + cont + "' name='txtId" + cont + "' class='form-control' value='" + dt.Rows[i][j].ToString() + "'/></div></td>";
+                }
+            else if(j==1)
                 {
                     int idArea = Convert.ToInt32(dt.Rows[i][j]);
                     string option = "";
@@ -67,39 +70,36 @@ public partial class Aplicaciones_Logistica_Empleado : System.Web.UI.Page
                             option += "<option value='" + dtArea.Rows[k][0] + "'>" + dtArea.Rows[k][1] + "</option>";
                         }
                     }
-                    html += "<td><div id='campo2' class='input-group input-group-sm'><select runat='server' class='form-control' id='cmbArea" + cont + "' >" + option + "</select></div></td>";
-                }
-            else if(j==1)
-                {
-                    html += "<td style='display:none;'><div id='campo3' class='input-group input-group-sm'><input type = 'text' runat='server' id='txtIdEmple" + cont + "' class='form-control' value='" + dt.Rows[i][j].ToString() + "'/></div></td>";
+                    html += "<td><div id='campo2' class='input-group input-group-sm'><select runat='server' class='form-control' id='cmbArea" + cont + "' name='cmbArea" + cont + "'>" + option + "</select></div></td>";
                 }
                 else if (j == 2)
                 {
-                    html += "<td><div id='campo4' class='input-group input-group-sm'><input type='text' runat='server' id='txtDni" + cont + "' class='form-control' value='" + dt.Rows[i][j].ToString() + "'/></div></td>";
+                    html += "<td><div id='campo4' class='input-group input-group-sm'><input type='text' runat='server' id='txtDni" + cont + "' name='txtDni" + cont + "' class='form-control' value='" + dt.Rows[i][j].ToString() + "'/></div></td>";
                 }
                 else if (j == 3)
                 {
-                    html += "<td><div id='campo5' class='input-group input-group-sm'><input type = 'text' runat='server' id='txtNombre" + cont + "' class='form-control' value='" + dt.Rows[i][j].ToString() + "'/></div></td>";
+                    html += "<td><div id='campo5' class='input-group input-group-sm'><input type = 'text' runat='server' id='txtNombre" + cont + "' name='txtNombre" + cont + "' class='form-control' value='" + dt.Rows[i][j].ToString() + "'/></div></td>";
                 }
                 else if (j == 4)
                 {
-                    html += "<td><div id='campo6' class='input-group input-group-sm'><input type='text' runat='server' id='txtApePa" + cont + "' class='form-control' value='" + dt.Rows[i][j].ToString() + "'/></div></td>";
+                    html += "<td><div id='campo6' class='input-group input-group-sm'><input type='text' runat='server' id='txtApePat" + cont + "' name='txtApePat" + cont + "' class='form-control' value='" + dt.Rows[i][j].ToString() + "'/></div></td>";
                 }
                 else if (j == 5)
                 {
-                    html += "<td><div id ='campo7' class='input-group input-group-sm'><input type = 'text' runat='server' id='txtApeMat" + cont + "' class='form-control' value='" + dt.Rows[i][j].ToString() + "'/></div></td>";
+                    html += "<td><div id ='campo7' class='input-group input-group-sm'><input type = 'text' runat='server' id='txtApeMat" + cont + "' name='txtApeMat" + cont + "' class='form-control' value='" + dt.Rows[i][j].ToString() + "'/></div></td>";
                 }
                 else if (j == 6)
                 {
-                    html += "<td><div id='campo8' class='input-group input-group-sm'><input type='text' runat='server' id='txtTelef" + cont + "' class='form-control' value='" + dt.Rows[i][j].ToString() + "'/></div></td>";
+                    html += "<td><div id='campo8' class='input-group input-group-sm'><input type='text' runat='server' id='txtTelef" + cont + "' name='txtTelef" + cont + "' class='form-control' value='" + dt.Rows[i][j].ToString() + "'/></div></td>";
                 }
                 else if (j == 7)
                 {
-                    html += "<td><div id='campo9' class='input-group input-group-sm'><input type = 'text' runat='server' id='txtDirec" + cont + "' class='form-control' value='" + dt.Rows[i][j].ToString() + "'/></div></td>";
+                    html += "<td><div id='campo9' class='input-group input-group-sm'><input type = 'text' runat='server' id='txtDirec" + cont + "' name='txtDirec" + cont + "' class='form-control' value='" + dt.Rows[i][j].ToString() + "'/></div></td>";
                 }
                 else if (j == 8)
                 {
-                    html += "<td><div id='campo10' class='input-group input-group-sm'><input type='date' runat='server' id='txtFNac" + cont + "' class='form-control' value='" + dt.Rows[i][j].ToString() + "'/></div></td>";
+                    string fecha =Convert.ToDateTime(dt.Rows[i][j]).ToString("yyyy-MM-dd");
+                    html += "<td><div id='campo10' class='input-group input-group-sm'><input type='date' runat='server' id='txtFNac" + cont + "' name='txtFNac" + cont + "' class='form-control' value='" + fecha + "'/></div></td>";
                 }
                 else if (j == 9)
                 {
@@ -113,7 +113,7 @@ public partial class Aplicaciones_Logistica_Empleado : System.Web.UI.Page
                     {
                         inputSel = "<option value='M'>M</option><option value='F' selected>F</option>";
                     }
-                    html += "<td><div id='campo11' class='input-group input-group-sm'><select runat='server' id='cmbSex" + cont + "' class'form-control'>" + inputSel + "</select></div></td>";
+                    html += "<td><div id='campo11' class='input-group input-group-sm'><select runat='server' id='cmbSex" + cont + "' name='cmbSex" + cont + "' class'form-control'>" + inputSel + "</select></div></td>";
                 }
                 else if (j == 10)
                 {
@@ -161,9 +161,6 @@ public partial class Aplicaciones_Logistica_Empleado : System.Web.UI.Page
             mat = "%";
         }
         valores = dni + ";" + nom + ";" + pat + ";" + mat;
-
-
-        //odEmpl.lstEmplAli;
         DataTable dt = obEmpl.Buscar(listaBuscar, valores);
         DataTable dtArea = obArea.ListarArea();
         tbodyCol.InnerHtml = DataTable_HTML2(dt, dtArea);
@@ -228,30 +225,20 @@ public partial class Aplicaciones_Logistica_Empleado : System.Web.UI.Page
         {
             listaBuscar.Add(obEmpl.getListEmpl()[i]);
         }
-        //string cad = Request["txtNombre" + idFila];
-        string cad = Request["txtTelef1"];
-        //int idArea = Convert.ToInt32((WebControl)tblEmpleado.Rows[idFila].Cells[1].FindControl("cmbArea" + idFila));
-        //char dni = Convert.ToChar((WebControl)tblEmpleado.Rows[idFila].Cells[2].FindControl("txtDni" + idFila));
-        string nom = Convert.ToString((HtmlInputText)Page.FindControl("txtNombre" + idFila));
-        //string apePat = Convert.ToString((WebControl)tblEmpleado.Rows[idFila].Cells[4].FindControl("txtApePat" + idFila));
-        //int apeMat = Convert.ToInt32((WebControl)tblEmpleado.Rows[idFila].Cells[5].FindControl("txtApeMat" + idFila));
-        //int tel = Convert.ToInt32((WebControl)tblEmpleado.Rows[idFila].Cells[6].FindControl("txtTelef" + idFila));
-        //int dir = Convert.ToInt32((WebControl)tblEmpleado.Rows[idFila].Cells[7].FindControl("txtDirec" + idFila));
-        //int fNac = Convert.ToInt32((WebControl)tblEmpleado.Rows[idFila].Cells[8].FindControl("txtFNac" + idFila));
-        //int sexo = Convert.ToInt32((WebControl)tblEmpleado.Rows[idFila].Cells[9].FindControl("cmbSex" + idFila));
-        int idEstado = 1;
-        
-        //string dniBus = txtBusDni.Value;
-        //divControlDni.Attributes.Add("style", "display:block;");
-        //string valores = "";
-        //string dni = txtBusDni.Value;
-        //string nom = txtBusNom.Value;
-        //string pat = txtBusPat.Value;
-        //string mat = txtBusMat.Value;
+        int idArea = Convert.ToInt32(Request["cmbArea" + idFila]);
+        int idEmpl = Convert.ToInt32(Request["txtId" + idFila]);
+        string dni =Request["txtDni" + idFila];
+        string nom = Request["txtNombre" + idFila];
+        string apePat = Request["txtApePat" + idFila];
+        string apeMat = Request["txtApeMat" + idFila];
+        string tel = Request["txtTelef" + idFila];
+        string dir = Request["txtDirec" + idFila];
+        string fNac = Request["txtFNac" + idFila];
+        string sexo = Request["cmbSex" + idFila];
+        char idEstado = '1';         
 
-
-        
-        
-        //valores = dni + ";" + nom + ";" + pat + ";" + mat;
+        string valores = idArea + ";" + dni + ";" + nom + ";" + apePat + ";" + apeMat + ";" + tel + ";" + dir + ";" + fNac + ";" + sexo + ";" + idEstado;
+        obEmpl.Actualizar(listaBuscar, valores, idEmpl);
+        //busDni();
     }
 }
