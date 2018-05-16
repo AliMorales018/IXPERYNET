@@ -7,63 +7,108 @@ using Dominio.Main.Module;
 using Infraestructura.Data.SqlServer;
 public partial class Aplicaciones_Logistica_Categoria : System.Web.UI.Page
 {
-    BCategoria obCat = new BCategoria();
-    ECategoria oeCat = new ECategoria();
-    DFamilia odFam = new DFamilia();
-    BFamilia obFam = new BFamilia();
+    BCategoria obCate = new BCategoria();
+    ECategoria oeCate = new ECategoria();
+    BFamilia obFami = new BFamilia();
     List<string> lista = new List<string>();
+    List<string> listaBuscar = new List<string>();
+
     DataSet ds = new DataSet();
     DataTable dt = new DataTable();
     protected void Page_Load(object sender, EventArgs e)
     {
-        dt.Columns.Add("NomCategoria");
-        dt.Columns.Add("IdFamilia");
+        obCate.llenarLista();
+        int conList = obCate.getListCate().Count;
+        for (int i = 1; i < conList; i++)
+        {
+            dt.Columns.Add(obCate.getListCate()[i]);
+        }
         if (!IsPostBack)
         {
-            //LLENANDO EL COMBO CON LOS DATOS DE FAMILIA
-            cmbFam1.DataSource = obFam.LlenarCombo();
-            cmbFam1.DataTextField = "NOMBRE FAMILIA";
-            cmbFam1.DataValueField = "ID FAMILIA";
+            cmbFam1.DataSource = obFami.Listar();
+            cmbFam1.DataTextField = "NOMFAMILIA";
+            cmbFam1.DataValueField = "IDFAMILIA";
             cmbFam1.DataBind();
         }
     }
+    public static string DataTable_HTML2(DataTable dt, DataTable dtFamilia)
+    {
+        string html = "";
+        int cont = 0;
+        int columnas = dt.Columns.Count + 1;
+        for (int i = 0; i < dt.Rows.Count; i++)
+        {
+            int c = i + 1;
+            html += "<tr id='" + c + "'>";
+
+            for (int j = -1; j < columnas; j++)
+                if (j == -1)
+                {
+                    cont++;
+                    html += "<td>" + cont + "</td>";
+                }
+                else if (j == 0)
+                {
+                    html += "<td style='display: none;'><div id='campo2' class='input-group input-group-sm'><input type = 'text' runat='server' id='txtIdCat" + cont + "' name='txtIdCat" + cont + "' class='form-control' value='" + dt.Rows[i][j].ToString() + "'/></div></td>";
+                }
+                else if (j == 1)
+                {
+                    html += "<td><div id='campo3' class='input-group input-group-sm'><input type='text' runat='server' id='txtCategoria" + cont + "' name='txtCategoria" + cont + "' class='form-control' value='" + dt.Rows[i][j].ToString() + "'/></div></td>";
+                }
+                else if (j == 2)
+                {
+                    int idFam = Convert.ToInt32(dt.Rows[i][j]);
+                    string option = "";
+                    for (int k = 0; k < dtFamilia.Rows.Count; k++)
+                    {
+                        if (idFam == Convert.ToInt32(dtFamilia.Rows[k][0]))
+                        {
+                            option += "<option value='" + dtFamilia.Rows[k][0] + "' selected>" + dtFamilia.Rows[k][1] + "</option>";
+                        }
+                        else
+                        {
+                            option += "<option value='" + dtFamilia.Rows[k][0] + "'>" + dtFamilia.Rows[k][1] + "</option>";
+                        }
+                    }
+                    html += "<td><div id='campo4' class='input-group input-group-sm'><select runat='server' class='form-control' id='cmbFam" + cont + "' name='cmbFam" + cont + "'>" + option + "</select></div></td>";
+                }
+                else if (j == 3)
+                {
+                    html += "<td><div id='campo5'><button type='button' class='btn btn-danger mr-sm-2 btn-sm' id='btnE' runat='server' onclick='Dcate(" + dt.Rows[i][0].ToString() + "," + c + ");'>Eliminar</button></div></td>";
+                    html += "<td><div id='campo6'><button type='button' class='btn btn-danger mr-sm-2 btn-sm' id='btnA' runat='server' onclick='Ucate(" + c + ");' >Actualizar</button></div></td>";
+                }
+            html += "</tr>";
+        }
+        //html += "</body>";
+        return html;
+    }
+    void busCate()
+    {
+        string cateBus = txtBusCat.Value;
+        divControlCat.Attributes.Add("style", "display:block;");
+        string valores = "";
+        string nom = cateBus;
+        for (int i = 1; i < 2; i++)
+        {
+            listaBuscar.Add(obCate.getListCate()[i]);
+        }
+        if (txtBusCat.Value == "")
+        {
+            nom = "%";
+        }
+
+        valores = nom;
+        DataTable dt = obCate.Buscar(listaBuscar, valores);
+        DataTable dtFami = obFami.Listar();
+        tbodyCol.InnerHtml = DataTable_HTML2(dt, dtFami);
+    }
     protected void btnBusCat_Click(object sender, EventArgs e)
     {
-        gvCategoria.Columns[0].Visible = false;
-        //int fila = Convert.ToInt32(HBuscar.Value);
-        //if (fila==1)
-        //{
-        string catBus = txtBusCate.Value;
-        int contIdFam = 0;
-        tbodyCol.Attributes.Add("style", "display:none;");
-        divControl.Attributes.Add("style", "display:block;");
-        gvCategoria.Visible = true;
-        DataTable dt = obCat.BuscarCategoria(catBus);
-        gvCategoria.DataSource = dt;
-        gvCategoria.DataBind();
-        DataTable dtFam = obFam.ListarFamilia();
-        foreach (GridViewRow item in gvCategoria.Rows)
-        {
-            int idFam = Convert.ToInt32(dt.Rows[contIdFam][2]);
-            ((DropDownList)item.FindControl("cmbFamilia")).DataSource = dtFam;
-            ((DropDownList)item.FindControl("cmbFamilia")).DataTextField = "NOMBRE FAMILIA";
-            ((DropDownList)item.FindControl("cmbFamilia")).DataValueField = "ID FAMILIA";
-            ((DropDownList)item.FindControl("cmbFamilia")).SelectedValue = idFam.ToString();
-            ((DropDownList)item.FindControl("cmbFamilia")).DataBind();
-            contIdFam++;
-        }
-        txtCategoria1.Value = "";
-    }
-    protected void gvCategoria_RowUpdating(object sender, GridViewUpdateEventArgs e)
-    {
-        int idCate = Convert.ToInt32((gvCategoria.Rows[e.RowIndex].FindControl("lblIdCate") as Label).Text.Trim());
-        string nomCate = (gvCategoria.Rows[e.RowIndex].FindControl("txtCat") as TextBox).Text.Trim();
-        int idFam = Convert.ToInt32((gvCategoria.Rows[e.RowIndex].FindControl("cmbFamilia") as DropDownList).SelectedValue);
-        obCat.UpdateCategoria(nomCate, idFam, idCate);
+        busCate();
     }
     protected void BtnGuardar_Click(object sender, EventArgs e)
     {
-        if (HctblCategoria.Value.Equals(string.Empty))
+        if (HctblCategoria.Value.Equals(""))
         {
             HctblCategoria.Value = "1";
         }
@@ -74,18 +119,29 @@ public partial class Aplicaciones_Logistica_Categoria : System.Web.UI.Page
             dt.Rows[i][0] = Request["txtCategoria" + (i + 1)];
             dt.Rows[i][1] = Request["cmbFam" + (i + 1)];
         }
-        //grid.DataSource = dt;
-        //grid.DataBind();
         ds.Tables.Add(dt);
-        obCat.InsertCategoria(ds);
+        obCate.Insertar(ds);
     }
-    protected void gvCategoria_RowDeleting(object sender, GridViewDeleteEventArgs e)
+    protected void BtnEliminar_Click(object sender, EventArgs e)
     {
-        int idCat = Convert.ToInt32((gvCategoria.Rows[e.RowIndex].FindControl("lblIdCate") as Label).Text.Trim());
-        obCat.DeleteCategoria(idCat);
+        oeCate.idCategoria = Convert.ToInt32(Hdcate.Value);
+        obCate.Eliminar(oeCate);
+        busCate();
     }
-    protected void gvCategoria_RowCommand(object sender, GridViewCommandEventArgs e)
-    {
 
+    protected void BtnUpdate_Click(object sender, EventArgs e)
+    {
+        int idFila = Convert.ToInt32(Hdcate.Value);
+        int contLista = obCate.getListCate().Count;
+        for (int i = 0; i < contLista; i++)
+        {
+            listaBuscar.Add(obCate.getListCate()[i]);
+        }
+        oeCate.idCategoria = Convert.ToInt32(Request["txtIdCat" + idFila]);
+        string nom = Request["txtCategoria" + idFila];
+        int idFam = Convert.ToInt32(Request["cmbFam" + idFila]);
+
+        string valores = nom + ";" + idFam;
+        obCate.Modificar(oeCate, listaBuscar, valores);
     }
 }

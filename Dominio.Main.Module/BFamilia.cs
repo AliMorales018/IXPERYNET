@@ -1,34 +1,58 @@
-﻿using System.Data;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+using System.Data;
+using Dominio.Core.Entities;
 using Infraestructura.Data.SqlServer;
 namespace Dominio.Main.Module
 {
     public class BFamilia
     {
-        DFamilia odFamilia = new DFamilia();
+        DFamilia odFam = new DFamilia();
 
-        public DataTable LlenarCombo()
+        #region METODOS
+        /**LLAMADO DE LOS METODOS EN LA CAPA DE DATOS**/
+        public void Insertar(DataSet ds)
         {
-            return odFamilia.LlenarCombo();
+            odFam.InsertarFamilia(ds);
         }
-        public DataTable ListarFamilia()
+
+        public void Modificar(EFamilia oeFam, List<string> campos, string valores)
         {
-            return odFamilia.ListarFamilia();
+            odFam.ModificarFamilia(oeFam, campos, valores);
         }
-        public void InsertFamilia(DataSet ds)
+
+        public void Eliminar(EFamilia oeFam)
         {
-            odFamilia.InsertFamilia(ds);
+            odFam.EliminarFamilia(oeFam);
         }
-        public void UpdateFamilia(int idFam, string nomFam)
+        #endregion
+
+        #region FUNCIONES
+        /**LLAMADO DE LAS FUNCIONES EN LA CAPA DE DATOS**/
+        public DataTable Listar()
         {
-            odFamilia.UpdateFamilia(idFam, nomFam);
+            return odFam.ListarFamilias();
         }
-        public void DeleteFamilia(int idFam)
+        public List<string> getListFam()
         {
-            odFamilia.DeleteFamilia(idFam);
+            return odFam.getListaFam();
         }
-        public DataTable BuscarFamilia(string famBuscar)
+        public List<string> llenarLista()
         {
-            return odFamilia.BuscarFamilia(famBuscar);
+            return odFam.LstFamAli();
         }
+        public DataTable Buscar(List<string> campos, string valores)
+        {
+            return odFam.BuscarFamilias(campos, valores);
+        }
+        //public void Actualizar(List<string> campos, string valores, int cod)
+        //{
+        //    odFam.ActualizarFamilias(campos, valores, cod);
+        //}
+        #endregion
     }
 }

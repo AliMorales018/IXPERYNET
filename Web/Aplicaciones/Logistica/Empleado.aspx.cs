@@ -8,7 +8,6 @@ using Infraestructura.Data.SqlServer;
 using System.Web.UI.HtmlControls;
 public partial class Aplicaciones_Logistica_Empleado : System.Web.UI.Page
 {
-    //   DEmpleado odEmpl = new DEmpleado();
     BEmpleado obEmpl = new BEmpleado();
     EEmpleado oeEmpl = new EEmpleado();
     BArea obArea = new BArea();
@@ -27,7 +26,6 @@ public partial class Aplicaciones_Logistica_Empleado : System.Web.UI.Page
         }
         if (!IsPostBack)
         {
-
             //LLENANDO EL COMBO CON LOS DATOS DE ÁREA---ESPERAR A MIGUEL QUE CREE LA TABLA AREA
             cmbArea1.DataSource = obArea.LlenarCombo();
             cmbArea1.DataTextField = "Nombre";
@@ -188,8 +186,6 @@ public partial class Aplicaciones_Logistica_Empleado : System.Web.UI.Page
             dt.Rows[i][9] = 1;
 
         }
-        //grid.DataSource = dt;
-        //grid.DataBind();
         ds.Tables.Add(dt);
         obEmpl.Insertar(ds);
     }
@@ -226,7 +222,7 @@ public partial class Aplicaciones_Logistica_Empleado : System.Web.UI.Page
             listaBuscar.Add(obEmpl.getListEmpl()[i]);
         }
         int idArea = Convert.ToInt32(Request["cmbArea" + idFila]);
-        int idEmpl = Convert.ToInt32(Request["txtId" + idFila]);
+        oeEmpl.idEmpleado = Convert.ToInt32(Request["txtId" + idFila]);
         string dni =Request["txtDni" + idFila];
         string nom = Request["txtNombre" + idFila];
         string apePat = Request["txtApePat" + idFila];
@@ -238,7 +234,7 @@ public partial class Aplicaciones_Logistica_Empleado : System.Web.UI.Page
         char idEstado = '1';         
 
         string valores = idArea + ";" + dni + ";" + nom + ";" + apePat + ";" + apeMat + ";" + tel + ";" + dir + ";" + fNac + ";" + sexo + ";" + idEstado;
-        obEmpl.Actualizar(listaBuscar, valores, idEmpl);
+        obEmpl.Modificar(oeEmpl,listaBuscar, valores);
         //busDni();
     }
 }

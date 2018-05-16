@@ -1,33 +1,43 @@
 ﻿using System;
 using System.Collections.Generic;
-
-
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Dominio.Core.Entities;
 using System.Data;
 using System.Data.SqlClient;
-using System.Xml.Linq;
 using Utilitario;
-
+using System.Xml.Linq;
 
 namespace Infraestructura.Data.SqlServer
 {
     public class DCategoria
     {
-        #region ATRIBUTOS DE APLICACION
-        /**NOMBRE TABLAS**/
-        internal string nomTabFam { get => "TBC_FAMILIA"; }
-        internal string nomTabCat { get => "TBC_CATEGORIA"; }
-        /**NOMBRE DE CAMPOS EN LA BASE DE DATOS**/
-        internal string idCat { get => "N_IdCategoria"; }
-        internal string nombreCat { get => "V_NomCategoria"; }//COL BD NOMBRE DE LA CATEGORIA
-        internal string idFam { get => "N_IdFamilia"; }//COL BD IDFAMILIA(FK->FAMILIA)
-        /**NOMBRE DE CAMPOS PARA LA PRESENTACION**/
-        public string cIdCat { get => "IdCate"; }
-        public string cNomCat { get => "NomCategoria"; }
-        public string cIdFam { get => "IdFamilia"; }
-        #endregion
-        #region DECLARACION DE VARIABLES
-        /****/
-        private string campoUpd = "V_NomCategoria; N_IdFamilia";
+        //#region ATRIBUTOS DE APLICACION
+        ///**NOMBRE TABLAS**/
+
+        internal string nomTabCate { get => "TBC_CATEGORIA"; }
+        private List<string> lstCateReal = new List<string>();
+        private List<string> lstCateAli = new List<string>();
+        #region LISTA DE CAMPOS DEL DB
+        private List<string> LstCateReal()
+        {
+            lstCateReal.Add("N_IdCategoria");
+            lstCateReal.Add("V_NomCategoria");
+            lstCateReal.Add("N_IdFamilia");
+            return lstCateReal;
+        }
+        public List<string> LstCateAli()
+        {
+            lstCateAli.Add("IdCategoria");
+            lstCateAli.Add("NomCategoria");
+            lstCateAli.Add("IdFamilia");
+            return lstCateAli;
+        }
+        public List<string> getListaCate()
+        {
+            return lstCateAli;
+        }
         #endregion
         #region INSTANCIACIONES
         /**LLAMADOS A OTRAS CLASES**/
@@ -37,70 +47,34 @@ namespace Infraestructura.Data.SqlServer
         DGeneral odGeneral = new DGeneral();
         XDocument xml = new XDocument();
         #endregion
-        #region LLENAR COMBO CATEGORÍA
-        public DataTable LlenarCombo()
+        private void ListaCategorias(string cateBuscar)
         {
+            SqlParameter pValor = new SqlParameter("@valor", cateBuscar);
+            lista.Add(pValor);
+        }
+        public DataTable BuscarCategoria(string cateBuscar)
+        {
+            ListaCategorias(cateBuscar);
             try
             {
-                lista.Clear();
-                return com.EjecutaConsulta("LOG_TBC_CATEGORIA_LISTAR", lista, 1);
+                return com.EjecutaConsulta("LOG_TBC_Categoria_Buscar", lista, 1);
             }
             catch (Exception ex)
             {
                 throw new Exception("Error " + ex.Message, ex);
             }
         }
-        #endregion
-        #region LISTAPARAMETROS
-        private void ListaCategorias(string catBuscar)
-        {
-            SqlParameter pValor = new SqlParameter("@valor", catBuscar);
-            lista.Add(pValor);
-        }
-        public DataTable ListarCategoria()
-        {
-            try
-            {
-                lista.Clear();
-                return com.EjecutaConsulta("LOG_TBC_CATEGORIA_LISTAR", lista, 1);
-            }
-            catch (Exception ex)
-            {
-
-                throw new Exception("Error" + ex.Message, ex);
-            }
-        }
-        private void ListaParametros(int tipo, string nomCat, int idFam, int idCat)
-        {
-            SqlParameter pNomTabla = new SqlParameter("@tabla", nomTabCat);//NOMBRE TABLA LOG.TBC_CATEGORIA @tabla
-            SqlParameter pCampoEval = new SqlParameter("@campo", nombreCat);//NOMBRE DE LA COL BD NOMBRE DE LA CATEGORIA
-           if (tipo == 1)//tipo 1:actualizar
-            {
-                string valores = nomCat + ";" + idFam;
-                SqlParameter pCampos = new SqlParameter("@campos", campoUpd);
-                SqlParameter pValores = new SqlParameter("@valores", valores);
-                SqlParameter pIdCat = new SqlParameter("@id", idCat);
-                lista.Add(pNomTabla);
-                lista.Add(pCampos);
-                lista.Add(pValores);
-                lista.Add(pIdCat);
-            }
-            else
-            {
-                SqlParameter pIdCat = new SqlParameter("@id", idCat);
-                lista.Add(pIdCat);
-                lista.Add(pNomTabla);
-            }
-        }
-        #endregion
         #region VALIDACIONES
-        /**VALIDACIONES DE LOS NOMBRES DE LAS TABLAS**/
+        /**VALIDACIONES DE LOS NOMBRES DE LAS TABLAS Y CAMPOS**/
         public DataSet ValidarDataSet(DataSet ds)
         {
-            ds.Tables[0].TableName = nomTabCat;
-            ds.Tables[0].Columns[cIdCat].ColumnName = idCat;
-            ds.Tables[0].Columns[cNomCat].ColumnName = nombreCat;
-            ds.Tables[0].Columns[cIdFam].ColumnName = idFam;
+            ds.Tables[0].TableName = nomTabCate;
+            int numFilas = lstCateReal.Count;
+
+            for (int i = 0; i < numFilas; i++)
+            {
+                ds.Tables[0].Columns[LstCateAli()[i]].ColumnName = lstCateReal[i];
+            }
             if (ds.Tables.Count == 2)
             {
                 //LLENAR SEGUN CASO
@@ -109,13 +83,17 @@ namespace Infraestructura.Data.SqlServer
             }
             return ds;
         }
-        /**VALIDACIONES DE LOS NOMBRES DE LOS CAMPOS**/
+        /**VALIDACIONES DE LISTAS**/
         public string ValidarCampos(List<string> lista)
         {
+            LstCateReal();
             string campos = string.Empty;
             List<string> camposTabla = new List<string>();
-            camposTabla.Add(nombreCat);
-            camposTabla.Add(idFam);
+            for (int j = 1; j < lstCateReal.Count; ++j)
+            {
+                camposTabla.Add(lstCateReal[j]);
+            }
+
             foreach (string campoLista in lista)
             {
                 foreach (string campoTabla in camposTabla)
@@ -135,44 +113,24 @@ namespace Infraestructura.Data.SqlServer
             }
             return campos;
         }
-        #endregion
-        #region INSERTAR NUEVO REGISTRO EN CATEGORÍA
-        /**METODO INSERTAR SEGUN REQUERIMIENTOS DEL PROCEDIMIENTO ALMACENADO**/
-        public void InsertCategoria(DataSet ds)
-        {
-            try
-            {
-                List<SqlParameter> listParInsert = new List<SqlParameter>();
-                SqlParameter pXml = new SqlParameter("@xml", Convert.ToString(odGeneral.generarXML(ValidarDataSet(FixDataSet(ds)))));
-                //SqlParameter pCampo = new SqlParameter("@campo", campo);
-                //SqlParameter pSalid = new SqlParameter("@salida", salida);
-                //pSalid.Direction = ParameterDirection.InputOutput;
-                listParInsert.Add(pXml);
-                //listaParametros.Add(pCampo);
-                //listaParametros.Add(pSalid);
-                com.TransUnica("GEN_INSERTAR_XML_CON_ID", listParInsert);
-                //string a = Convert.ToString(pSalid.Value);
-                listParInsert.Clear();
-            }
-            catch (Exception ex)
-            {
-                com.DeshaceTransaccion();
-                throw new Exception("DB - Error" + ex.Message, ex);
-            }
-        }
+
         #endregion
         #region MODIFICAR DATASET
         public DataSet FixDataSet(DataSet ds)
         {
             try
             {
+                //LstEmplAli();
+                LstCateReal();
                 DataTable dtPos = new DataTable();
+                DataTable prueba = new DataTable();
+                prueba = ds.Tables[0];
                 listaParametros.Clear();
-                SqlParameter pTabla = new SqlParameter("@tabla", nomTabCat);
+                SqlParameter pTabla = new SqlParameter("@tabla", nomTabCate);
                 listaParametros.Add(pTabla);
                 dtPos = com.EjecutaConsulta("GEN_RETORNAID", listaParametros, 1);
                 int numero = Convert.ToInt32(dtPos.Rows[0][0].ToString());
-                ds.Tables[0].Columns.Add("IdCate").SetOrdinal(0);
+                ds.Tables[0].Columns.Add(lstCateAli[0]).SetOrdinal(0);
 
                 for (int i = 0; i < ds.Tables[0].Rows.Count; ++i)
                 {
@@ -188,56 +146,113 @@ namespace Infraestructura.Data.SqlServer
             }
         }
         #endregion
-        #region MODIFICAR REGISTRO EXISTENTE EN CATEGORÍA
-        /**METODO MODIFICAR SEGUN REQUERIMIENTOS DEL PROCEDIMIENTO ALMACENADO**/
-        public void UpdateCategoria(string nomCat, int idFam, int idCat)
+        #region INSERTAR NUEVO REGISTRO EN EMPLEADO
+        /**METODO INSERTAR SEGUN REQUERIMIENTOS DEL PROCEDIMIENTO ALMACENADO**/
+        public void InsertarCategoria(DataSet ds)
         {
-            int tipo = 1;
-            ListaParametros(tipo, nomCat, idFam, idCat);
             try
             {
-                com.TransUnica("GEN_ACTUALIZAR", lista);
+                List<SqlParameter> listParInsert = new List<SqlParameter>();
+                SqlParameter pXml = new SqlParameter("@xml", Convert.ToString(odGeneral.generarXML(ValidarDataSet(FixDataSet(ds)))));
+                SqlParameter pSalid = new SqlParameter("@salida", "");
+                pSalid.Direction = ParameterDirection.InputOutput;
+                pSalid.Size = 50;
+                listParInsert.Add(pXml);
+                listParInsert.Add(pSalid);
+                com.TransUnica("GEN_INSERTAR_XML_CON_ID", listParInsert);
+                string retorno = Convert.ToString(pSalid.Value);
+                listParInsert.Clear();
             }
             catch (Exception ex)
             {
                 com.DeshaceTransaccion();
-                throw new Exception(ex.Message, ex);
-            }
-            lista.Clear();
-        }
-        #endregion
-        #region ELIMINAR REGISTRO EXISTENTE EN CATEGORÍA
-        /**METODO ELIMINAR SEGUN REQUERIMIENTOS DEL PROCEDIMIENTO ALMACENADO**/
-        public void DeleteCategoria(int idCat)
-        {
-            int tipo = 3;
-            ListaParametros(tipo, "", 0, idCat);
-            try
-            {
-                com.TransUnica("GEN_ELIMINAR", lista);
-                lista.Clear();
-            }
-            catch (Exception)
-            {
-
-                throw;
+                throw new Exception("DB - Error" + ex.Message, ex);
             }
         }
         #endregion
-        #region BUSCAR REGISTROS DETERMINADOS EN CATEGORÍA
-        /**FUNCION BUSCAR SEGUN REQUERIMIENTOS DEL PROCEDIMIENTO ALMACENADO**/
-        public DataTable BuscarCategoria(string catBuscar)
+        #region MODIFICAR REGISTRO EXISTENTE EN CATEGORIA
+        /**METODO MODIFICAR SEGUN REQUERIMIENTOS DEL PROCEDIMIENTO ALMACENADO**/
+        public void ModificarCategoria(ECategoria oeCate, List<string> campos, string valores)
         {
-
-            ListaCategorias(catBuscar);
             try
             {
-                return com.EjecutaConsulta("LOG_TBC_Categoria_Buscar", lista, 1);
+                SqlParameter pTabla = new SqlParameter("@tabla", nomTabCate);
+                SqlParameter pId = new SqlParameter("@id", oeCate.idCategoria);
+                SqlParameter pCampos = new SqlParameter("@campos", ValidarCampos(campos));
+                SqlParameter pValores = new SqlParameter("@valores", valores);
+                listaParametros.Add(pTabla); listaParametros.Add(pId); listaParametros.Add(pCampos); listaParametros.Add(pValores); 
+                com.TransUnica("GEN_ACTUALIZAR", listaParametros);
+                listaParametros.Clear();
             }
             catch (Exception ex)
             {
-                throw new Exception("Error " + ex.Message, ex);
+                com.DeshaceTransaccion();
+                throw new Exception("DB - Error" + ex.Message, ex);
             }
+        }
+        #endregion
+        #region MODIFICAR REGISTRO EXISTENTE EN APLICACION
+        ///**METODO ACTUALIZAR SEGUN REQUERIMIENTOS DEL PROCEDIMIENTO ALMACENADO**/
+        //public void ActualizarEmpleado(List<string> campos, string valores, int cod)
+        //{
+        //    try
+        //    {
+        //        SqlParameter pTabla = new SqlParameter("@tabla", nomTabEmpl);
+        //        SqlParameter pId = new SqlParameter("@id", cod);
+        //        SqlParameter pCampos = new SqlParameter("@campos", ValidarCampos(campos));
+        //        SqlParameter pValores = new SqlParameter("@valores", valores);
+        //        listaParametros.Add(pTabla); listaParametros.Add(pCampos); listaParametros.Add(pValores); listaParametros.Add(pId);
+        //        com.TransUnica("GEN_ACTUALIZAR", listaParametros);
+        //        listaParametros.Clear();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        com.DeshaceTransaccion();
+        //        throw new Exception("DB - Error" + ex.Message, ex);
+        //    }
+        //}
+        #endregion
+        #region ELIMINAR REGISTRO EXISTENTE EN APLICACION
+        /**METODO ELIMINAR SEGUN REQUERIMIENTOS DEL PROCEDIMIENTO ALMACENADO**/
+        public void EliminarCategoria(ECategoria oeCate)
+        {
+            try
+            {
+                SqlParameter pTabla = new SqlParameter("@tabla", nomTabCate);
+                SqlParameter pId = new SqlParameter("@id", oeCate.idCategoria);
+                listaParametros.Add(pId); listaParametros.Add(pTabla);
+                com.TransUnica("GEN_ELIMINAR", listaParametros);
+                listaParametros.Clear();
+            }
+            catch (Exception ex)
+            {
+                com.DeshaceTransaccion();
+                throw new Exception("DB - Error" + ex.Message, ex);
+            }
+        }
+        #endregion
+
+        #region LISTAR TODOS LOS REGISTROS EN APLICACION
+        /**FUNCION LISTAR SEGUN REQUERIMIENTOS DEL PROCEDIMIENTO ALMACENADO**/
+        public DataTable ListarCategoria()
+        {
+            listaParametros.Clear();
+            SqlParameter pTabla = new SqlParameter("@tabla", nomTabCate);
+            listaParametros.Add(pTabla);
+            return com.EjecutaConsulta("GEN_LISTAR", listaParametros, 1);
+        }
+        #endregion
+
+        #region BUSCAR REGISTROS DETERMINADOS EN APLICACION
+        /**FUNCION BUSCAR SEGUN REQUERIMIENTOS DEL PROCEDIMIENTO ALMACENADO**/
+        public DataTable BuscarCategorias(List<string> campos, string valores)
+        {
+            listaParametros.Clear();
+            SqlParameter pTabla = new SqlParameter("@tabla", nomTabCate);
+            SqlParameter pCampos = new SqlParameter("@campos", ValidarCampos(campos));
+            SqlParameter pValores = new SqlParameter("@valores", valores);
+            listaParametros.Add(pTabla); listaParametros.Add(pCampos); listaParametros.Add(pValores);
+            return com.EjecutaConsulta("GEN_FILTRAR", listaParametros, 1);
         }
         #endregion
     }

@@ -5,7 +5,7 @@
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Registro_Empleados</title>
-        <% Response.WriteFile("/Includes/filesCss.html"); %>
+    <% Response.WriteFile("/Includes/filesCss.html"); %>
     <% Response.WriteFile("/Includes/filesJs.html"); %>
       <script type="text/javascript">
         function Demple(id,f) {
@@ -42,8 +42,8 @@
                         <thead class="bg-dark" runat="server">
                             <tr class="bg-dark text-white border border-dark">
                                 <th class="text-center font-weight-light">N°</th>
-                                <th class="text-center font-weight-light">Area</th>
                                 <th class="text-center font-weight-light" style="display: none;">IdEmpleado</th>
+                                <th class="text-center font-weight-light">Area</th>
                                 <th class="text-center font-weight-light"><div id="divControlDni" runat="server">
                                                 <input type="text" id="txtBusDni" name='txtBusDni' placeholder='Buscar Dni' class='form - control' runat="server" />
                                                 <asp:Button ID="btnBusDni" Text="Buscar" runat="server" OnClick="btnBusDni_Click" />
@@ -71,8 +71,8 @@
                         <tbody id="tbodyCol" runat="server">
                             <tr id="firstRowBody">
                                 <td><div id="campo1"><p>1</p></div></td>
-                                <td><div id="campo2" class="input-group input-group-sm"><select runat="server" class="form-control" id="cmbArea1"></select></div></td>
-                                <td style="display: none;"><div id="campo3" class="input-group input-group-sm"><input type="text" runat="server" id="txtId1" class="form-control" /></div></td>
+                                <td style="display: none;"><div id="campo2" class="input-group input-group-sm"><input type="text" runat="server" id="txtId1" class="form-control" /></div></td>
+                                <td><div id="campo3" class="input-group input-group-sm"><select runat="server" class="form-control" id="cmbArea1"></select></div></td>
                                 <td><div id="campo4" class="input-group input-group-sm"><input type="text" runat="server" id="txtDni1" class="form-control" /></div></td>
                                 <td><div id="campo5" class="input-group input-group-sm"><input type="text" runat="server" id="txtNombre1" class="form-control" /></div></td>
                                 <td><div id="campo6" class="input-group input-group-sm"><input type="text" runat="server" id="txtApePat1" class="form-control" /></div></td>

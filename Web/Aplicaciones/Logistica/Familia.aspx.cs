@@ -11,16 +11,80 @@ public partial class Familia : System.Web.UI.Page
 {
     BFamilia obFam = new BFamilia();
     EFamilia oeFam = new EFamilia();
+
     List<string> lista = new List<string>();
+    List<string> listaBuscar = new List<string>();
+
     DataSet ds = new DataSet();
     DataTable dt = new DataTable();
     protected void Page_Load(object sender, EventArgs e)
     {
-        dt.Columns.Add("NomFamilia");
+        obFam.llenarLista();
+        int conList = obFam.getListFam().Count;
+        for (int i = 1; i < conList; i++)
+        {
+            dt.Columns.Add(obFam.getListFam()[i]);
+        }
+    }
+    public static string DataTable_HTML2(DataTable dt)
+    {
+        string html = "";
+        int cont = 0;
+        int columnas = dt.Columns.Count + 1;
+        for (int i = 0; i < dt.Rows.Count; i++)
+        {
+            int c = i + 1;
+            html += "<tr id='" + c + "'>";
+            for (int j = -1; j < columnas; j++)
+                if (j == -1)
+                {
+                    cont++;
+                    html += "<td>" + cont + "</td>";
+                }
+                else if (j == 0)
+                {
+                    html += "<td style='display: none;'><div id='campo2' class='input-group input-group-sm'><input type = 'text' runat='server' id='txtIdFam" + cont + "' name='txtIdFam" + cont + "' class='form-control' value='" + dt.Rows[i][j].ToString() + "'/></div></td>";
+                }
+                else if (j == 1)
+                {
+                    html += "<td><div id='campo3' class='input-group input-group-sm'><input type = 'text' runat='server' id='txtFamilia" + cont + "' name='txtFamilia" + cont + "' class='form-control' value='" + dt.Rows[i][j].ToString() + "'/></div></td>";
+                }
+                else if (j == 2)
+                {
+                    html += "<td><div id='campo4'><button type='button' class='btn btn-danger mr-sm-2 btn-sm' id='btnE' runat='server' onclick='Demple(" + dt.Rows[i][0].ToString() + "," + i + ");'>Eliminar</button></div></td>";
+                    html += "<td><div id='campo5'><button type='button' class='btn btn-danger mr-sm-2 btn-sm' id='btnA' runat='server' onclick='Uemple(" + c + ");' >Actualizar</button></div></td>";
+                }
+            html += "</tr>";
+        }
+        //html += "</body>";
+        return html;
+    }
+    void busFam()
+    {
+        string famBus = txtBusFam.Value;
+        divControlFam.Attributes.Add("style", "display:block;");
+        string valores = "";
+        string fam = txtBusFam.Value;
+
+        for (int i = 1; i < 2; i++)
+        {
+            listaBuscar.Add(obFam.getListFam()[i]);
+        }
+        if (txtBusFam.Value == "")
+        {
+            fam = "%";
+        }
+        valores = fam;
+        DataTable dt = obFam.Buscar(listaBuscar, valores);
+        tbodyCol.InnerHtml = DataTable_HTML2(dt);
+    }
+    protected void btnBusFam_Click(object sender, EventArgs e)
+    {
+        busFam();
     }
     protected void BtnGuardar_Click(object sender, EventArgs e)
     {
-        if (HctblFamilia.Value.Equals(string.Empty))
+        if (HctblFamilia.Value.Equals(""))
         {
             HctblFamilia.Value = "1";
         }
@@ -30,41 +94,28 @@ public partial class Familia : System.Web.UI.Page
             dt.Rows.Add(dr);
             dt.Rows[i][0] = Request["txtFamilia" + (i + 1)];
         }
-        //grid.DataSource = dt;
-        //grid.DataBind();
         ds.Tables.Add(dt);
-        obFam.InsertFamilia(ds);
+        obFam.Insertar(ds);
     }
-    protected void gvFamilia_RowCommand(object sender, GridViewCommandEventArgs e)
+    protected void BtnEliminar_Click(object sender, EventArgs e)
     {
-
+        oeFam.idFamilia = Convert.ToInt32(Hdfam.Value);
+        obFam.Eliminar(oeFam);
+        busFam();
     }
 
-    protected void gvFamilia_RowUpdating(object sender, GridViewUpdateEventArgs e)
+    protected void BtnUpdate_Click(object sender, EventArgs e)
     {
-        int idFam = Convert.ToInt32((gvFamilia.Rows[e.RowIndex].FindControl("lblIdFam") as Label).Text.Trim());
-        string nomFam = (gvFamilia.Rows[e.RowIndex].FindControl("txtFam") as TextBox).Text.Trim();
-        obFam.UpdateFamilia(idFam, nomFam);
+        int idFila = Convert.ToInt32(Hdfam.Value);
+        int contLista = obFam.getListFam().Count;
+        for (int i = 0; i < contLista; i++)
+        {
+            listaBuscar.Add(obFam.getListFam()[i]);
+        }
+        oeFam.idFamilia = Convert.ToInt32(Request["txtIdFam" + idFila]);
+        string nomFam = Request["txtFamilia" + idFila];
+
+        string valores = nomFam;
+        obFam.Modificar(oeFam, listaBuscar, valores);
     }
-
-    protected void gvFamilia_RowDeleting(object sender, GridViewDeleteEventArgs e)
-    {
-        int idFam = Convert.ToInt32((gvFamilia.Rows[e.RowIndex].FindControl("lblIdFam") as Label).Text.Trim());
-        obFam.DeleteFamilia(idFam);
-    }
-
-    protected void btnBusFam_Click(object sender, EventArgs e)
-    {
-        gvFamilia.Columns[0].Visible = false;
-        string famBus = txtBusFam.Value;
-        tbodyCol.Attributes.Add("style", "display:none;");
-        divControl.Attributes.Add("style", "display:block;");
-        gvFamilia.Visible = true;
-        DataTable dt = obFam.BuscarFamilia(famBus);
-        gvFamilia.DataSource = dt;
-        gvFamilia.DataBind();
-        txtFamilia1.Value = "";
-    }
-
-
 }

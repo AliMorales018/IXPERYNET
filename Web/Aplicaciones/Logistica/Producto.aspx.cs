@@ -24,7 +24,7 @@ public partial class Aplicaciones_Logistica_Producto : System.Web.UI.Page
         if (!IsPostBack)
         {
             //LLENANDO EL COMBO CON LOS DATOS DE CATEGORÍA
-            cmbCat1.DataSource = obCat.LlenarCombo();
+            cmbCat1.DataSource = obCat.Listar();
             cmbCat1.DataTextField = "NOMBRE CATEGORIA";
             cmbCat1.DataValueField = "ID CATEGORIA";
             cmbCat1.DataBind();
@@ -54,7 +54,7 @@ public partial class Aplicaciones_Logistica_Producto : System.Web.UI.Page
         DataTable dt = obpro.BuscarProducto(proBus);
         gvProducto.DataSource = dt;
         gvProducto.DataBind();
-        DataTable dtCat = obCat.ListarCategoria();
+        DataTable dtCat = obCat.Listar();
         DataTable dtUMed = obUmed.ListarUMedida();
         foreach (GridViewRow item in gvProducto.Rows)
         {

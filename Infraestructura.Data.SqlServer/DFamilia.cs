@@ -10,18 +10,29 @@ namespace Infraestructura.Data.SqlServer
 {
     public class DFamilia
     {
-        #region ATRIBUTOS DE APLICACION
-        /**NOMBRE TABLAS**/
-        internal string nomTab { get => "TBC_FAMILIA"; }
-        /**NOMBRE DE CAMPOS EN LA BASE DE DATOS**/
-        internal string idFam { get => "N_IdFamilia"; }
-        internal string nomFam { get => "V_NomFamilia"; }//COL BD NOMBRE DE LA CATEGORIA
-        /**NOMBRE DE CAMPOS PARA LA PRESENTACION**/
-        public string cIdFam { get => "IdFami"; }
-        public string cNomFam { get => "NomFamilia"; }
-        #endregion
-        #region DECLARACIÓN DE VARIABLES
-        private string campoUpd = "V_NomFamilia";
+        //#region ATRIBUTOS DE APLICACION
+        ///**NOMBRE TABLAS**/
+
+        internal string nomTabFam { get => "TBC_FAMILIA"; }
+        private List<string> lstFamReal = new List<string>();
+        private List<string> lstFamAli = new List<string>();
+        #region LISTA DE CAMPOS DEL DB
+        private List<string> LstFamReal()
+        {
+            lstFamReal.Add("N_IdFamilia");
+            lstFamReal.Add("V_NomFamilia");
+            return lstFamReal;
+        }
+        public List<string> LstFamAli()
+        {
+            lstFamAli.Add("IdFamilia");
+            lstFamAli.Add("NomFamilia");
+            return lstFamAli;
+        }
+        public List<string> getListaFam()
+        {
+            return lstFamAli;
+        }
         #endregion
         #region INSTANCIACIONES
         /**LLAMADOS A OTRAS CLASES**/
@@ -31,93 +42,34 @@ namespace Infraestructura.Data.SqlServer
         DGeneral odGeneral = new DGeneral();
         XDocument xml = new XDocument();
         #endregion
-        #region LISTAPARAMETROS
         private void ListaFamilias(string famBuscar)
         {
             SqlParameter pValor = new SqlParameter("@valor", famBuscar);
             lista.Add(pValor);
         }
-        private void ListaParametros(int tipo,int idFam, string nFam)
-        {
-            SqlParameter pNomTabla = new SqlParameter("@tabla", nomTab);//NOMBRE TABLA LOG.TBC_CATEGORIA @tabla
-            SqlParameter pCampoEval = new SqlParameter("@campo", nomFam);//NOMBRE DE LA COL BD NOMBRE DE LA CATEGORIA
-            if (tipo == 1)//tipo 1:actualizar
-            {
-                string valores = nFam;
-                SqlParameter pCampos = new SqlParameter("@campos", campoUpd);
-                SqlParameter pValores = new SqlParameter("@valores", valores);
-                SqlParameter pIdFam = new SqlParameter("@id", idFam);
-                lista.Add(pNomTabla);
-                lista.Add(pCampos);
-                lista.Add(pValores);
-                lista.Add(pIdFam);
-            }
-            else
-            {
-                SqlParameter pIdFam = new SqlParameter("@id", idFam);
-                lista.Add(pIdFam);
-                lista.Add(pNomTabla);
-            }
-        }
-        #endregion
-        #region BUSCAR REGISTROS DETERMINADOS EN FAMILIA
-        /**FUNCION BUSCAR SEGUN REQUERIMIENTOS DEL PROCEDIMIENTO ALMACENADO**/
         public DataTable BuscarFamilia(string famBuscar)
         {
-
             ListaFamilias(famBuscar);
             try
             {
-                return com.EjecutaConsulta("LOG_TBC_FAMILIA_BUSCAR", lista, 1);
+                return com.EjecutaConsulta("LOG_TBC_Familia_Buscar", lista, 1);
             }
             catch (Exception ex)
             {
                 throw new Exception("Error " + ex.Message, ex);
             }
         }
-        #endregion
-
-        private void LlenarObj(EFamilia oFam)
-        {
-            //SqlParameter id = new SqlParameter("@IdFamilia", oFam.idFamilia);
-            SqlParameter nombre = new SqlParameter("@NomFamilia", oFam.nomFamilia);
-            //lista.Add(id); 
-            lista.Add(nombre);
-        }
-        #region MODIFICAR DATASET
-        public DataSet FixDataSet(DataSet ds)
-        {
-            try
-            {
-                DataTable dtPos = new DataTable();
-                listaParametros.Clear();
-                SqlParameter pTabla = new SqlParameter("@tabla", nomTab);
-                listaParametros.Add(pTabla);
-                dtPos = com.EjecutaConsulta("GEN_RETORNAID", listaParametros, 1);
-                int numero = Convert.ToInt32(dtPos.Rows[0][0].ToString());
-                ds.Tables[0].Columns.Add("IdFami").SetOrdinal(0);
-
-                for (int i = 0; i < ds.Tables[0].Rows.Count; ++i)
-                {
-                    ds.Tables[0].Rows[i][0] = numero;
-                    ++numero;
-                }
-                return ds;
-            }
-            catch (Exception ex)
-            {
-                com.DeshaceTransaccion();
-                throw new Exception("DB - Error" + ex.Message, ex);
-            }
-        }
-        #endregion
         #region VALIDACIONES
-        /**VALIDACIONES DE LOS NOMBRES DE LAS TABLAS**/
+        /**VALIDACIONES DE LOS NOMBRES DE LAS TABLAS Y CAMPOS**/
         public DataSet ValidarDataSet(DataSet ds)
         {
-            ds.Tables[0].TableName = nomTab;
-            ds.Tables[0].Columns[cIdFam].ColumnName = idFam;
-            ds.Tables[0].Columns[cNomFam].ColumnName = nomFam;
+            ds.Tables[0].TableName = nomTabFam;
+            int numFilas = lstFamReal.Count;
+
+            for (int i = 0; i < numFilas; i++)
+            {
+                ds.Tables[0].Columns[LstFamAli()[i]].ColumnName = lstFamReal[i];
+            }
             if (ds.Tables.Count == 2)
             {
                 //LLENAR SEGUN CASO
@@ -126,12 +78,17 @@ namespace Infraestructura.Data.SqlServer
             }
             return ds;
         }
-        /**VALIDACIONES DE LOS NOMBRES DE LOS CAMPOS**/
+        /**VALIDACIONES DE LISTAS**/
         public string ValidarCampos(List<string> lista)
         {
+            LstFamReal();
             string campos = string.Empty;
             List<string> camposTabla = new List<string>();
-            camposTabla.Add(nomFam);
+            for (int j = 1; j < lstFamReal.Count; ++j)
+            {
+                camposTabla.Add(lstFamReal[j]);
+            }
+
             foreach (string campoLista in lista)
             {
                 foreach (string campoTabla in camposTabla)
@@ -151,23 +108,56 @@ namespace Infraestructura.Data.SqlServer
             }
             return campos;
         }
+
         #endregion
-        #region INSERTAR NUEVO REGISTRO EN CATEGORÍA
+        #region MODIFICAR DATASET
+        public DataSet FixDataSet(DataSet ds)
+        {
+            try
+            {
+                //LstEmplAli();
+                LstFamReal();
+                DataTable dtPos = new DataTable();
+                DataTable prueba = new DataTable();
+                prueba = ds.Tables[0];
+                listaParametros.Clear();
+                SqlParameter pTabla = new SqlParameter("@tabla", nomTabFam);
+                listaParametros.Add(pTabla);
+                dtPos = com.EjecutaConsulta("GEN_RETORNAID", listaParametros, 1);
+                int numero = Convert.ToInt32(dtPos.Rows[0][0].ToString());
+                ds.Tables[0].Columns.Add(lstFamAli[0]).SetOrdinal(0);
+
+                for (int i = 0; i < ds.Tables[0].Rows.Count; ++i)
+                {
+                    ds.Tables[0].Rows[i][0] = numero;
+                    ++numero;
+                }
+                return ds;
+            }
+            catch (Exception ex)
+            {
+                com.DeshaceTransaccion();
+                throw new Exception("DB - Error" + ex.Message, ex);
+            }
+        }
+        #endregion
+        #region INSERTAR NUEVO REGISTRO EN FAMILIAS
         /**METODO INSERTAR SEGUN REQUERIMIENTOS DEL PROCEDIMIENTO ALMACENADO**/
-        public void InsertFamilia(DataSet ds)
+        public void InsertarFamilia(DataSet ds)
         {
             try
             {
                 List<SqlParameter> listParInsert = new List<SqlParameter>();
                 SqlParameter pXml = new SqlParameter("@xml", Convert.ToString(odGeneral.generarXML(ValidarDataSet(FixDataSet(ds)))));
+                SqlParameter pSalid = new SqlParameter("@salida", "");
+                pSalid.Direction = ParameterDirection.InputOutput;
+                pSalid.Size = 50;
                 //SqlParameter pCampo = new SqlParameter("@campo", campo);
-                //SqlParameter pSalid = new SqlParameter("@salida", salida);
-                //pSalid.Direction = ParameterDirection.InputOutput;
                 listParInsert.Add(pXml);
+                listParInsert.Add(pSalid);
                 //listaParametros.Add(pCampo);
-                //listaParametros.Add(pSalid);
                 com.TransUnica("GEN_INSERTAR_XML_CON_ID", listParInsert);
-                //string a = Convert.ToString(pSalid.Value);
+                string retorno = Convert.ToString(pSalid.Value);
                 listParInsert.Clear();
             }
             catch (Exception ex)
@@ -177,68 +167,90 @@ namespace Infraestructura.Data.SqlServer
             }
         }
         #endregion
-        #region MODIFICAR REGISTRO EXISTENTE EN FAMILIA
+        #region MODIFICAR REGISTRO EXISTENTE EN APLICACION
         /**METODO MODIFICAR SEGUN REQUERIMIENTOS DEL PROCEDIMIENTO ALMACENADO**/
-        public void UpdateFamilia(int idFam, string nomFam)
+        public void ModificarFamilia(EFamilia oeFam, List<string> campos, string valores)
         {
-            int tipo = 1;
-            ListaParametros(tipo,idFam, nomFam);
             try
             {
-                com.TransUnica("GEN_ACTUALIZAR", lista);
+                SqlParameter pTabla = new SqlParameter("@tabla", nomTabFam);
+                SqlParameter pId = new SqlParameter("@id", oeFam.idFamilia);
+                SqlParameter pCampos = new SqlParameter("@campos", ValidarCampos(campos));
+                SqlParameter pValores = new SqlParameter("@valores", valores);
+                listaParametros.Add(pTabla); listaParametros.Add(pCampos); listaParametros.Add(pValores); listaParametros.Add(pId);
+                com.TransUnica("GEN_ACTUALIZAR", listaParametros);
+                listaParametros.Clear();
             }
             catch (Exception ex)
             {
                 com.DeshaceTransaccion();
-                throw new Exception(ex.Message, ex);
+                throw new Exception("DB - Error" + ex.Message, ex);
             }
-            lista.Clear();
         }
         #endregion
-        #region ELIMINAR REGISTRO EXISTENTE EN CATEGORÍA
+        #region MODIFICAR REGISTRO EXISTENTE EN APLICACION
+        ///**METODO ACTUALIZAR SEGUN REQUERIMIENTOS DEL PROCEDIMIENTO ALMACENADO**/
+        //public void ActualizarEmpleado(List<string> campos, string valores, int cod)
+        //{
+        //    try
+        //    {
+        //        SqlParameter pTabla = new SqlParameter("@tabla", nomTabFam);
+        //        SqlParameter pId = new SqlParameter("@id", cod);
+        //        SqlParameter pCampos = new SqlParameter("@campos", ValidarCampos(campos));
+        //        SqlParameter pValores = new SqlParameter("@valores", valores);
+        //        listaParametros.Add(pTabla); listaParametros.Add(pCampos); listaParametros.Add(pValores); listaParametros.Add(pId);
+        //        com.TransUnica("GEN_ACTUALIZAR", listaParametros);
+        //        listaParametros.Clear();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        com.DeshaceTransaccion();
+        //        throw new Exception("DB - Error" + ex.Message, ex);
+        //    }
+        //}
+        #endregion
+        #region ELIMINAR REGISTRO EXISTENTE EN APLICACION
         /**METODO ELIMINAR SEGUN REQUERIMIENTOS DEL PROCEDIMIENTO ALMACENADO**/
-        public void DeleteFamilia(int idFam)
+        public void EliminarFamilia(EFamilia oFam)
         {
-            int tipo = 3;
-            ListaParametros(tipo,idFam,"");
             try
             {
-                com.TransUnica("GEN_ELIMINAR", lista);
-                lista.Clear();
+                SqlParameter pTabla = new SqlParameter("@tabla", nomTabFam);
+                SqlParameter pId = new SqlParameter("@id", oFam.idFamilia);
+                listaParametros.Add(pId); listaParametros.Add(pTabla);
+                com.TransUnica("GEN_ELIMINAR", listaParametros);
+                listaParametros.Clear();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                com.DeshaceTransaccion();
+                throw new Exception("DB - Error" + ex.Message, ex);
             }
         }
         #endregion
-        public DataTable LlenarCombo()
+
+        #region LISTAR TODOS LOS REGISTROS EN APLICACION
+        /**FUNCION LISTAR SEGUN REQUERIMIENTOS DEL PROCEDIMIENTO ALMACENADO**/
+        public DataTable ListarFamilias()
         {
-            try
-            {
-                lista.Clear();
-                return com.EjecutaConsulta("LOG_TBC_Familia_Listar",lista,1);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error " + ex.Message, ex);
-            }
+            listaParametros.Clear();
+            SqlParameter pTabla = new SqlParameter("@tabla", nomTabFam);
+            listaParametros.Add(pTabla);
+            return com.EjecutaConsulta("GEN_LISTAR", listaParametros, 1);
         }
+        #endregion
 
-        public DataTable ListarFamilia()
+        #region BUSCAR REGISTROS DETERMINADOS EN APLICACION
+        /**FUNCION BUSCAR SEGUN REQUERIMIENTOS DEL PROCEDIMIENTO ALMACENADO**/
+        public DataTable BuscarFamilias(List<string> campos, string valores)
         {
-            try
-            {
-                lista.Clear();
-                return com.EjecutaConsulta("LOG_TBC_FAMILIA_LISTAR", lista, 1);
-            }
-            catch (Exception ex)
-            {
-
-                throw new Exception("Error" + ex.Message,ex);
-            }
+            listaParametros.Clear();
+            SqlParameter pTabla = new SqlParameter("@tabla", nomTabFam);
+            SqlParameter pCampos = new SqlParameter("@campos", ValidarCampos(campos));
+            SqlParameter pValores = new SqlParameter("@valores", valores);
+            listaParametros.Add(pTabla); listaParametros.Add(pCampos); listaParametros.Add(pValores);
+            return com.EjecutaConsulta("GEN_FILTRAR", listaParametros, 1);
         }
-
+        #endregion
     }
 }
