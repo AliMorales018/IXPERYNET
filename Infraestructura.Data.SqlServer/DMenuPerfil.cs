@@ -12,23 +12,38 @@ namespace Infraestructura.Data.SqlServer
 {
     public class DMenuPerfil
 	{
-		#region Atributos Menu-Perfil
+		#region ATRIBUTOS MENU-PERFIL
 		internal string tablaMenPer { get => "TBD_MENUPERFIL"; }
-
-		internal string tIdMenMenPer { get => "N_IdMenu"; }
-		internal string tIdPerMenPer { get => "N_IdPerfil"; }
-		internal string tVisMenPer { get => "S_Visible"; }
-		internal string tEstMenPer { get => "S_Estado"; }
-
-		public string cIdMenMenPer { get => "IdMenu"; }
-		public string cIdPerMenPer { get => "IdPerfil"; }
-		public string cVisMenPer { get => "Visible"; }
-		public string cEstMenPer { get => "Estado"; }
 		#endregion
 
+		#region INSTANCIAS
+		internal List<string> lstMePerTab = new List<string>();
+		internal List<string> lstMePerAli = new List<string>();
 		DtUtilitario com = new DtUtilitario();
-        List<SqlParameter> lista = new List<SqlParameter>();
+		List<SqlParameter> lista = new List<SqlParameter>();
+		#endregion
 
+		#region LLENAR LISTAS
+		internal List<string> LstMePerTab()
+		{
+			lstMePerTab[0] = "N_IdMenu";
+			lstMePerTab[1] = "N_IdPerfil";
+			lstMePerTab[2] = "S_Visible";
+			lstMePerTab[3] = "S_Estado";
+			return lstMePerTab;
+		}
+
+		public List<string> LstMePerAli()
+		{
+			lstMePerAli[0] = "IdMenu";
+			lstMePerAli[1] = "IdPerfil";
+			lstMePerAli[2] = "Visible";
+			lstMePerAli[3] = "Estado";
+			return lstMePerAli;
+		}
+		#endregion
+
+		//CAMBIAR
         private void LlenarObj(EMenuPerfil oMenuPerfil){
             SqlParameter idMenu = new SqlParameter("@IdMenu", oMenuPerfil.oMenu.idMenu);
             SqlParameter idPerfil = new SqlParameter("@IdPerfil", oMenuPerfil.oPerfil.idPerfil);
@@ -53,7 +68,7 @@ namespace Infraestructura.Data.SqlServer
             SqlParameter idApli = new SqlParameter("@idaplicacion", oMenuPerfil.oPerfil.oAplicacion.idApli);
             SqlParameter idPerfil = new SqlParameter("@idperfil", oMenuPerfil.oPerfil.idPerfil);
             lista.Add(idApli); lista.Add(idPerfil);
-            return com.EjecutaConsulta("LOG_XTBC_MENU_POR_APLICACION_PERFIL", lista, 1);
+            return com.EjecutaConsulta("XXX_TBC_MENU_POR_APLICACION_PERFIL", lista, 1);
         }
     }
 }

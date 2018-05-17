@@ -15,6 +15,16 @@ namespace Dominio.Main.Module
 		DMenu odMenu = new DMenu();
 		DPerfil odPerfil = new DPerfil();
 
+		public void LlenarMenuAl()
+		{
+			odMenu.LlenarMenuAl();
+		}
+
+		public List<string> getMenuAl()
+		{
+			return odMenu.getMenuAl();
+		}
+
 		public string perValue()
 		{
 			return odPerfil.cIdPer;
@@ -27,22 +37,27 @@ namespace Dominio.Main.Module
 
 		public string KeyMember()
 		{
-			return odMenu.cIdMen;
+			return odMenu.getMenuAl()[0];
 		}
 
 		public string DisplayMember()
 		{
-			return odMenu.cDesMen;
+			return odMenu.getMenuAl()[1];
 		}
 
 		public string ValueMember()
 		{
-			return odMenu.cIdMen;
+			return odMenu.getMenuAl()[0];
 		}
 
 		public string ParentMember()
 		{
-			return odMenu.cIdPadMen;
+			return odMenu.getMenuAl()[2];
+		}
+		
+		public int SigMenuId()
+		{
+			return odMenu.SigMenuId();
 		}
 
 		public DataTable DataSource(EAplicacion oeApli, EPerfil oePerfil)
@@ -58,6 +73,11 @@ namespace Dominio.Main.Module
 		public DataTable ListarPerfilApli(EAplicacion oeApli)
 		{
 			return odMenu.ListarPerfilApli(oeApli);
+		}
+
+		public void InsertarMenu(DataSet ds)
+		{
+			odMenu.InsertarMenu(ds);
 		}
 	}
 }

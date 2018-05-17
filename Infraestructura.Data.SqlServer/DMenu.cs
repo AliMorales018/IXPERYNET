@@ -25,78 +25,117 @@ namespace Infraestructura.Data.SqlServer
 
 		#region Atributos Menu
 		internal string tablaMenu { get => "TBC_MENU"; }
-		/*
-		internal string tIdMen { get => "N_IdMenu"; }
-		internal string tDesMen { get => "V_Descripcion"; }
-		internal string tIdPadMen { get => "N_IdPadre"; }
-		internal string tPosMen { get => "N_Posicion"; }
-		internal string tIcoMen { get => "V_Icono"; }
-		internal string tHabMen { get => "S_Habilitado"; }
-		internal string tUrlMen { get => "V_Url"; }
-		internal string tIdAppMen { get => "N_IdApli"; }
-
-		public string cIdMen { get => "IdMenu"; }
-		public string cDesMen { get => "Descripcion"; }
-		public string cIdPadMen { get => "IdPadre"; }
-		public string cPosMen { get => "Posicion"; }
-		public string cIcoMen { get => "Icono"; }
-		public string cHabMen { get => "Habilitado"; }
-		public string cUrlMen { get => "Url"; }
-		public string cIdAppMen { get => "IdApli"; }
-		*/
 		#endregion
 
 		#region Listas de campos en tabla
 		/**LISTA SIN ALIAS**/
-		internal List<string> lstMenuSal = new List<string>();
+		private List<string> lstMenuReal = new List<string>();
 		/**LISTA CON ALIAS**/
-		internal List<string> lstMenuCal = new List<string>();
+		private List<string> lstMenuAli = new List<string>();
 		#endregion
-
+		
+		
 		#region Lleando de lista sin alias
-		internal List<string> LstMenuSal()
+		private void LlenarMenuRe()
 		{
-			lstMenuSal.Add("N_IdMenu");
-			lstMenuSal.Add("V_Descripcion");
-			lstMenuSal.Add("N_IdPadre");
-			lstMenuSal.Add("N_Posicion");
-			lstMenuSal.Add("V_Icono");
-			lstMenuSal.Add("S_Habilitado");
-			lstMenuSal.Add("V_Url");
-			lstMenuSal.Add("N_IdApli");
-			return lstMenuSal;
+			lstMenuReal.Add("N_IdMenu");
+			lstMenuReal.Add("V_Descripcion");
+			lstMenuReal.Add("N_IdPadre");
+			lstMenuReal.Add("N_Posicion");
+			lstMenuReal.Add("V_Icono");
+			lstMenuReal.Add("S_Habilitado");
+			lstMenuReal.Add("V_Url");
+			lstMenuReal.Add("N_IdApli");
 		}
 		#endregion
 
 		#region Llenado de lista con alias
-		public List<string> LstMenuCal()
+		public void LlenarMenuAl()
 		{
-			/*
-			lstMenuCal[0] = "IdMenu";
-			lstMenuCal[1] = "Descripcion";
-			lstMenuCal[2] = "IdPadre";
-			lstMenuCal[3] = "Posicion";
-			lstMenuCal[4] = "Icono";
-			lstMenuCal[5] = "Habilitado";
-			lstMenuCal[6] = "Url";
-			lstMenuCal[7] = "IdApli";
-			*/
-			
-			lstMenuCal.Add("IdMenu");
-			lstMenuCal.Add("Descripcion");
-			lstMenuCal.Add("IdPadre");
-			lstMenuCal.Add("Posicion");
-			lstMenuCal.Add("Icono");
-			lstMenuCal.Add("Habilitado");
-			lstMenuCal.Add("Url");
-			lstMenuCal.Add("IdApli");
-			return lstMenuCal;
+			lstMenuAli.Add("IdMenu");
+			lstMenuAli.Add("Descripcion");
+			lstMenuAli.Add("IdPadre");
+			lstMenuAli.Add("Posicion");
+			lstMenuAli.Add("Icono");
+			lstMenuAli.Add("Habilitado");
+			lstMenuAli.Add("Url");
+			lstMenuAli.Add("IdApli");
 		}
 		#endregion
 
+		public List<string> getMenuAl()
+		{
+			return lstMenuAli;
+		}
 
 		DtUtilitario com = new DtUtilitario();
 		List<SqlParameter> listaParametros = new List<SqlParameter>();
+		DGeneral odGeneral = new DGeneral();
+
+		#region VALIDACIONES
+		/**VALIDACIONES DE LOS NOMBRES DE LAS TABLAS Y CAMPOS**/
+		public DataSet ValidarDataSet(DataSet ds)
+		{
+			LlenarMenuRe();
+			ds.Tables[0].TableName = tablaMenu;
+			int numFilas = lstMenuReal.Count;
+
+			for (int i = 0; i < numFilas; i++)
+			{
+				ds.Tables[0].Columns[lstMenuAli[i]].ColumnName = lstMenuReal[i];
+			}
+			if (ds.Tables.Count == 2)
+			{
+				//LLENAR SEGUN CASO
+				//ds.Tables[1].TableName = "NOMBRE";
+				//ds.Tables[1].Columns[""].ColumnName = "";
+			}
+			return ds;
+		}
+		#endregion
+
+		#region INSERTAR NUEVA LISTA DE MENUES
+		/**METODO INSERTAR SEGUN REQUERIMIENTOS DEL PROCEDIMIENTO ALMACENADO**/
+		public void InsertarMenu(DataSet ds)
+		{
+			try
+			{
+				List<SqlParameter> listParInsert = new List<SqlParameter>();
+				com.TransUnica("XXX_MENUPERFIL_MENU_ELIMINAR", listParInsert);
+				SqlParameter pXml = new SqlParameter("@xml", Convert.ToString(odGeneral.generarXML(ValidarDataSet(ds))));
+				SqlParameter pSalid = new SqlParameter("@salida", "");
+				pSalid.Direction = ParameterDirection.InputOutput;
+				pSalid.Size = 50;
+				//SqlParameter pCampo = new SqlParameter("@campo", campo);
+				listParInsert.Add(pXml);
+				listParInsert.Add(pSalid);
+				//listaParametros.Add(pCampo);
+				com.TransUnica("GEN_INSERTAR_XML_CON_ID", listParInsert);
+				string retorno = Convert.ToString(pSalid.Value);
+				listParInsert.Clear();
+			}
+			catch (Exception ex)
+			{
+				com.DeshaceTransaccion();
+				throw new Exception("DB - Error" + ex.Message, ex);
+			}
+		}
+
+		#endregion
+
+
+
+		#region RECUPERAR ID DEL ULTIMO REGISTRO
+		public int SigMenuId()
+		{
+			DataTable dt = new DataTable();
+			listaParametros.Clear();
+			SqlParameter pTabla = new SqlParameter("@tabla", tablaMenu);
+			listaParametros.Add(pTabla);
+			dt= com.EjecutaConsulta("GEN_RETORNAID", listaParametros, 1);
+			return Convert.ToInt32(dt.Rows[0][0]);
+		}
+		#endregion
 
 		#region Buscar todos los menues por perfil de cada aplicación
 		public DataTable DataSource(EAplicacion oeApli, EPerfil oePerfil)

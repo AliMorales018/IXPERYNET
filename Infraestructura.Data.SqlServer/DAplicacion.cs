@@ -28,7 +28,7 @@ namespace Infraestructura.Data.SqlServer
 		private List<string> lstAppReal = new List<string>();
 		public List<string> lstAppAli = new List<string>();
 		DGeneral odGeneral = new DGeneral();
-		XDocument xml = new XDocument();
+		//XDocument xml = new XDocument();
 		#endregion
 
 		#region LISTA DE CAMPOS DEL DB
